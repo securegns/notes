@@ -10,3 +10,4 @@ Terraform providers - https://registry.terraform.io/browse/providers
 - terraform apply
 - terraform destroy
 
+* Import to state - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/rg1```
