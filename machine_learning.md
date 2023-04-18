@@ -8,3 +8,6 @@
 ## Tools
 
 ## Key concepts
+
+## Misc stuff that helps ML
+- Space & Time complexity
