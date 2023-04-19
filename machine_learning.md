@@ -13,7 +13,7 @@ Try scatter plots - [https://plotly.com/python/3d-scatter-plots/](https://plotly
 - 
 
 ## Key concepts
-- EDA | Understand the data, .shape, .columns, number of values in each columns, Make scatter plots - 2D/3D, understand the axis - labels/scale, Pair-plots, Histograms, univariate analysis, Probability distribution function (PDF), Cumulative distribution function(CDF), Mean, Variance, Standard deviation,
+- EDA | Understand the data, .shape, .columns, number of values in each columns, Make scatter plots - 2D/3D, understand the axis - labels/scale, Pair-plots, Histograms, univariate analysis, Probability distribution function (PDF), Cumulative distribution function(CDF), Mean, Variance, Standard deviation,median, percentile, quantile, Interquartile Range (IQR) & Mean Absolute Deviation (MAD)
 
 ## Misc stuff that helps ML
 - Space & Time complexity
