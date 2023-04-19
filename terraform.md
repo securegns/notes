@@ -59,7 +59,7 @@ var types
 - Base types - Str, Num, Bool
 - Complex types - List, Set, Map, Tuple, Object
 
-* Terraform output
+Terraform output
 ```
 output "instance_ip"{
         discription = "VM private IP"
