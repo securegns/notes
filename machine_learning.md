@@ -11,3 +11,12 @@
 
 ## Misc stuff that helps ML
 - Space & Time complexity
+
+### Important key terms
+* EDA - Exploratory data analysis
+* Data point/vector/observation
+* Data Set
+* Feature/Variable/Input variable/Dependent variable
+* Lable/Independent variable/Output var/Class/class lable/ response lable
+* Vectors and Arrays
+* 
