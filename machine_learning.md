@@ -25,4 +25,4 @@ Try scatter plots - [https://plotly.com/python/3d-scatter-plots/](https://plotly
 * Feature/Variable/Input variable/Dependent variable
 * Lable/Independent variable/Output var/Class/class lable/ response lable
 * Vectors and Arrays
-* 
+* Outlayer
