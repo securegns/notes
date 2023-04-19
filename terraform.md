@@ -21,3 +21,40 @@ provider "azurerm" {
         skip_provider_registration = "true"
 }
 ```
+* Vars
+```
+variable "myvar1"{
+        discription = "New var 1"
+        type = string
+        default = "Hello world"
+}
+```
+```
+variable "myvar1" {}
+```
+* Refrence a var `var.myvar1`
+* Vars can have validation condiations
+
+```
+variable "myvar1"{
+        discription = "New var 1"
+        type = string
+        validation {
+                condiation = lenght(var.myvar1) > 4
+                error_message = "Str must be grather than 4 chars"
+        }
+}
+```
+* Sensitive vars can be used for secrets
+```
+variable "myvar1"{
+        discription = "New var 1"
+        type = string
+        default = "Hello"
+        sensitive = true
+}
+```
+* var types
+        *       Base types - Str, Num, Bool
+        *       Complex types - List, Set, Map, Tuple, Object
+* 
