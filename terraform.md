@@ -54,7 +54,10 @@ variable "myvar1"{
         sensitive = true
 }
 ```
-* var types
+
+var types
 - Base types - Str, Num, Bool
 - Complex types - List, Set, Map, Tuple, Object
+
 * 
+
