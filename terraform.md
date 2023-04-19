@@ -11,7 +11,7 @@ Terraform providers - https://registry.terraform.io/browse/providers
 - terraform plan
 - terraform apply
 - terraform destroy
-
+* Skip yes while applying `terraform apply --auto-approve`
 * Import to state - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/rg1```
 * List the state -  ```terraform state list```
 Skip provider reg if we SPN dont have enough privs to do so
@@ -59,5 +59,11 @@ var types
 - Base types - Str, Num, Bool
 - Complex types - List, Set, Map, Tuple, Object
 
-* 
+* Terraform output
+```
+output "instance_ip"{
+        discription = "VM private IP"
+        value = aws_instance.my-vm.private_ip
+}
+```
 
