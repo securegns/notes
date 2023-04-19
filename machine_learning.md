@@ -5,14 +5,14 @@
 
 [fast.ai](https://www.fast.ai/) courses - Practical Deep Learning for Coders, From Deep Learning Foundations to Stable Diffusion
 
-## Tools
+## Tools/Libraries/Websites/Services
 
 ## Key concepts
 
 ## Misc stuff that helps ML
 - Space & Time complexity
 
-### Important key terms
+## Important key terms
 * EDA - Exploratory data analysis
 * Data point/vector/observation
 * Data Set
