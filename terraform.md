@@ -55,6 +55,6 @@ variable "myvar1"{
 }
 ```
 * var types
-        *       Base types - Str, Num, Bool
-        *       Complex types - List, Set, Map, Tuple, Object
+- Base types - Str, Num, Bool
+- Complex types - List, Set, Map, Tuple, Object
 * 
