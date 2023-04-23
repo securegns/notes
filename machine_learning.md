@@ -31,3 +31,4 @@ plot,
 * Bi-variate analysis (scatter plots, pair-plots)
 
 ## Math for ML
+### Linear Algebra
