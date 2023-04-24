@@ -5,5 +5,10 @@
 ### Course 
 [Certified Kubernetes Administrator CKA](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780138103804/)
 
-### Imp
+## Useful commands
 ```alias k=kubectl```
+Use kubectl - create, run
+
+Generate deployment files
+```k create deployment mypod1 --image=nginx --dry-run -o yaml > first.yml```
+
