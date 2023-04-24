@@ -4,3 +4,6 @@
 
 ### Course 
 [Certified Kubernetes Administrator CKA](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780138103804/)
+
+### Imp
+```alias k=kubectl```
