@@ -15,6 +15,13 @@
 ```alias k=kubectl```
 Use kubectl - create, run
 
+Resource Short names
+```kubectl api-resources```
+
+Finding Object Information
+```kubectl describe pods```
+```kubectl get pods -o yaml ```
+
 Generate deployment files
 ```k create deployment mypod1 --image=nginx --dry-run -o yaml > first.yml```
 
