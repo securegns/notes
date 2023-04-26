@@ -6,9 +6,9 @@
 [Certified Kubernetes Administrator CKA](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780138103804/)
 
 ### Links can be opened in the exam
-[https://kubernetes.io/docs/home/](https://kubernetes.io/docs/home/)
-[https://kubernetes.io/blog/](https://kubernetes.io/blog/)
-[https://github.com/kubernetes/](https://github.com/kubernetes/)
+- [https://kubernetes.io/docs/home/](https://kubernetes.io/docs/home/)
+- [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
+- [https://github.com/kubernetes/](https://github.com/kubernetes/)
 
 
 ## Useful commands
