@@ -25,3 +25,9 @@ Finding Object Information
 Generate deployment files
 ```k create deployment mypod1 --image=nginx --dry-run -o yaml > first.yml```
 
+Run a pod
+```kubectl run nginx-pod --image=nginx --restart=Never --port=80```
+
+Check if build-robot has privs to list pods
+```kubectl auth can-i list pods --as build-robot```
+
