@@ -5,6 +5,9 @@
 ### Course 
 [Certified Kubernetes Administrator CKA](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780138103804/)
 
+### important points
+- API resource types include Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob, Pod
+
 ### Links can be opened in the exam
 - [https://kubernetes.io/docs/home/](https://kubernetes.io/docs/home/)
 - [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
