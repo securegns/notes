@@ -7,6 +7,7 @@
 
 ### important points
 - API resource types include Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob, Pod
+- configmap, service, ingress, secrets
 
 ### Links can be opened in the exam
 - [https://kubernetes.io/docs](https://kubernetes.io/docs)
