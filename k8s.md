@@ -12,6 +12,8 @@
 - [https://kubernetes.io/docs](https://kubernetes.io/docs)
 - [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
 
+### Free exam simulator
+[https://killercoda.com/kimwuestkamp/scenario/cks-cka-ckad-remote-desktop](https://killercoda.com/kimwuestkamp/scenario/cks-cka-ckad-remote-desktop)
 
 ## Useful commands
 ```alias k=kubectl```
