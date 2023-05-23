@@ -9,9 +9,8 @@
 - API resource types include Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob, Pod
 
 ### Links can be opened in the exam
-- [https://kubernetes.io/docs/home/](https://kubernetes.io/docs/home/)
+- [https://kubernetes.io/docs](https://kubernetes.io/docs)
 - [https://kubernetes.io/blog/](https://kubernetes.io/blog/)
-- [https://github.com/kubernetes/](https://github.com/kubernetes/)
 
 
 ## Useful commands
