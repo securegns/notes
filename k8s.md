@@ -23,6 +23,9 @@ Use kubectl - create, run
 Resource Short names
 ```kubectl api-resources```
 
+Get info
+```k explain pod.spec.volumes```
+
 Finding Object Information
 ```kubectl describe pods```
 ```kubectl get pods -o yaml ```
