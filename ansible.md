@@ -9,6 +9,15 @@ Other params
 - ansible_password=password123
 By default ansible_user is set to root
 
+We can group servers into groups using
+```
+[web_servers]
+web1
+
+[db_servers]
+db1
+```
+
 ### Check connection
 ```ansible target1 -m ping -i inventory.txt```
 
