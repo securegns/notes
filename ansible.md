@@ -64,5 +64,10 @@ service: httpd
         state: present
       with_items: '{{ packages }}'
 ```
+### Roles
+```ansible-galaxy init mysql```
+```ansible-galaxy search mysql```
+
+
 ### Important terms
 - idempotency
