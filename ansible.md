@@ -33,3 +33,6 @@ db_servers
 ### set host key checking false
 - File: ```/etc/ansible/ansible.cfg```
 - Code: ```host_key_checking=False```
+
+### Important terms
+- idempotency
