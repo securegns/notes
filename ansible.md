@@ -7,5 +7,5 @@ target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
 ```ansible target1 -m ping -i inventory.txt```
 
 ### set host key checking false
-```/etc/ansible/ansible.cfg```
-```host_key_checking=False```
+- File: ```/etc/ansible/ansible.cfg```
+- Code: ```host_key_checking=False```
