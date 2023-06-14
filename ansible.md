@@ -3,7 +3,7 @@
 
 ### 
 
-### inventory file
+### Inventory file
 ```
 target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
 ```
@@ -33,6 +33,21 @@ db_servers
 ### set host key checking false
 - File: ```/etc/ansible/ansible.cfg```
 - Code: ```host_key_checking=False```
+
+### Vars
+```
+vars:
+  dns_server: 10.10.10.10
+tasks:
+  - linefile
+       path: /etc/hosts
+       line: 'dnsserver {{ dns_server }}'
+```
+```
+# sanple vars file
+http_port: 8080
+service: httpd
+```
 
 ### Important terms
 - idempotency
