@@ -44,7 +44,7 @@ tasks:
        line: 'dnsserver {{ dns_server }}'
 ```
 ```
-# sanple vars file
+# sample vars file
 http_port: 8080
 service: httpd
 ```
