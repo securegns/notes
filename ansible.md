@@ -48,6 +48,21 @@ tasks:
 http_port: 8080
 service: httpd
 ```
-
+### Loops
+```
+- name: 'Install required packages'
+  hosts: localhost
+  become: yes
+  vars:
+    packages:
+      - httpd
+      - make
+      - vim
+  tasks:
+    - yum:
+        name: '{{ item }}'
+        state: present
+      with_items: '{{ packages }}'
+```
 ### Important terms
 - idempotency
