@@ -1,3 +1,8 @@
+### Running playbook
+```ansible-playbook -i inventory playbook.yaml```
+
+### 
+
 ### inventory file
 ```
 target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
