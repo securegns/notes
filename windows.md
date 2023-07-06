@@ -6,7 +6,8 @@ Steps
 * Now open windbg -> Attach kernel -> enter port and the key from above command
 * kd>.reload /f - Command to reload symbols
 
-Windows Operating System Architecture - https://i.ytimg.com/vi/PuDlDtqfXtk/maxresdefault.jpg
+### Windows Operating System Architecture
+- https://i.ytimg.com/vi/PuDlDtqfXtk/maxresdefault.jpg
 - User mode
     - kernel32.dll, USER32.dll, advapi32.dll, ntdll.dll
 - Kernel mode
