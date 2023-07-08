@@ -12,3 +12,5 @@ Steps
     - kernel32.dll, USER32.dll, advapi32.dll, ntdll.dll
 - Kernel mode
     -  ntoskrnl.exe, hal.dll, win32k.sys 
+1. Inturrupts
+- Trap - Interrupts
