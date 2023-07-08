@@ -37,6 +37,14 @@ variable "myvar1"{
 ```
 variable "myvar1" {}
 ```
+local vars 
+```
+locals {
+  resource_group_name        = "us-west-2"
+}
+
+rg = local.resource_group_name
+```
 * Refrence a var `var.myvar1`
 * Vars can have validation condiations
 
