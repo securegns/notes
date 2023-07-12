@@ -34,7 +34,7 @@ Get access token
 ```az account get-access-token --resource https://graph.microsoft.com```
 
 Get user info
-```curl -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/users```
+```curl -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/me```
 
 curl -X GET -H "Authorization: Bearer ${TOKEN} "https://graph.microsoft.com/v1.0/me/drive/root/children"
 
