@@ -1,10 +1,10 @@
 #Exploitation Flow 
 
-1. Get shell 
+### 1. Get shell 
 
-2. ```env```
+### 2. ```env```
 
-3. Metadata 
+### 3. Metadata 
 
 3.1 Get metadata of the azure vm
 ```
