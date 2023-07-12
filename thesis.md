@@ -49,3 +49,6 @@ VM command for
 ```
 Set-AzVMCustomScriptExtension -ResourceGroupName TEST -VMName PentestVM -Location westcentralus -FileUri 'http://book.azurepentesting.com/whoami.ps1' -Run 'whoami.ps1' -Name CustomScriptExtension
 ```
+
+### Lab setup 
+```az deployment group create --resource-group sec --template-file ./file.json```
