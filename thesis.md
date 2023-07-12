@@ -30,8 +30,15 @@ curl --header "Authorization: Bearer ${TOKEN}" https://management.azure.com/subs
 4.3
 
 ### 5. MS Graph access
-get access token
+Get access token
 ```az account get-access-token --resource https://graph.microsoft.com```
+
+Get user info
+```curl -H "Authorization: Bearer ${TOKEN}" https://graph.microsoft.com/v1.0/users```
+
+curl -X GET -H "Authorization: Bearer ${TOKEN} "https://graph.microsoft.com/v1.0/me/drive/root/children"
+
+
 
 ### Misc useful commands
 Get deployment history
