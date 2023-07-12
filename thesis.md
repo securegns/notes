@@ -29,6 +29,10 @@ curl --header "Authorization: Bearer ${TOKEN}" https://management.azure.com/subs
 
 4.3
 
+### 5. MS Graph access
+get access token
+```az account get-access-token --resource https://graph.microsoft.com```
+
 ### Misc useful commands
 Get deployment history
 ```
