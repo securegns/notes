@@ -13,7 +13,7 @@ Terraform providers - https://registry.terraform.io/browse/providers
 - terraform destroy
 * Skip yes while applying `terraform apply --auto-approve`
 * Import to state - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/rg1```
-
+* If you have error with already existing resources and need to sync - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/1-4f10a454-playground-sandbox```
 Terraform State - We can also save the state remotely in S3/GCP/Blob storages
 - List the state -  ```terraform state list```
 - Remove state - ```terraform state rm```
