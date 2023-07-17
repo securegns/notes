@@ -1,11 +1,13 @@
 # Exploitation Flow 
 ### Login tricks
 
+### Buffer
 ```
 ### Try this
 $pscredential = Get-Credential
 Connect-AzureRmAccount -ServicePrincipal -ApplicationId "http://my-app" -Credential $pscredential -TenantId $tenantid
 AzCopy /Source:https://myaccount.blob.core.windows.net/mycontainer /Dest:C:\myfolder /SourceKey:key /S
+Explore : https://cloud.hacktricks.xyz/pentesting-cloud/azure-security
 ```
 
 ### 1. Get shell 
