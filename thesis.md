@@ -5,6 +5,7 @@
 ### Try this
 $pscredential = Get-Credential
 Connect-AzureRmAccount -ServicePrincipal -ApplicationId "http://my-app" -Credential $pscredential -TenantId $tenantid
+AzCopy /Source:https://myaccount.blob.core.windows.net/mycontainer /Dest:C:\myfolder /SourceKey:key /S
 ```
 
 ### 1. Get shell 
