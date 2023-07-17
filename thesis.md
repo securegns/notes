@@ -1,4 +1,11 @@
 # Exploitation Flow 
+### Login tricks
+
+```
+### Try this
+$pscredential = Get-Credential
+Connect-AzureRmAccount -ServicePrincipal -ApplicationId "http://my-app" -Credential $pscredential -TenantId $tenantid
+```
 
 ### 1. Get shell 
 
