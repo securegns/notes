@@ -1,5 +1,8 @@
 # Exploitation Flow 
 ### Login tricks
+```
+az login --use-device --allow-no-subscriptions
+```
 
 ### Buffer
 ```
