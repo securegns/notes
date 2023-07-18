@@ -4,6 +4,13 @@
 az login --use-device --allow-no-subscriptions
 ```
 
+### Commands
+```
+List users - az ad user list
+List groups - az ad group list
+
+```
+
 ### Buffer
 ```
 ### Try this
