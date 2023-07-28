@@ -96,6 +96,8 @@ Get groups
 az role assignment list --scope /subscriptions/2213e8b1-dbc7-4d54-8aff-b5e315df5e5b/resourceGroups/1-6417d8f7-playground-sandbox/ --include-inherited
 ```
 
+Role assignments: ```curl -H "Authorization: Bearer <access_token>" https://graph.microsoft.com/v1.0/me```
+
 List of groups I am a member of 
 ```
 curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.0/me/memberOf/$/microsoft.graph.group?$filter=groupTypes/any(c:c%20eq%20'unified')"
@@ -108,4 +110,4 @@ curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.
 
 
 ### Lab setup 
-```az deployment group create --resource-group sec --template-file ./file.json```
+```az deployment group create --resource-group sec --template-file ./file.json``` #To re create deployment history with arm tenplate
