@@ -109,3 +109,7 @@ curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.
 
 ### Lab setup 
 ```az deployment group create --resource-group sec --template-file ./file.json``` #To re create deployment history with arm tenplate
+
+READ
+https://github.com/dafthack/CloudPentestCheatsheets/blob/master/cheatsheets/Cloud%20Pentesting%20Cheatsheet.pdf
+https://github.com/dafthack/CloudPentestCheatsheets/blob/master/cheatsheets/ReferencesAndResources.md
