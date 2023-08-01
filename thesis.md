@@ -108,7 +108,14 @@ curl -X GET -H "Authorization: Bearer ${TOKEN}" "https://graph.microsoft.com/v1.
 
 
 ### Lab setup 
-```az deployment group create --resource-group sec --template-file ./file.json``` #To re create deployment history with arm tenplate
+```
+devrg1 - Storage Account(with mounted clouddata), LinVM(managed identity enabled)
+prodrg
+```
+Create a Resource group - ```az group create --name devrg1 --location eastus``` ```az group create --name prodrg --location eastus```
+Create a linux VM - 
+
+To re create deployment history with arm tenplate - ```az deployment group create --resource-group sec --template-file ./file.json```
 
 READ
 https://github.com/dafthack/CloudPentestCheatsheets/blob/master/cheatsheets/Cloud%20Pentesting%20Cheatsheet.pdf
