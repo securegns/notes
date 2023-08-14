@@ -11,8 +11,3 @@
 - Boost C++ Application Development Cookbook by Antony Polukhin
 
 ### OOPS 
-
-<details>
-<summary>Class with object</summary>
-### class 1
-</details>
