@@ -14,9 +14,5 @@
 
 <details>
 <summary>Class with object</summary>
-'''
-class One{
-  
-}
-'''
+### class 1
 </details>
