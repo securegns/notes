@@ -42,3 +42,4 @@ plot,
 
 ## Math for ML
 ### Linear Algebra
+https://www.khanacademy.org/math/linear-algebra/
