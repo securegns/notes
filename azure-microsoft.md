@@ -1,3 +1,6 @@
+### Ninja trainings 
+- https://rodtrent.substack.com/p/all-the-microsoft-ninja-training
+
 ### KQL notes
 * KQL is a read only language
 - Practice KQL in azure demo env - https://dataexplorer.azure.com/clusters/help/databases/SecurityLogs
