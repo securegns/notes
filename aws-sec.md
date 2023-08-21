@@ -1,3 +1,6 @@
+### Security Labs
+https://www.wellarchitectedlabs.com/security/
+
 ### Certification
 https://aws.amazon.com/certification/certified-security-specialty/
 
