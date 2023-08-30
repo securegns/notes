@@ -8,8 +8,13 @@ Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certifica
 - AWS Security workshop - https://awssecworkshops.com/
 - Architecture examples - https://aws.amazon.com/architecture
 
+Monitoring and auditing
 * Monitoring (Amazon CloudWatch)
 * Audit services (AWS CloudTrail)
+
+- Network controling features - ACLs, Security group, AWS Network Firewall, VPC flow logs
+- 
+
 
 # Security
 ### Security Labs
