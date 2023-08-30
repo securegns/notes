@@ -5,6 +5,11 @@ Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certifica
 - Security Pillar, Reliability Pillar, Performance Efficiency Pillar, Cost Optimization Pillar
 - Framework - https://aws.amazon.com/architecture/well-architected/
 - Labs - https://wellarchitectedlabs.com/
+- AWS Security workshop - https://awssecworkshops.com/
+- Architecture examples - https://aws.amazon.com/architecture
+
+* Monitoring (Amazon CloudWatch)
+* Audit services (AWS CloudTrail)
 
 # Security
 ### Security Labs
