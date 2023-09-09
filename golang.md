@@ -24,3 +24,5 @@ go version
 - Create linux executable - ```GOOS=linux GOARCH=amd64 go build -o myApp-linux```
 
 ## Notes
+- You cannot have unused variables
+- 
