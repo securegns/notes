@@ -27,3 +27,7 @@ Steps
     -  ntoskrnl.exe, hal.dll, win32k.sys 
 1. Inturrupts
 - Trap - Interrupts
+
+# EDR bypass and malware developement
+- Evading EDR Book- https://learning.oreilly.com/library/view/evading-edr
+- Grey hat GoLang
