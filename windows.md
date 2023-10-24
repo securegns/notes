@@ -15,5 +15,5 @@ Useful for trackig filesystem, Process, Threads, DLL activity
 
 
 # EDR bypass and malware developement
-- Evading EDR Book- https://learning.oreilly.com/library/view/evading-edr
+- Evading EDR Book - [https://learning.oreilly.com/library/view/evading-edr](https://learning.oreilly.com/library/view/evading-edr/9781098168742)https://learning.oreilly.com/library/view/evading-edr/9781098168742
 - Grey hat GoLang
