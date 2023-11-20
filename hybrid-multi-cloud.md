@@ -1,5 +1,5 @@
 # Course notes
-Hybrid cloud could be ...
+A cloud could also have ...
 - One account which can manage multiple accounts (ex. AWS orginisations)
 - Cross account access (ex. Azure guest users)
 
