@@ -3,6 +3,10 @@ A cloud could also have ...
 - One account which can manage multiple accounts (ex. AWS orginisations)
 - Cross account access (ex. Azure guest users)
 
+Entra login to another cloud providers - https://myapps.microsoft.com/
+
+SAML, OpenIDConnect, O-Auth
+
 #### Resource hirarchy
 - AWS - https://cdn.ttgtmedia.com/rms/onlineimages/aws_resource_hierarchy-f_mobile.png
 - Azure - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/media/organize-resources/scope-levels.png
