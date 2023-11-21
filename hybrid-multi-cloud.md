@@ -10,6 +10,11 @@ SAML, OpenIDConnect, O-Auth
 Policies
 - Inline policy
 - Managed Policy - Managed policies, Customer Managed policies
+
+Pentesting methodology
+- MITRE ATT&CK Cloud matrix
+- Cyberwarefarelabs - redteam attack flow
+
 #### Resource hirarchy
 - AWS - https://cdn.ttgtmedia.com/rms/onlineimages/aws_resource_hierarchy-f_mobile.png
 - Azure - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/media/organize-resources/scope-levels.png
