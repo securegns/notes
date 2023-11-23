@@ -23,8 +23,13 @@ Pentesting methodology
 - GCP - https://cloud.google.com/static/resource-manager/img/cloud-hierarchy.svg 
 
 #### Tools
-```cloud_enum.py``` - bruteforce names against multi-cloud DNS bruteforce for services
+- ```cloud_enum.py``` - bruteforce names against multi-cloud DNS bruteforce for services
+- PACU for AWS
 
+### Metadata
+- ```curl http://169.254.169.254``` - All cloud providers have same IP to check if it is a cloud instance
+- ```curl http://169.254.169.254/metadata```
+ 
 # Commands
 Login to gcp cli
 ```gcloud auth activate-service-account --key-file auth.json```
