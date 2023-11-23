@@ -2,6 +2,7 @@
 A cloud could also have ...
 - One account which can manage multiple accounts (ex. AWS orginisations)
 - Cross account access (ex. Azure guest users)
+- In GCP by default role attached to compute instance, in AWS/Azure its not enabled by default
 
 ### Apps URL
 AWS  -  orgname.awsapps.com/start
