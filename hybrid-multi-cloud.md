@@ -8,6 +8,7 @@ A cloud could also have ...
 AWS  -  orgname.awsapps.com/start
 Microsoft - https://myapps.microsoft.com/
 GCP identity - admin.google.com
+GCP user - myaccount.google.com
 
 SAML, OpenIDConnect, O-Auth
 
