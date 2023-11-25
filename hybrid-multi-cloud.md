@@ -7,6 +7,7 @@ A cloud could also have ...
 ### Apps URL
 AWS  -  orgname.awsapps.com/start
 Microsoft - https://myapps.microsoft.com/
+GCP identity - admin.google.com
 
 SAML, OpenIDConnect, O-Auth
 
