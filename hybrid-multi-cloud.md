@@ -36,3 +36,5 @@ Pentesting methodology
 # Commands
 Login to gcp cli
 ```gcloud auth activate-service-account --key-file auth.json```
+
+gcloud login with access-token ```gcloud projects list --access-token-file accesstoken.txt```
