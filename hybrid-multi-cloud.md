@@ -4,9 +4,12 @@ A cloud could also have ...
 - Cross account access (ex. Azure guest users)
 - In GCP by default role attached to compute instance, in AWS/Azure its not enabled by default
 
-### Apps URL
+### Apps URLs
 AWS  -  orgname.awsapps.com/start
 Microsoft - https://myapps.microsoft.com/
+
+### Important URLs
+MS admin portal - https://portal.microsoft.com/Adminportal/Home
 GCP identity - admin.google.com
 GCP user - myaccount.google.com
 
