@@ -1,4 +1,4 @@
-<img width="815" alt="image" src="https://github.com/securegns/notes/assets/24625106/e6343c1a-6fd2-49e0-b9e4-c4b371ebceed"># Course notes
+# Course notes
 A cloud could also have ...
 - One account which can manage multiple accounts (ex. AWS orginisations)
 - Cross account access (ex. Azure guest users)
