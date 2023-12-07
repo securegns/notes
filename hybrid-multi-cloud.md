@@ -42,7 +42,7 @@ Login to gcp cli
 
 gcloud login with access-token ```gcloud projects list --access-token-file accesstoken.txt```
 
-# All commands
+# Lab commands
 
 gcloud auth activate-service-account --key-file ./sonic-airfoil-339910-8c4c6de6bf0d.json 
 
