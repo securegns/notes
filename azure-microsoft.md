@@ -7,6 +7,11 @@
 # Azure Sec tools
 - Purview, Priva, 
 
+# CIS benchmark
+- Video tutorials - https://www.youtube.com/watch?v=FS874tASMTw
+- Benchmark PDF - https://www.csiltd.co.uk/wp-content/uploads/2021/12/CIS_Microsoft_Azure_Foundations_Benchmark_v1.4.0.pdf
+
+
 # Interactive guides
 - Sentinel and how SOC works - https://mslearn.cloudguides.com/guides/Investigate%20security%20incidents%20in%20a%20hybrid%20environment%20with%20Azure%20Sentinel
 
