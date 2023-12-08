@@ -9,14 +9,16 @@ Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certifica
 - Architecture examples - https://aws.amazon.com/architecture
 
 Monitoring and auditing
-* Monitoring (Amazon CloudWatch)
-* Audit services (AWS CloudTrail)
-
+- Monitoring (Amazon CloudWatch)
+- Audit services (AWS CloudTrail)
 - Network controling features - ACLs, Security group, AWS Network Firewall, VPC flow logs
 - 
 
 
 # Security
+
+CIS benchmark for AWS - https://www.youtube.com/watch?v=t5o3VN5cEMo
+
 ### Security Labs
 https://www.wellarchitectedlabs.com/security/
 
