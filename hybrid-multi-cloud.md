@@ -206,10 +206,24 @@ az ad sp list --filter "AppId eq 'bf3a573f-bedc-45e5-8a68-2fb9fdbbbf58'"
 
 az account get-access-token --resource https://graph.microsoft.com
 
-Connect-MgGraph -AccessToken "MSGraphAccessToken"
+Connect-MgGraph --AccessToken "MSGraphAccessToken"
+[ use ps to login to graph
+
+$clientId = "bf3a573f-bedc-45e5-8a68-2fb9fdbbbf58"
+$clientSecret = "tDZ8Q~XXd3zd9Z1mtjsgHG-4gGQq6i6A~idr2bdR"
+$tenantId = "68b40a4c-50f1-48f3-b7cb-916dd82418a7"
+
+$clientSecretSecure = ConvertTo-SecureString -String $clientSecret -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $clientId, $clientSecretSecure
+Connect-MgGraph -Credential $credential -TenantId $tenantId
+]
 
 Get-MgGroup
 
+[ get barer token
+$context = Get-MgContext
+$token = $context.Token.AccessToken
+]
 curl -X GET -H "Authorization: Bearer $Token" https://graph.microsoft.com/beta/groups/21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0/owners
 
 curl -X GET -H "Authorization: Bearer $Token" https://graph.microsoft.com/beta/groups/21ea2faa-d0e4-432b-ba45-c61b3a2bf4f0/members
