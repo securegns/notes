@@ -73,7 +73,9 @@ gcloud compute instances add-metadata tesing-instance --metadata-from-file ssh-k
 
 gcloud compute instances describe tesing-instance - get the ip of vm
 
-ssh -i ./gcp gcp@104.154.17.222
+[chmod 600 ./gcp]
+
+ssh -i ./gcp gcp@104.154.17.222 
 - get the name of service account attached to that VM - gcloud auth list
 - gcloud auth print-access-token
 
