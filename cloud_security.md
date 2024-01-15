@@ -18,3 +18,10 @@
 | 16. AWS Config                  | 16. Azure Log Analytics        | 16. GCP Security Scanner          |
 | 17. AWS CloudWatch              | 17. Azure Network Watcher      | 17. GCP Network Intelligence Center |
 | 18. AWS Trusted Advisor         | 18. Azure Advisor              | 18. GCP Recommender              |
+
+# Books
+Practical Cloud Security
+
+# Guides, Guidelines, 
+CSA - Cloud control matrix - https://cloudsecurityalliance.org/research/cloud-controls-matrix/
+CIS benchmark guide for individual clouds
