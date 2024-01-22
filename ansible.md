@@ -21,20 +21,20 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
     Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."
 }
 ```
+We require 2 files, called `inventory` which has info about target machine, and playbook yml file
 
 ### Running playbook
 ```ansible-playbook -i inventory playbook.yaml```
 
-### 
-
 ### Inventory file
 Naming convention for this file is `hosts` or `inventory`
 ```
-target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
+[windows]
+winvm ansible_host=10.01.01.01 ansible_user=gns ansible_password=Password@123 ansible_connection=ssh
 ```
 Other params
 - ansible_connection=ssh(or)winrm(or)localhost
-- ansible_port=22/5986
+- ansible_port=22(or)5986
 - ansible_user=gns
 - ansible_password=password123
 By default ansible_user is set to root
