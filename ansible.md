@@ -8,7 +8,7 @@
 target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
 ```
 Other params
-- ansible_connection=ssh/winrm/localhost
+- ansible_connection=ssh(or)winrm(or)localhost
 - ansible_port=22/5986
 - ansible_user=gns
 - ansible_password=password123
