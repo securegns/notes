@@ -39,6 +39,12 @@ Other params
 - ansible_password=password123
 By default ansible_user is set to root
 
+Run using this command:
+```
+ansible-playbook -i inventory create_user.yml
+
+```
+
 We can group servers into groups and also groups of groups
 ```
 [web_servers]
