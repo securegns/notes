@@ -28,6 +28,7 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
 ### 
 
 ### Inventory file
+Naming convention for this file is `hosts` or `inventory`
 ```
 target1 ansible_host=10.10.10.10 ansible_ssh_pass=Password123
 ```
