@@ -40,9 +40,7 @@ Check if build-robot has privs to list pods
 ```kubectl auth can-i list pods --as build-robot```
 
 
-#______________________
-### K8s working on AKS
-#______________________
+### K8s working on AKS commands
 ```
 az aks create --resource-group k8s_resource --name myAKSCluster --node-count 2 --enable-addons monitoring --generate-ssh-keys
 az aks get-credentials --resource-group k8s_resource --name myAKSCluster
