@@ -25,3 +25,6 @@ Practical Cloud Security
 # Guides, Guidelines, 
 CSA - Cloud control matrix - https://cloudsecurityalliance.org/research/cloud-controls-matrix/
 CIS benchmark guide for individual clouds
+
+# Courses
+SANS Public cloud security
