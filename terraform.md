@@ -81,7 +81,8 @@ output "instance_ip"{
 ```
 
 # Book notes
-## Terraform. Up and Running - https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022[.]pdf
+## Terraform. Up and Running 
+- https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022[.]pdf
 ### Interesting Questions
 - Why use IaC at all?
 - What are the differences between configuration management, orchestration, provisioning, and server templating?
