@@ -1,7 +1,7 @@
 ### Courses
 https://learn.acloud.guru/course/hashicorp-certified-terraform-associate-1
 
-### Notes
+# Notes
 Terraform providers - https://registry.terraform.io/browse/providers
 
 #### Terraform workflow
@@ -81,7 +81,7 @@ output "instance_ip"{
 ```
 
 # Book notes
-## Terraform. Up and Running
+## Terraform. Up and Running - https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022[.]pdf
 ### Interesting Questions
 - Why use IaC at all?
 - What are the differences between configuration management, orchestration, provisioning, and server templating?
