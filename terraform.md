@@ -99,4 +99,10 @@ output "instance_ip"{
 
 ### Important points
 - Terraform helpful for creating/maintaining reusable infrastructure
+- There are five broad categories of IaC tools:
+        - Ad hoc scripts
+        - Configuration management tools
+        - Server templating tools
+        - Orchestration tools
+        - Provisioning tools
 - 
