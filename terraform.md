@@ -82,7 +82,8 @@ output "instance_ip"{
 
 # Book notes
 ## Terraform. Up and Running 
-- https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022[.]pdf
+- https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022.pdf
+- Github : https://github.com/brikis98/terraform-up-and-running-code/tree/master/code
 ### Interesting Questions
 - Why use IaC at all?
 - What are the differences between configuration management, orchestration, provisioning, and server templating?
@@ -96,4 +97,6 @@ output "instance_ip"{
 - How do you make Terraform a part of your automated deployment process?
 - What are the best practices for using Terraform as a team?
 
-### 
+### Important points
+- Terraform helpful for creating/maintaining reusable infrastructure
+- 
