@@ -80,3 +80,19 @@ output "instance_ip"{
 }
 ```
 
+# Book notes
+## Terraform. Up and Running
+### Interesting Questions
+- Why use IaC at all?
+- What are the differences between configuration management, orchestration, provisioning, and server templating?
+- When should you use Terraform, Chef, Ansible, Puppet, Pulumi, CloudFormation, Docker, Packer, or Kubernetes?
+- How does Terraform work, and how do you use it to manage your infrastructure?
+- How do you create reusable Terraform modules?
+- How do you securely manage secrets when working with Terraform?
+- How do you use Terraform with multiple regions, accounts, and clouds?
+- How do you write Terraform code that’s reliable enough for production usage?
+- How do you test your Terraform code?
+- How do you make Terraform a part of your automated deployment process?
+- What are the best practices for using Terraform as a team?
+
+### 
