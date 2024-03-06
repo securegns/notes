@@ -9,6 +9,7 @@ Terraform providers - https://registry.terraform.io/browse/providers
 - terraform fmt
 - terraform validate
 - terraform plan
+- terraform workspace show
 - terraform apply
 - terraform destroy
 - terraform graph - to show dependency graph
@@ -80,7 +81,21 @@ output "instance_ip"{
         value = aws_instance.my-vm.private_ip
 }
 ```
-
+```terraform output public_ip```
+Save the session in the S3 bucket
+```
+terraform {
+ backend "s3" {
+ # Replace this with your bucket name!
+ bucket = "terraform-up-and-running-state"
+ key = "global/s3/terraform.tfstate"
+ region = "us-east-2"
+ # Replace this with your DynamoDB table name!
+ dynamodb_table = "terraform-up-and-running-locks"
+ encrypt = true
+ }
+}
+```
 # Book notes
 ## Terraform. Up and Running 
 - https[://]digtvbg[.]com/files/LINUX/Brikman%20Y.%20Terraform.%20Up%20and%20Running.%20Writing...as%20Code%203ed%202022.pdf
@@ -106,6 +121,7 @@ output "instance_ip"{
         * Server templating tools - ex. Docker, Packer, Vagrant
         * Orchestration tools - ex. K8s 
         * Provisioning tools - ex. Terraform, Cloudformation
+- Dont forget the Don’t Repeat Yourself (DRY) principle
 - Advantages of IaC - Less members can manage infra, Speed and safety, Documentation, Version control, Validation, Reuse,
 - IAC tools - Configuration Management Versus Provisioning, Mutable Infrastructure Versus Immutable Infrastructure, Procedural Language Versus Declarative Language, General-Purpose Language Versus Domain-Specific Language, Master Versus Masterless, Agent vs Agentless
 - Procedural code does not fully capture the state of the infrastructure
@@ -115,4 +131,21 @@ output "instance_ip"{
 - user_data can be used to run commands on a vm while creation
 - user_data_replace_on_change set to true means, if user_data has a change in tf script, the vm gets re-created
 - Terraform graph output is graph description language called DOT which can be made into graphical image using tools
-- 
+- A variable has - description, default, type
+- Type constraints supported - string, number, bool, list, map, set, object, tuple, any
+- If you don’t specify a type, Terraform assumes the type is any.
+- ```validation``` - Can define a custom validation rules
+- ```sensitive``` - Terraform will not log those vars, helpful for passwords/keys
+- Pass a variable                -         terraform plan -var "server_port=8080"
+- Set variable as env var        -         export TF_VAR_server_port=8080
+- If we do not have a default value set to var, it will prompt user to provide value while applying
+- In terraform interpolation is possible with ```${...}```
+- If variable has sensitive set to true, the output var also need to have sensitive set to true to indicate we are intentionally outputing a secret
+- ```depends_on``` useful for depends on another resource managed by terraform
+- We can see outputs with ```terraform output public_ip```
+- Add lifecycle lifecycle ```create_before_destroy = true``` to create update or delete
+- If you set create_before_destroy to true, Terraform will invert the order in which it replaces resources, creating the replacement resource first
+- Challenges with state file - Shared storage for state files, Locking state files, Isolating state files
+- We can apply lock ```-lock-timeout=10m``` will wait for 10 minutes
+- Partial configurations ```terraform init -backend-config=backend.hcl```
+- Terraform workspaces
