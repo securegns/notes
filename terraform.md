@@ -11,6 +11,7 @@ Terraform providers - https://registry.terraform.io/browse/providers
 - terraform plan
 - terraform apply
 - terraform destroy
+- terraform graph - to show dependency graph
 * Skip yes while applying `terraform apply --auto-approve`
 * Import to state - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/rg1```
 * If you have error with already existing resources and need to sync - ```terraform import azurerm_resource_group.rg /subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/1-4f10a454-playground-sandbox```
@@ -113,3 +114,5 @@ output "instance_ip"{
 - Add ```.terraform *.tfstate *.tfstate.backup``` to .gitignore file
 - user_data can be used to run commands on a vm while creation
 - user_data_replace_on_change set to true means, if user_data has a change in tf script, the vm gets re-created
+- Terraform graph output is graph description language called DOT which can be made into graphical image using tools
+- 
