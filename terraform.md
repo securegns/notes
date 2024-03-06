@@ -98,11 +98,18 @@ output "instance_ip"{
 - What are the best practices for using Terraform as a team?
 
 ### Important points
-- Terraform helpful for creating/maintaining reusable infrastructure
+- Terraform helpful for creating/maintaining reusable infrastructure, and also helpful for state configuration of cloud
 - There are five broad categories of IaC tools:
-        - Ad hoc scripts
-        - Configuration management tools
-        - Server templating tools
-        - Orchestration tools
-        - Provisioning tools
-- 
+        * Ad hoc scripts - ex. Powershell, Bash scripts that automate setup
+        * Configuration management tools - ex. Ansible, Chef
+        * Server templating tools - ex. Docker, Packer, Vagrant
+        * Orchestration tools - ex. K8s 
+        * Provisioning tools - ex. Terraform, Cloudformation
+- Advantages of IaC - Less members can manage infra, Speed and safety, Documentation, Version control, Validation, Reuse,
+- IAC tools - Configuration Management Versus Provisioning, Mutable Infrastructure Versus Immutable Infrastructure, Procedural Language Versus Declarative Language, General-Purpose Language Versus Domain-Specific Language, Master Versus Masterless, Agent vs Agentless
+- Procedural code does not fully capture the state of the infrastructure
+- Procedural code limits reusability
+- (+) is to create, (-) is to delete, (~) is to modify a resource
+- Add ```.terraform *.tfstate *.tfstate.backup``` to .gitignore file
+- user_data can be used to run commands on a vm while creation
+- user_data_replace_on_change set to true means, if user_data has a change in tf script, the vm gets re-created
