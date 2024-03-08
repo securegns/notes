@@ -149,3 +149,8 @@ terraform {
 - We can apply lock ```-lock-timeout=10m``` will wait for 10 minutes
 - Partial configurations ```terraform init -backend-config=backend.hcl```
 - Terraform workspaces
+
+### Personal challenges faced
+- Forgetting to update terraform version in the main file
+- Upon initially creating the VM, its IP address does not appear in the output variables. However, after running `terraform apply` a second time, the IP address becomes visible in the output variables.
+- 
