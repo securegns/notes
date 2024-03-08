@@ -153,4 +153,5 @@ terraform {
 ### Personal challenges faced
 - Forgetting to update terraform version in the main file
 - Upon initially creating the VM, its IP address does not appear in the output variables. However, after running `terraform apply` a second time, the IP address becomes visible in the output variables.
-- 
+- I am not able to find a way to put exceptions for any resource
+- If I have a script with n number of resources and I need to deploy only a VM in azure, I need to deploy all the dependency resources including VM
