@@ -158,4 +158,5 @@ terraform {
 - Upon initially creating the VM, its IP address does not appear in the output variables. However, after running `terraform apply` a second time, the IP address becomes visible in the output variables.
 - I am not able to find a way to put exceptions for any resource
 - If I have a script with n number of resources and I need to deploy only a VM in azure, I need to deploy all the dependency resources including VM
+- In Azure, the process of creating a resource through Terraform can be inconsistent because the required parameters for the resource block may vary between needing a name or an ID. This inconsistency can be frustrating since Terraform itself doesn't enforce a uniform method, with the variation instead stemming from the specific requirements of the cloud provider's API.
 - 
