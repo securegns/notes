@@ -21,6 +21,7 @@ Terraform State - We can also save the state remotely in S3/GCP/Blob storages
 - List the state -  ```terraform state list```
 - Remove state - ```terraform state rm```
 - Show state - ```terraform state show```
+- Delete only 1 resource ```terraform destroy -target azurerm_redis_cache.myrediscache```
 
 Skip provider reg if we SPN dont have enough privs to do so
 ```
