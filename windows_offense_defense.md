@@ -6,5 +6,8 @@
 # Important notes
 - WMIC will be depricated, Miscorosft is suggesting to stick witk powershell
 - SANS course material  -  https://blueteampowershell.com
+
 # Powershell for Defense
+
+# Windows security
 MITRE's ATT&CK Matrix for Windows
