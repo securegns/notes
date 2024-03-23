@@ -1,6 +1,8 @@
 # Architect-Associate
 Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf
-
+# Important resources 
+- [AWS Cloud Adoption Framework (AWS CAF)](https://aws.amazon.com/cloud-adoption-framework/)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 ### AWS Well Architected Framework
 - Security Pillar, Reliability Pillar, Performance Efficiency Pillar, Cost Optimization Pillar
 - Framework - https://aws.amazon.com/architecture/well-architected/
