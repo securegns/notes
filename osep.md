@@ -2,6 +2,7 @@
 C#, Sysinternals, Windows Audit logs, 
 
 # Book Notes
+- Our intended target operating system may be 64-bit, however, the software we aim to run shellcode on the victim's machine might be 32-bit. In this case, we'll need to use 32-bit shellcode. 
 ### Windows Registry
 Gui tool  -  Registry Editor (regedit)
 User level  -  HKEY_CURRENT_USER (HKCU)
@@ -26,5 +27,6 @@ function base64ToArrayBuffer(base64)
 }
 ```
 ##### Microsoft office
-
+- Execute shellcode in word memory
+- 
 ##### Powershell
