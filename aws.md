@@ -1,3 +1,7 @@
+# AWS Certified Cloud Practitioner
+- Cheatsheets - https://tutorialsdojo.com/aws-cheat-sheets/
+- Free course from aws - https://pages.awscloud.com/GLOBAL-other-T2-Traincert-Twitch-AWS-Power-Hour-CP-2022.html
+
 # Architect-Associate
 Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf
 # Important resources 
