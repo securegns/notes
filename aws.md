@@ -1,9 +1,11 @@
-# AWS Certified Cloud Practitioner
+# AWS Learning Bookmarks
 - Cheatsheets - https://tutorialsdojo.com/aws-cheat-sheets/
 - Free course from aws - https://pages.awscloud.com/GLOBAL-other-T2-Traincert-Twitch-AWS-Power-Hour-CP-2022.html
+- EKS crash course - https://www.youtube.com/watch?v=IJBHIuURA3g&list=PLLh98oBzdb7YLnm-67RnNIjrD98g1w2js 
 
 # Architect-Associate
 Architect-Associate Exam-Guide - https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf
+
 # Important resources 
 - [AWS Cloud Adoption Framework (AWS CAF)](https://aws.amazon.com/cloud-adoption-framework/)
 - [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
