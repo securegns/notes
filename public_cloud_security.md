@@ -26,3 +26,8 @@ CIS benchmark guide for individual clouds
 Cloud center of excellence (CCoE)
 Mitre ATT&CK Cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 
+### Notes
+- VM Service accounts/Instance Metadata Service (IMDS) - EC2 - Instance profile, Azure - Managed identity, GCP - Service account
+##### EC2
+- Get security group ```curl –s "http://169.254.169.254/latest/meta-data/securitygroups/"```
+-  
