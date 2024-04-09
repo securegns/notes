@@ -19,12 +19,10 @@
 | 17. AWS CloudWatch              | 17. Azure Network Watcher      | 17. GCP Network Intelligence Center |
 | 18. AWS Trusted Advisor         | 18. Azure Advisor              | 18. GCP Recommender              |
 
-# Books
-Practical Cloud Security
 
 # Guides, Guidelines, 
 CSA - Cloud control matrix - https://cloudsecurityalliance.org/research/cloud-controls-matrix/
 CIS benchmark guide for individual clouds
+Cloud center of excellence (CCoE)
+Mitre ATT&CK Cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 
-# Courses
-SANS Public cloud security
