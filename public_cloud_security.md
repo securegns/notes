@@ -40,6 +40,7 @@ $ export AWS_SECRET_ACCESS_KEY="S0M6vF4UmMlfmV5B/bM2lTzocsSWMMHRI"
 $ export AWS_SESSION_TOKEN="IQoJb3JpZjEJ...3QtMSJEQCIykQYitLv8Vg=="
 
 $ aws s3api list-buckets```
+
 ##### Azure 
 - JWT for accessing the storage service ```curl "http://169.254.169.254/metadata/identity/oauth2/token?apiversion=2018-02-01&resource=https://storage.azure.com/" -H "Metadata: true"```
 
