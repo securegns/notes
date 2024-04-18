@@ -17,10 +17,10 @@
 
 # Defense in Depth approach
 - Identity and Access - PIM
-- Perimeter - Azure Firewall
+- Perimeter - Azure Firewall [Application FDQN Filtering, Network Traffic filtering rules, FDQN Tags, Outbound SNAT, Inbound DNAT support, L3-L7 Connectivity policie, seperate firewall subnet, static public IP address, Forced tunnelling], Firewall manager, Firewall policies
 - Network - Vnets, Application security groups, Network security groups, JIT, Route Tables, 
 - Compute - Host secuirty, Container security
-- Application
+- Application - Azure WAF, Azure WAf Policies, 
 - Data - Defender for Cloud/storage/SQL, Azure Information Protection
    
 ### Ninja trainings 
