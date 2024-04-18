@@ -15,6 +15,14 @@
 # Interactive guides
 - Sentinel and how SOC works - https://mslearn.cloudguides.com/guides/Investigate%20security%20incidents%20in%20a%20hybrid%20environment%20with%20Azure%20Sentinel
 
+# Defense in Depth approach
+- Identity and Access - PIM
+- Perimeter - Azure Firewall
+- Network - Vnets, Application security groups, Network security groups, JIT
+- Compute - Host secuirty, Container security
+- Application
+- Data - Defender for Cloud/storage/SQL, Azure Information Protection
+   
 ### Ninja trainings 
 - All Ninja trainings list     -   https://rodtrent.substack.com/p/all-the-microsoft-ninja-training
 - M365 Defender Ninja          -   https://techcommunity.microsoft.com/t5/microsoft-365-defender-blog/become-a-microsoft-365-defender-ninja/ba-p/1789376
