@@ -18,7 +18,7 @@
 # Defense in Depth approach
 - Identity and Access - PIM
 - Perimeter - Azure Firewall
-- Network - Vnets, Application security groups, Network security groups, JIT
+- Network - Vnets, Application security groups, Network security groups, JIT, Route Tables, 
 - Compute - Host secuirty, Container security
 - Application
 - Data - Defender for Cloud/storage/SQL, Azure Information Protection
