@@ -1,0 +1,4 @@
+- Web : OWASP Top 10, Burpsuite academy, 
+- Linux : Network+
+- Networking : Network+
+- API Sec : https://university.apisec.ai/products/api-security-fundamentals
