@@ -2,3 +2,4 @@
 - API Sec : https://university.apisec.ai/products/api-security-fundamentals, 
 - Linux : Network+
 - Networking : Network+
+- C - FreeCodeCamp https://www.youtube.com/watch?v=j-_s8f5K30I and Book - https://www.cc4e.com/book/chap00.md
