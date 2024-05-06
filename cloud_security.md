@@ -1,6 +1,6 @@
 ## Certifications
 - ISC2 CCSP
-- CCSK - Security Guidance for Critical Areas of Focus in Cloud Computing v4.0, Cloud Control Matrix, ENISA’s Cloud Computing Risk Assessment
+- CSA CCSK - Security Guidance for Critical Areas of Focus in Cloud Computing v4.0, Cloud Control Matrix, ENISA’s Cloud Computing Risk Assessment
 - AZ 500, AWS Sec, GCP Sec
 - Microsoft Microsoft Cybersecurity Architect (SC 100) - https://learn.microsoft.com/en-us/credentials/certifications/exams/sc-100/
 
