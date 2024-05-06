@@ -27,6 +27,14 @@ Answer these questions in very deep and using the right cybersecurity vocabulary
 - Expected compromise on CEO laptop, what to do first?
 - Describe your expirence with documenting standard operating procedures? - create white papers or blogs could help
 - How would you trained a new junior staff on technology or process and what are the ways to onboard can be improved?
+- Explain a time when you have a disagreement with your team and how did you handle it? - STAR method
+- How can you contribute to the cybersecurity community - Blogs, Opensource projects etc.
+- Explain the CIA Triad
+- Explain DNS - From browser to loading website what happens
+- What is XSS and how to metigate it
+- OWASP top 10, what would you add something to OWASP top 10?
+- If orginisation has been attacked by a vulnerability or a malware, what would you do?
+- 
 - Exected compromized on a windows or linux box, what to do first?
 - Using OWASP Testing guide
 - Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
