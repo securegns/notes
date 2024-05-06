@@ -3,3 +3,10 @@
 - Discribe your home network and lab
 - Explain OSI model
 - Opensource vs closed source what is more secure?
+- Which security framework is best - based on the role our answer should be constructed - common framewors are COBIT, NSIT SP 800 series, PCI etc.
+- What is the primary goal is for cybersecuirty or information security
+- What is Risk, Threat, Vulnerability
+- Where do you get your security news from? - Darkreading, 
+- Why are preventative controlls better than detective controlls or detective controlls better than preventative controlls
+- Should you compress or encrypt first
+- 
