@@ -21,7 +21,13 @@ Answer these questions in very deep and using the right cybersecurity vocabulary
 - What is SQL injection and how to defend from them?
 - What is SUID/SGID how can it lead to privilege escilations?
 - How can an attackers bypass firewall rules? - SSH port forwarding/SSH tunneling how to do it using commands
-- What is one of the easiest attack vectors attackers can use to gain access to networks? - Phishing, Bruteforce etc.
+- What is one of the easiest attack vectors attackers can use to gain access to networks? - Phishing, Bruteforce etc. also explain how to defend
+- What is Buffer overflow and how to defend it?
+- PASSWD vs SHADOW file in linux?
+- Expected compromise on CEO laptop, what to do first?
+- Describe your expirence with documenting standard operating procedures? - create white papers or blogs could help
+- How would you trained a new junior staff on technology or process and what are the ways to onboard can be improved?
+- Exected compromized on a windows or linux box, what to do first?
 - Using OWASP Testing guide
 - Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
 - 
