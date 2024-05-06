@@ -20,7 +20,8 @@ Answer these questions in very deep and using the right cybersecurity vocabulary
 - What is bruteforce attack and how to defend it
 - What is SQL injection and how to defend from them?
 - What is SUID/SGID how can it lead to privilege escilations?
-- How can an attackers bypass firewall rules? - SSH port forwarding/SSH tunneling 
+- How can an attackers bypass firewall rules? - SSH port forwarding/SSH tunneling how to do it using commands
+- What is one of the easiest attack vectors attackers can use to gain access to networks? - Phishing, Bruteforce etc.
 - Using OWASP Testing guide
 - Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
 - 
