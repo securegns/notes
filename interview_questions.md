@@ -1,4 +1,5 @@
 ### Cybersecurity questions
+Answer these questions in very deep and using the right cybersecurity vocabulary
 - How is encryption different from hashing
 - Discribe your home network and lab
 - Explain OSI model
@@ -9,4 +10,16 @@
 - Where do you get your security news from? - Darkreading, 
 - Why are preventative controlls better than detective controlls or detective controlls better than preventative controlls
 - Should you compress or encrypt first
+- What are some important files in linux file system
+- Different HTTP status codes
+- Vulnerability assessment vs Penetration testing
+- Tools can be used by attackers or good guys for performing VA or PT
+- What is Attack and Mitre framework
+- What are some common attacks you see
+- How would you know if the email is legit?
+- What is bruteforce attack and how to defend it
+- What is SQL injection and how to defend from them?
+- What is SUID/SGID how can it lead to privilege escilations?
+- Using OWASP Testing guide
+- Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
 - 
