@@ -22,8 +22,9 @@ Linux security book - https://linux-training.be/linuxsec.pdf
 - ```$(command)``` to print output of a command in a string ```echo "Files are $(ls)"```
 - ```rm $(ls)``` - Delete all the files from a folder using rm command in the current working dir
 
-###### fd, stdin, stdout, stderr – file descriptor
+###### fd, stdin, stdout, stderr, file descriptors
 - STDIN=0, STDOUT=1, STDERR=2
+- https://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html
 - ```/dev/null``` redirect o/p to this if we dont want to see any output
 - 
 
