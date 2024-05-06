@@ -1,3 +1,9 @@
+- Web : OWASP Top 10, Burpsuite academy web sec
+- API Sec : https://university.apisec.ai/products/api-security-fundamentals, 
+- Linux : Network+
+- Networking : Network+
+- C - FreeCodeCamp https://www.youtube.com/watch?v=j-_s8f5K30I and Book - https://www.cc4e.com/book/chap00.md
+
 ### Cybersecurity questions
 Answer these questions in very deep and using the right cybersecurity vocabulary
 - How is encryption different from hashing
@@ -39,3 +45,5 @@ Answer these questions in very deep and using the right cybersecurity vocabulary
 - Using OWASP Testing guide
 - Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
 - 
+- [NSAs Top Ten Cybersecurity Mitigation Strategies](https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF)
+- [The 18 CIS Critical Security Controls](https://www.cisecurity.org/controls/cis-controls-list)
