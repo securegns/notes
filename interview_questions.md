@@ -44,6 +44,6 @@ Answer these questions in very deep and using the right cybersecurity vocabulary
 - Exected compromized on a windows or linux box, what to do first?
 - Using OWASP Testing guide
 - Explain any of your favorate vulnerability - how it works and how to fix it - Choose some common vulnerability so that even the interviewer is aware of it
-- 
+- Understand cyberkill chain very well
 - [NSAs Top Ten Cybersecurity Mitigation Strategies](https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF)
 - [The 18 CIS Critical Security Controls](https://www.cisecurity.org/controls/cis-controls-list)
