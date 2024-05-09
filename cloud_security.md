@@ -12,7 +12,8 @@
 - Cloud Control Matrix
 - ENISA’s Cloud Computing Risk Assessment
 - CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
-- NIST SP publications - [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final), [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final)
+- NIST SP publications - [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final), [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final), [NIST Cloud Computing
+Reference Architecture](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909505)
 - ISO/IEC Cloud computing Reference architecture - https://www.iso.org/standard/82758.html, https://www.iso.org/standard/82759.html, 
 - ATTCK Mitre cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 - ATTACK Mitre Defend - https://d3fend.mitre.org/
