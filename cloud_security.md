@@ -22,7 +22,11 @@
 - [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final)
 - [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final)
 - [NIST Cloud Computing Reference Architecture](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909505)
-- ISO/IEC Cloud computing Reference architecture - https://www.iso.org/standard/82758.html, https://www.iso.org/standard/82759.html
+###### ISO/IEC 
+- Cloud computing Reference architecture - https://www.iso.org/standard/82758.html
+- https://www.iso.org/standard/82759.html
+- [Code of practice for information security controls based on ISO/IEC 27002 for cloud services](https://www.iso.org/standard/43757.html)
+
 - ATTCK Mitre cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 - ATTACK Mitre Defend - https://d3fend.mitre.org/
 
