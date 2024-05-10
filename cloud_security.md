@@ -8,9 +8,9 @@
 - [OWASP Web Top 10](https://owasp.org/www-project-top-ten/)
 - [OWASP API Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
 - [OWASP Cloud-Native Application Security Top 10](https://owasp.org/www-project-cloud-native-application-security-top-10/)
-- Security Guidance for Critical Areas of Focus in Cloud Computing v4.0
-- Cloud Control Matrix
-- ENISA’s Cloud Computing Risk Assessment
+- [Security Guidance for Critical Areas of Focus in Cloud Computing v4.0](https://cloudsecurityalliance.org/artifacts/security-guidance-v4)
+- [Cloud Control Matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
+- [ENISA’s Cloud Computing Risk Assessment](https://www.enisa.europa.eu/publications/cloud-computing-risk-assessment)
 - CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
 - NIST SP publications - [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final), [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final), [NIST Cloud Computing
 Reference Architecture](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909505)
