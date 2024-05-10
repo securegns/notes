@@ -1,7 +1,7 @@
 ###### Services
 | Service  | AWS | Azure | GCP |
 | -------- | --- | ----- | --- |
-| Keys/secrets | AWS Secrets manager | Keyvault | 
+| Keys/secrets | AWS Secrets manager | Keyvault | Google Cloud Secret Manager |
 
 ###### Access Controls
 - PIM
