@@ -19,7 +19,8 @@
 ###### NIST SP publications 
 - [NIST Cloud Computing Related Publications](https://www.nist.gov/itl/nist-cloud-computing-related-publications)
 - [NIST Cloud Computing 6 Security Reference Architecture](https://csrc.nist.gov/files/pubs/sp/500/299/ipd/docs/NIST_Security_Reference_Architecture_2013.05.15_v1.0.pdf)
-- [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final)
+- [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf)
+- [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final)
 - [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final)
 - [NIST Cloud Computing Reference Architecture](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909505)
 ###### ISO/IEC 
