@@ -1,7 +1,9 @@
 ###### Access Controls
+PIM
+- 
 ###### Virtual networks
 ###### Load balancers
-- Enable HTTPS redirection for application load balancer
+- Enable HTTP to HTTPS redirection using Application load balancer
 ###### Identity
 ###### IaaS Security
 ###### PaaS Security
