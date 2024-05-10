@@ -6,6 +6,8 @@
 ###### Access Controls
 - PIM
 
+###### Data security
+- Identify IPP or PHI information - Amazon Comprihend, Azure - Microsoft Purview, GCP Cloud Data Loss Prevention (DLP)
 ###### Virtual networks
 ###### Load balancers
 - Enable HTTP to HTTPS redirection using Application load balancer
