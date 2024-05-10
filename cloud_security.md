@@ -5,15 +5,17 @@
 - Microsoft Microsoft Cybersecurity Architect (SC 100) - https://learn.microsoft.com/en-us/credentials/certifications/exams/sc-100/
 
 ### Important
+- CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
+###### OWASP
 - [OWASP Web Top 10](https://owasp.org/www-project-top-ten/)
 - [OWASP API Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
 - [OWASP Cloud-Native Application Security Top 10](https://owasp.org/www-project-cloud-native-application-security-top-10/)
+###### Cloud Security Alliance
 - [Security Guidance for Critical Areas of Focus in Cloud Computing v4.0](https://cloudsecurityalliance.org/artifacts/security-guidance-v4)
 - [CSA Enterprise Architecture](https://cloudsecurityalliance.org/research/working-groups/enterprise-architecture#_overview)
 - [Cloud Control Matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
 - [Consensus Assessments Initiative Questionnaire (CAIQ)](https://cloudsecurityalliance.org/research/working-groups/consensus-assessments#_overview)
 - [ENISA’s Cloud Computing Risk Assessment](https://www.enisa.europa.eu/publications/cloud-computing-risk-assessment)
-- CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
 ###### NIST SP publications 
 - [NIST Cloud Computing Related Publications](https://www.nist.gov/itl/nist-cloud-computing-related-publications)
 - [NIST Cloud Computing 6 Security Reference Architecture](https://csrc.nist.gov/files/pubs/sp/500/299/ipd/docs/NIST_Security_Reference_Architecture_2013.05.15_v1.0.pdf)
