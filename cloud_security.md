@@ -37,8 +37,3 @@
 - Practice Exam - CCSP Official practice tests book, CCSP practice exams, Boson questions, Udemy Aris CCSP questions
 - Chetsheet - https://prabhnair.in/2020/12/27/ccspstudyguideprabh/
 
-Cloud Security Models
-- Conceptual models or frameworks - CSA logical model 
-- Controls models or frameworks - CSA CCM
-- Reference architectures - 
-- Design patterns - reusable solutions to particular problems
