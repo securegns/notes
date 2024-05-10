@@ -10,6 +10,7 @@
 - [OWASP Cloud-Native Application Security Top 10](https://owasp.org/www-project-cloud-native-application-security-top-10/)
 - [Security Guidance for Critical Areas of Focus in Cloud Computing v4.0](https://cloudsecurityalliance.org/artifacts/security-guidance-v4)
 - [Cloud Control Matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
+- [Consensus Assessments Initiative Questionnaire (CAIQ)](https://cloudsecurityalliance.org/research/working-groups/consensus-assessments#_overview)
 - [ENISA’s Cloud Computing Risk Assessment](https://www.enisa.europa.eu/publications/cloud-computing-risk-assessment)
 - CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
 - NIST SP publications - [NIST Definition of Cloud Computing](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf), [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final), [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final), [NIST Cloud Computing
