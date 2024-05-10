@@ -27,6 +27,7 @@
 - Cloud computing Reference architecture - https://www.iso.org/standard/82758.html
 - https://www.iso.org/standard/82759.html
 - [Code of practice for information security controls based on ISO/IEC 27002 for cloud services](https://www.iso.org/standard/43757.html)
+- [ISO/IEC 27014:2020 Information security, cybersecurity and privacy protection](https://www.iso.org/standard/74046.html)
 
 - ATTCK Mitre cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 - ATTACK Mitre Defend - https://d3fend.mitre.org/
