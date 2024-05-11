@@ -26,6 +26,7 @@
 - [Cloud Computing Synopsis and Recommendations](https://csrc.nist.gov/pubs/sp/800/146/final)
 - [Guide to Security for Full Virtualization Technologies](https://csrc.nist.gov/pubs/sp/800/125/final)
 - [NIST Cloud Computing Reference Architecture](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909505)
+- [NIST 800-63 - Digital Identity Guidelines](https://pages.nist.gov/800-63-3/)
 
 ###### ISO/IEC 
 - Cloud computing Reference architecture - https://www.iso.org/standard/82758.html
