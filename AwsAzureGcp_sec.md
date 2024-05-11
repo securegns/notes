@@ -8,6 +8,13 @@
 | Data Protection | AWS Key Management Service, Amazon Macie, AWS VPC(ACLs NACLs) |
 | Keys/secrets | AWS Secrets manager, AWS Certificate Manager | Keyvault | Google Cloud Secret Manager |
 
+### Important cloud services
+- Identity
+- Compute
+- Storage
+- Networking
+- Database
+
 ### Identity
 
 ### Storage
