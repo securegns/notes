@@ -29,8 +29,10 @@
 - https://www.iso.org/standard/82759.html
 - [Code of practice for information security controls based on ISO/IEC 27002 for cloud services](https://www.iso.org/standard/43757.html)
 - [ISO/IEC 27014:2020 Information security, cybersecurity and privacy protection](https://www.iso.org/standard/74046.html)
-- [Security management systems for the supply chain](https://www.iso.org/standard/45654.html) - less important but useful
+- [Security management systems for the supply chain](https://www.iso.org/standard/45654.html)
 - [Information security for Supplier relationships](https://www.iso.org/search.html?PROD_isoorg_en%5Bquery%5D=27036)
+
+###### Frameworks etc.
 - ATTCK Mitre cloud matrix - https://attack.mitre.org/matrices/enterprise/cloud/
 - ATTACK Mitre Defend - https://d3fend.mitre.org/
 
