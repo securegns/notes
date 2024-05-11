@@ -24,5 +24,7 @@
 
 ###### Important documents/whitepapers/talks
 
-- AWS [AWS RE:Inforce The fundamentels of cloud security](https://www.youtube.com/watch?v=-ObImxw1PmI)
+AWS 
+- [AWS RE:Inforce The fundamentels of cloud security](https://www.youtube.com/watch?v=-ObImxw1PmI)
+- [AWS Summit DC 2021: Security best practices, common mistakes, and solutions](https://www.youtube.com/watch?v=tmuClE3nWlk)
 
