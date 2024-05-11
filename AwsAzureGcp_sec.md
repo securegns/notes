@@ -8,6 +8,12 @@
 | Data Protection | AWS Key Management Service, Amazon Macie, AWS VPC(ACLs NACLs) |
 | Keys/secrets | AWS Secrets manager, AWS Certificate Manager | Keyvault | Google Cloud Secret Manager |
 
+###### Storage
+Access tiers 
+- AWS
+- Azure
+- GCP
+  
 ###### Access Controls
 - PIM
 
