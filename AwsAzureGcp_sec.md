@@ -8,27 +8,28 @@
 | Data Protection | AWS Key Management Service, Amazon Macie, AWS VPC(ACLs NACLs) |
 | Keys/secrets | AWS Secrets manager, AWS Certificate Manager | Keyvault | Google Cloud Secret Manager |
 
-###### Storage
+### Identity
+
+### Storage
 Access tiers 
 - AWS
 - Azure
 - GCP
   
-###### Access Controls
+### Access Controls
 - PIM
 
-###### Data security
+### Data security
 - Identify IIP or PHI information - Amazon Comprihend, Azure - Microsoft Purview, GCP Cloud Data Loss Prevention (DLP)
-###### Virtual networks
-###### Load balancers
+### Virtual networks
+### Load balancers
 - Enable HTTP to HTTPS redirection using Application load balancer
-###### Identity
-###### IaaS Security
-###### PaaS Security
-###### FaaS security
-###### Defence in depth
+### IaaS Security
+### PaaS Security
+### FaaS security
+### Defence in depth
 
-###### Important documents/whitepapers/talks
+### Important documents/whitepapers/talks
 
 AWS 
 - [AWS RE:Inforce The fundamentels of cloud security](https://www.youtube.com/watch?v=-ObImxw1PmI)
