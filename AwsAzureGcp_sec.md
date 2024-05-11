@@ -21,3 +21,8 @@
 ###### PaaS Security
 ###### FaaS security
 ###### Defence in depth
+
+###### Important documents/whitepapers/talks
+
+- AWS [AWS RE:Inforce The fundamentels of cloud security](https://www.youtube.com/watch?v=-ObImxw1PmI)
+
