@@ -11,6 +11,7 @@
 - [OWASP API Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
 - [OWASP Cloud-Native Application Security Top 10](https://owasp.org/www-project-cloud-native-application-security-top-10/)
 ###### Cloud Security Alliance
+- [SecaaS guide](https://cloudsecurityalliance.org/research/artifacts?term=security-as-a-service)
 - [Security Guidance for Critical Areas of Focus in Cloud Computing v4.0](https://cloudsecurityalliance.org/artifacts/security-guidance-v4)
 - [CSA Enterprise Architecture](https://cloudsecurityalliance.org/research/working-groups/enterprise-architecture#_overview)
 - [Cloud Control Matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
