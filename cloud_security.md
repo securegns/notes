@@ -10,6 +10,7 @@
 - [OWASP Web Top 10](https://owasp.org/www-project-top-ten/)
 - [OWASP API Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
 - [OWASP Cloud-Native Application Security Top 10](https://owasp.org/www-project-cloud-native-application-security-top-10/)
+- [OWASP Cheatsheet series](https://cheatsheetseries.owasp.org/cheatsheets/)
 
 ###### Cloud Security Alliance
 - [SecaaS guide](https://cloudsecurityalliance.org/research/artifacts?term=security-as-a-service)
