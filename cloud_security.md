@@ -6,7 +6,7 @@
 
 ### Important
 - CIS Benchmarks for Azure, AWS, GCP - https://downloads.cisecurity.org
-- [NICCS Workforce Framework for Cybersecurity (NICE Framework)](https://niccs.cisa.gov/workforce-development/nice-framework)
+- NICCS [Workforce Framework for Cybersecurity (NICE Framework)](https://niccs.cisa.gov/workforce-development/nice-framework)
 ###### OWASP
 - [OWASP Web Top 10](https://owasp.org/www-project-top-ten/)
 - [OWASP API Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
