@@ -37,7 +37,7 @@
 - [ISO/IEC 27014:2020 Information security, cybersecurity and privacy protection](https://www.iso.org/standard/74046.html)
 - [Security management systems for the supply chain](https://www.iso.org/standard/45654.html)
 - [Information security for Supplier relationships](https://www.iso.org/search.html?PROD_isoorg_en%5Bquery%5D=27036)
-- [Application security - 27034](https://www.iso.org/search.html?PROD_isoorg_en%5Bquery%5D=27034)
+- [Application security - 27034](https://www.iso.org/standard/44378.html)
 
 ###### SANS
 - [CWE TOP 25 Most Dangerous Software Errors](https://www.sans.org/top25-software-errors/)
