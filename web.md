@@ -4,7 +4,7 @@
 
 # Imp info links
 - OWASP Top 10
-- 
+- [Portswigger learn list of vulns](https://portswigger.net/web-security/all-materials)
 
 # LABS
 - [DVWA (Damn Vulnerable Web Application)](https://www.attackdefense.com/challengedetails?cid=34) - Free DVWA
