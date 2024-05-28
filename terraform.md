@@ -161,3 +161,4 @@ terraform {
 - In Azure, the process of creating a resource through Terraform can be inconsistent because the required parameters for the resource block may vary between needing a name or an ID. This inconsistency can be frustrating since Terraform itself doesn't enforce a uniform method, with the variation instead stemming from the specific requirements of the cloud provider's API.
 - If secrets do not have keyvault depends on, the kv is deleted first, then the terraform throws error that can not delete secrets 
 - Sometimes we add some data part(JSON?XML etc), and then perform terraform apply, says nothing changed.
+- I deployed 1 k8s with 2 nodes, 1 with GPU and 1 without GPU. As GPU instances were not avaialible, it deployed the EKS +1 non gpu node and exited the script with error.
