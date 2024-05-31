@@ -7,6 +7,7 @@
 | Identity and Access Management | AWS IAM |
 | Data Protection | AWS Key Management Service, Amazon Macie, AWS VPC(ACLs NACLs) |
 | Keys/secrets | AWS Secrets manager, AWS Certificate Manager | Keyvault | Google Cloud Secret Manager |
+| Firewall | Azure Firewall | 
 
 ### Important cloud services
 - Identity
@@ -33,6 +34,7 @@ Access tiers
 - Enable HTTP to HTTPS redirection using Application load balancer
 ### IaaS Security
 ### PaaS Security
+- Attach a .pfx cdrt to AppService or LoadBalancer
 ### FaaS security
 ### Defence in depth
 
