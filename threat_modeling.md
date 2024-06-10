@@ -36,3 +36,34 @@ Trust boundaries - Adding boundaries to show who controls what is a simple way t
 ### TRUST BOUNDARY vs. ATTACK SURFACE
 The Trust boundry is where the permissions change to perform any actions, Attack surface is all the points where an attacker can try to enter or extract data from a system
 
+### What Can Go Wrong
+- Use methodologies like STRIDE CIA DRAID
+
+### STRIDE
+- Spoofing
+- Tampering
+- Repudiation
+- Information Disclosure
+- Denial of Service
+- Elevation of Privilege
+
+### Tips for Identifying Threats
+- Start with external entities
+- Never ignore a threat because it’s not what you’re looking for right now - Redundancy in what you fi nd can be tedious, but it helps you avoid missing things.
+- Focus on feasible threats - Prioritizing more likely and actionable risks over less probable scenarios 
+
+### Addressing Each Threat
+- Mitigating threats
+- Eliminating threats - Transferring threats, Accepting the risk
+
+### Addressing Spoofing
+Here is the information formatted into a Markdown table for GitHub notes:
+
+```markdown
+| THREAT                  | TARGET                                    | MITIGATION STRATEGY                    | MITIGATION TECHNIQUE                                                      |
+|-------------------------|-------------------------------------------|----------------------------------------|---------------------------------------------------------------------------|
+| Spoofing a person       | Identification and authentication         | Usernames, real names, or other identifiers | - Passwords<br>- Tokens<br>- Biometrics<br>- Enrollment/maintenance/expiry   |
+| Spoofing a “file” on disk | Leverage the OS                          | Full paths<br>Checking ACLs<br>Ensuring that pipes are created properly | Cryptographic authenticators<br>Digital signatures or authenticators      |
+| Spoofing a network address | Cryptographic                          | - DNSSEC<br>- HTTPS/SSL<br>- IPsec                                             |
+| Spoofing a program in memory | Leverage the OS                      | Many modern operating systems have some form of application identifier that the OS will enforce |
+```
