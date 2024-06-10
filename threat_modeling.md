@@ -61,5 +61,6 @@ The Trust boundry is where the permissions change to perform any actions, Attack
 |-------------------------|-------------------------------------------|----------------------------------------|---------------------------------------------------------------------------|
 | Spoofing a person       | Identification and authentication         | Usernames, real names, or other identifiers | - Passwords<br>- Tokens<br>- Biometrics<br>- Enrollment/maintenance/expiry   |
 | Spoofing a “file” on disk | Leverage the OS                          | Full paths<br>Checking ACLs<br>Ensuring that pipes are created properly | Cryptographic authenticators<br>Digital signatures or authenticators      |
-| Spoofing a network address | Cryptographic                          | - DNSSEC<br>- HTTPS/SSL<br>- IPsec                                             |
+|  | Cryptographic authenticators | Digital signatures or authenticators |
+| Spoofing a network address | Cryptographic                          | - DNSSEC<br>- HTTPS/SSL<br>- IPsec  |
 | Spoofing a program in memory | Leverage the OS                      | Many modern operating systems have some form of application identifier that the OS will enforce |
