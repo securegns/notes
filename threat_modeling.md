@@ -58,7 +58,7 @@ The Trust boundry is where the permissions change to perform any actions, Attack
 
 ### Addressing Spoofing
 | THREAT TARGET                                    | MITIGATION STRATEGY                    | MITIGATION TECHNIQUE                                                      |
-|-------------------------|-------------------------------------------|----------------------------------------|---------------------------------------------------------------------------|
+|-------------------------------|----------------------------------------|---------------------------------------------------------------------------|
 | Spoofing a person - Identification and authentication         | Usernames, real names, or other identifiers | - Passwords<br>- Tokens<br>- Biometrics<br>- Enrollment/maintenance/expiry   |
 | Spoofing a “file” on disk | Leverage the OS - Full paths<br>Checking ACLs<br>Ensuring that pipes are created properly | Cryptographic authenticators<br>Digital signatures or authenticators      |
 |  | Cryptographic authenticators | Digital signatures or authenticators |
