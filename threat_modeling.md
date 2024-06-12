@@ -150,6 +150,7 @@ The Trust boundry is where the permissions change to perform any actions, Attack
 - Are my security tests in line with the other software tests and the sorts of risks that failures expose?
 
 ## Checklists for Diving In and Threat Modeling
+##### Diagramming
 1. Can we tell a story without changing the diagram?
 2. Can we tell that story without using words such as “sometimes” or “also”?
 3. Can we look at the diagram and see exactly where the software will make a security decision?
@@ -161,4 +162,9 @@ The Trust boundry is where the permissions change to perform any actions, Attack
 1. Have we looked for each of the STRIDE threats?
 2. Have we looked at each element of the diagram?
 3. Have we looked at each data flow in the diagram?
+##### Validating Threats
+1. Have we written down or fi led a bug for each threat?
+2. Is there a proposed/planned/implemented way to address each threat?
+3. Do we have a test case per threat?
+4. Has the software passed the test?
 
