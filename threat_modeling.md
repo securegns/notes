@@ -2,11 +2,13 @@ Book - Threat Modeling: Designing for Security - Book by Adam Shostack
 
 Threat modeling is all about making more secure software
 
+
 ### Reasons to Threat Model
 - Find Security Bugs Early
 - Understand Your Security Requirements
 - Engineer and Deliver Better Products
 - Address Issues Other Techniques Won’t
+- The earlier you find problems, the easier it is to fix them
 
 ### The Four-Step Framework
 1. What are you building?
