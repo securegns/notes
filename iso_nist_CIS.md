@@ -10,3 +10,9 @@ ISMS - Information Security Management System
 
 - Our security objectives should be aligned with security objectives
 
+# NIST CSF
+- NIST FAQ - https://www.nist.gov/cyberframework/faqs
+- Framework catagories breakdown - https://csrc.nist.gov/Projects/cybersecurity-framework/Filters#/csf/filters
+- NIST implementation examples - https://www.nist.gov/system/files/documents/2024/02/21/CSF%202.0%20Implementation%20Examples.pdf
+- Small Business Quick-Start Guide Overview - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1300.pdf
+- 
