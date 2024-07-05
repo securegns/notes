@@ -11,8 +11,8 @@
 - Purview, Priva, 
 
 # CIS benchmark
-[How to Enforce CIS Benchmark policies using Azure Blueprints](https://www.youtube.com/watch?v=FS874tASMTw)
-[CIS Benchmark PDF](https://www.csiltd.co.uk/wp-content/uploads/2021/12/CIS_Microsoft_Azure_Foundations_Benchmark_v1.4.0.pdf)
+- [How to Enforce CIS Benchmark policies using Azure Blueprints](https://www.youtube.com/watch?v=FS874tASMTw)
+- [CIS Benchmark PDF](https://www.csiltd.co.uk/wp-content/uploads/2021/12/CIS_Microsoft_Azure_Foundations_Benchmark_v1.4.0.pdf)
 
 
 # Interactive guides
@@ -33,7 +33,13 @@
 - 
 
 ### KQL notes
-- KQL is a read only language
 - Practice KQL in azure demo env - https://dataexplorer.azure.com/clusters/help/databases/SecurityLogs
 - Must learn KQL blog - https://github.com/rod-trent/MustLearnKQL
+- 
+### Notes
+- Stateful firewall is VNETs and for stateless firewall, we need to use Azure Firewall
+- Types of Azure logs - Activity logs(control-plane), Metrics, 
+
+### Things to try
+- Upload a reverse shell to storage account, download the file in a windows that has defender for endpoint connected and check for alert. Use the file hash to scan whole orginisation using microsoft sentinel
 - 
