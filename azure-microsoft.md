@@ -12,7 +12,7 @@
 
 # CIS benchmark
 [How to Enforce CIS Benchmark policies using Azure Blueprints](https://www.youtube.com/watch?v=FS874tASMTw)
-- Benchmark PDF - https://www.csiltd.co.uk/wp-content/uploads/2021/12/CIS_Microsoft_Azure_Foundations_Benchmark_v1.4.0.pdf
+[CIS Benchmark PDF](https://www.csiltd.co.uk/wp-content/uploads/2021/12/CIS_Microsoft_Azure_Foundations_Benchmark_v1.4.0.pdf)
 
 
 # Interactive guides
