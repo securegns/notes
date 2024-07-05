@@ -1,6 +1,7 @@
 # Imp Links
 - New security improvements from microsoft  -  https://www.microsoft.com/en-us/security/blog/2023/01/23/microsoft-security-innovations-from-2022-to-help-you-create-a-safer-world-today/
 - Log analytics workspace demo - https://aka.ms/lademo
+- Microsoft graph explorer demo - https://developer.microsoft.com/graph/graph-explorer 
 - [Microsoft Cybersecurity Reference Architectures](https://learn.microsoft.com/en-gb/security/adoption/mcra)
 - [Microsoft Security Adoption Framework (SAF)](https://learn.microsoft.com/en-us/security/adoption/adoption)
 
