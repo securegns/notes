@@ -42,4 +42,7 @@
 
 ### Things to try
 - Upload a reverse shell to storage account, download the file in a windows that has defender for endpoint connected and check for alert. Use the file hash to scan whole orginisation using microsoft sentinel
+- Quarintine files in multiple devices
+- Phishing email with some malware attachment
+- Reverse shell in macros and generate alert in Protection.office.com
 - 
