@@ -45,4 +45,7 @@
 - Quarintine files in multiple devices
 - Phishing email with some malware attachment
 - Reverse shell in macros and generate alert in Protection.office.com
+- Sync on-prem ad and perform a DC sync or user impersonation attack
+- Without on-prem ad sync, perform DC sync or user impersonation attack and check Defender for endpoint
+- Azure advanced threat protection sensor test it out
 - 
