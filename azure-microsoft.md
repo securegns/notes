@@ -48,4 +48,4 @@
 - Sync on-prem ad and perform a DC sync or user impersonation attack
 - Without on-prem ad sync, perform DC sync or user impersonation attack and check Defender for endpoint
 - Azure advanced threat protection sensor test it out
-- 
+- https://securitycopilot.microsoft.com
