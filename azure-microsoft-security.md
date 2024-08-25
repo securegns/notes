@@ -30,7 +30,7 @@
 - All Ninja trainings list     -   https://rodtrent.substack.com/p/all-the-microsoft-ninja-training
 - M365 Defender Ninja          -   https://techcommunity.microsoft.com/t5/microsoft-365-defender-blog/become-a-microsoft-365-defender-ninja/ba-p/1789376
 - Microsoft Sentinel ninja     -   https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/become-a-microsoft-sentinel-ninja-the-complete-level-400/ba-p/1246310
-- 
+- Microsoft Defender Threat Intelligence (MDTI)   -   https://techcommunity.microsoft.com/t5/microsoft-defender-threat/become-an-mdti-ninja-the-complete-level-400-training/ba-p/3656965
 
 ### KQL notes
 - Practice KQL in azure demo env - https://dataexplorer.azure.com/clusters/help/databases/SecurityLogs
