@@ -16,10 +16,11 @@ With limited amount of time and budget, risk management can be helpful for prior
         - Threat modeling is a way to identify threats - STRIDE, PASTA and DREAD are important. STRIDE can be used to identify threats and DREAD used for prioritizing threats
         - Qualitative and Quantative analysis for ranking 
 4. Risk treatment
-    - Avoid(prevent), Transfer(Insurance), Mitigate(Implementing controls) and Accept
+    - Avoid(prevent), Transfer(Insurance), Mitigate(Implementing controls) and Accept(Owners can accept risk)
     - Residual risk - Risk left over after controls applied
     - Types of controls - 
-    - 2 catagorizations of controls - Safegures(controls so risk dont occure) and Countermeasures()
+    - 2 catagorizations of controls - **Safegures**(controls so risk dont occure) and **Countermeasures**()
+    - All controls are supported by **Functional**(Function a control ment to do) and **Assurance**(Assurance of a control ex. firewall assurance can be determined by logs)
 #### Qualitative and Quantative analysis
 ###### Quantative 
 - Exactly how much a risk is going to cost us per year
@@ -28,5 +29,9 @@ With limited amount of time and budget, risk management can be helpful for prior
 
 ###### Qualitative
 - A relative ranking system
-  
+
+### Frameworks for Risk management
+##### NIST RMF (800-37) 7 steps
+1. Prepare to execute RMF
+2. ...
 ### Risk management documents
