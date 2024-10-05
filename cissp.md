@@ -31,7 +31,9 @@ With limited amount of time and budget, risk management can be helpful for prior
 - A relative ranking system
 
 ### Frameworks for Risk management
-##### NIST RMF (800-37) 7 steps
-1. Prepare to execute RMF
-2. ...
+1. NIST RMF (800-37) 7 steps
+2. ISACA Risk IT
+3. ISO 31000
+4. COSO
+
 ### Risk management documents
