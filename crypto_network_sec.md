@@ -2,6 +2,7 @@
 
 # Network security
 ### VPN
+- VPN offers - Confidentiality, Authentication, Message Intigrity
 - A vpn extends a private network across public network and enables users to send and receive data across the shared network
 - A VPN extends corporate network while providing encrypted connections over internet
 - 2 types
@@ -11,8 +12,6 @@
 DTE DCE and PPP
 
 CHAP authentication
-
-VPN offers - Confidentiality, Authentication, Message Intigrity
 
 VPN tunnels types
 - PPTP - Point to point tunneling protocol (PPTP) - TCP 1723, uses MPPE encryption
