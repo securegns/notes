@@ -5,6 +5,9 @@
 # Risk management
 With limited amount of time and budget, risk management can be helpful for priortizing security efforts and allocate resources effectively. Identification, Assessment and prioritization risks.
 
+Assets are 2 types 
+- Tangable - Can be seen, touched and felt, ex. physical servers 
+- Intangible - Cannot be seen or touched, ex. Reputation, data
 ### Three major steps
 1. Asset valuation
     - Figure out each how valuable each asset of an orginisation is
