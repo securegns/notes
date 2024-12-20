@@ -1,4 +1,4 @@
-3 linux VMs in a vnet in Azure, username gns, pasword Password"123
+3 linux VMs in a vnet in Azure, username gns, pasword Password@123
 ```
 terraform {
   required_version = ">= 1.0.0"
