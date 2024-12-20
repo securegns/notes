@@ -1,4 +1,4 @@
-3 linux VMs in a vnet in Azure 
+3 linux VMs in a vnet in Azure, username gns, pasword Password"123
 ```
 terraform {
   required_version = ">= 1.0.0"
@@ -12,11 +12,12 @@ terraform {
 
 provider "azurerm" {
   features {}
-  skip_provider_registration = "true"
+  skip_provider_registration = true
 }
 
 variable "resource_group_name" {
   type        = string
+  default     = "1-88cca038-playground-sandbox"
   description = "The name of the existing resource group."
 }
 
@@ -79,15 +80,17 @@ resource "azurerm_subnet_network_security_group_association" "subnet_assoc" {
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_public_ip" "pubip_vm1" {
-  name                = "vm1PublicIP"
+resource "azurerm_public_ip" "pubip" {
+  count               = 3
+  name                = "vm${count.index + 1}PublicIP"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   allocation_method   = "Static"
 }
 
-resource "azurerm_network_interface" "nic_vm1" {
-  name                = "vm1NIC"
+resource "azurerm_network_interface" "nic" {
+  count               = 3
+  name                = "vm${count.index + 1}NIC"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -95,110 +98,33 @@ resource "azurerm_network_interface" "nic_vm1" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pubip_vm1.id
+    public_ip_address_id          = azurerm_public_ip.pubip[count.index].id
   }
 }
 
-resource "azurerm_public_ip" "pubip_vm2" {
-  name                = "vm2PublicIP"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "nic_vm2" {
-  name                = "vm2NIC"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pubip_vm2.id
-  }
-}
-
-resource "azurerm_public_ip" "pubip_vm3" {
-  name                = "vm3PublicIP"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "nic_vm3" {
-  name                = "vm3NIC"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pubip_vm3.id
-  }
-}
-
-resource "azurerm_linux_virtual_machine" "vm1" {
-  name                = "myVM1"
+resource "azurerm_linux_virtual_machine" "vm" {
+  count               = 3
+  name                = "myVM${count.index + 1}"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   network_interface_ids = [
-    azurerm_network_interface.nic_vm1.id
+    azurerm_network_interface.nic[count.index].id
   ]
-  size                = var.vm_size
-  admin_username      = "adminuser"
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  }
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20_04-lts"
-    version   = "latest"
-  }
-}
+  size                               = var.vm_size
+  admin_username                     = "gns"
+  admin_password                     = "Password@123"
+  disable_password_authentication     = false
 
-resource "azurerm_linux_virtual_machine" "vm2" {
-  name                = "myVM2"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  network_interface_ids = [
-    azurerm_network_interface.nic_vm2.id
-  ]
-  size                = var.vm_size
-  admin_username      = "adminuser"
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  }
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
+    offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts"
     version   = "latest"
   }
-}
 
-resource "azurerm_linux_virtual_machine" "vm3" {
-  name                = "myVM3"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  network_interface_ids = [
-    azurerm_network_interface.nic_vm3.id
-  ]
-  size                = var.vm_size
-  admin_username      = "adminuser"
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  }
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20_04-lts"
-    version   = "latest"
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
   }
 }
 ```
