@@ -127,4 +127,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Standard_LRS"
   }
 }
+
+output "vm_public_ips" {
+  description = "The public IP addresses of the VMs"
+  value       = [for ip in azurerm_public_ip.pubip : ip.ip_address]
+}
+
 ```
