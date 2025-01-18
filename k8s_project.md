@@ -78,7 +78,7 @@ echo "4. 'uat' has no netpol => open to/from dev and prod."
 echo
 echo "Done! dev <-> prod are now blocked, dev <-> uat and prod <-> uat remain open."
 ```
-# Istio
+# mTLS with Istio 
 ```
 kubectl create namespace dev
 kubectl create namespace uat
