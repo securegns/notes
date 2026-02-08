@@ -1,52 +1,56 @@
-================================================================================
-           ELASTIC CERTIFIED ENGINEER EXAM PREPARATION GUIDE
-                    COMPREHENSIVE STUDY MATERIAL
-================================================================================
+# Elastic Certified Engineer Exam Preparation Guide
+## Comprehensive Study Material
 
-EXAM OVERVIEW
-================================================================================
-- Exam Name: Elastic Certified Engineer
-- Duration: 3 hours
-- Format: Hands-on, performance-based exam
-- Environment: Live Elasticsearch cluster
-- Passing Score: Not publicly disclosed
-- Prerequisites: None (but 6-12 months hands-on experience recommended)
-- Certification Validity: 2 years
-- Exam Version: Based on Elasticsearch 8.x
+---
 
-================================================================================
-                         OFFICIAL EXAM TOPICS
-================================================================================
+## 📋 Exam Overview
+
+| Detail | Information |
+|--------|-------------|
+| **Exam Name** | Elastic Certified Engineer |
+| **Duration** | 3 hours |
+| **Format** | Hands-on, performance-based exam |
+| **Environment** | Live Elasticsearch cluster |
+| **Passing Score** | Not publicly disclosed |
+| **Prerequisites** | None (but 6-12 months hands-on experience recommended) |
+| **Certification Validity** | 2 years |
+| **Exam Version** | Based on Elasticsearch 8.x |
+
+---
+
+## 📚 Official Exam Topics
 
 The exam covers the following major domains:
-1. Data Management
-2. Searching Data
-3. Developing Search Applications
-4. Data Processing
-5. Cluster Management
 
-================================================================================
-DOMAIN 1: DATA MANAGEMENT (20-25% of exam)
-================================================================================
+1. **Data Management** (20-25%)
+2. **Searching Data** (35-40%)
+3. **Developing Search Applications** (15-20%)
+4. **Data Processing** (15-20%)
+5. **Cluster Management** (15-20%)
 
-1.1 INDEXING DOCUMENTS
-------------------------------------------------------------------------------
-Topics:
+---
+
+# Domain 1: Data Management (20-25% of exam)
+
+## 1.1 Indexing Documents
+
+### Topics
 - Index a document using the Index API
 - Update a document using the Update API
 - Delete a document using the Delete API
 - Bulk indexing using the Bulk API
 - Reindex documents using the Reindex API
 
-Key Concepts:
-• Document structure (JSON format)
-• _id field (auto-generated vs custom)
-• Versioning and optimistic concurrency control
-• op_type parameter (index vs create)
-• Routing documents to specific shards
+### Key Concepts
+- Document structure (JSON format)
+- `_id` field (auto-generated vs custom)
+- Versioning and optimistic concurrency control
+- `op_type` parameter (index vs create)
+- Routing documents to specific shards
 
-Commands to Master:
-```
+### Commands to Master
+
+```json
 PUT /<index>/_doc/<_id>
 POST /<index>/_doc
 POST /<index>/_update/<_id>
@@ -55,8 +59,9 @@ POST /_bulk
 POST /_reindex
 ```
 
-Bulk API Format:
-```
+### Bulk API Format
+
+```json
 { "index": { "_index": "test", "_id": "1" } }
 { "field1": "value1" }
 { "delete": { "_index": "test", "_id": "2" } }
@@ -66,19 +71,20 @@ Bulk API Format:
 { "doc": { "field2": "value2" } }
 ```
 
-Reindex API Options:
-- source.index
-- source.query (filter documents)
-- dest.index
-- dest.op_type
-- dest.pipeline
-- script (inline transformations)
-- conflicts: proceed/abort
-- size (limit documents)
-- slice (parallel reindexing)
+### Reindex API Options
+- `source.index`
+- `source.query` (filter documents)
+- `dest.index`
+- `dest.op_type`
+- `dest.pipeline`
+- `script` (inline transformations)
+- `conflicts`: proceed/abort
+- `size` (limit documents)
+- `slice` (parallel reindexing)
 
-Update by Query API (EXAM CRITICAL):
-```
+### Update by Query API (⚠️ EXAM CRITICAL)
+
+```json
 POST my-index/_update_by_query
 {
   "query": {
@@ -89,8 +95,11 @@ POST my-index/_update_by_query
     "params": { "now": "2024-01-15" }
   }
 }
+```
 
-// With conflicts handling and slicing for performance
+With conflicts handling and slicing for performance:
+
+```json
 POST my-index/_update_by_query?conflicts=proceed&scroll_size=1000&slices=auto
 {
   "query": { "match_all": {} },
@@ -98,8 +107,9 @@ POST my-index/_update_by_query?conflicts=proceed&scroll_size=1000&slices=auto
 }
 ```
 
-Delete by Query API (EXAM CRITICAL):
-```
+### Delete by Query API (⚠️ EXAM CRITICAL)
+
+```json
 POST my-index/_delete_by_query
 {
   "query": {
@@ -108,18 +118,22 @@ POST my-index/_delete_by_query
     }
   }
 }
+```
 
-// Async delete with conflicts handling
+Async delete with conflicts handling:
+
+```json
 POST my-index/_delete_by_query?conflicts=proceed&wait_for_completion=false
 {
   "query": { "term": { "status": "deleted" } }
 }
 ```
 
-------------------------------------------------------------------------------
-1.2 DEFINING INDEX MAPPINGS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 1.2 Defining Index Mappings
+
+### Topics
 - Define an explicit mapping for an index
 - Define a dynamic template
 - Define a custom analyzer
@@ -127,69 +141,79 @@ Topics:
 - Configure field data types
 - Use mapping parameters
 
-Core Data Types:
-• text - Full-text searchable content
-• keyword - Exact value matching, aggregations, sorting
-• long, integer, short, byte - Numeric (integer)
-• double, float, half_float, scaled_float - Numeric (floating point)
-• date - Date/time values
-• boolean - true/false
-• ip - IPv4 and IPv6 addresses
-• geo_point - Latitude/longitude pairs
-• geo_shape - Complex geographic shapes
-• object - JSON object (flattened)
-• nested - Array of objects (preserved relationships)
-• flattened - Entire JSON object as single field
-• join - Parent/child relationships
-• binary - Base64-encoded binary
-• range - Integer, float, long, double, date, ip ranges
-• completion - Autocomplete suggestions
-• search_as_you_type - Prefix/infix search
-• token_count - Count of tokens
-• dense_vector - Dense vectors for ML
-• sparse_vector - Sparse vectors
-• rank_feature - Numeric feature for ranking
-• rank_features - Multiple ranking features
-• alias - Alternative name for a field
-• histogram - Pre-aggregated histogram
+### Core Data Types
 
-Mapping Parameters:
-• analyzer - Specifies the analyzer for text fields
-• search_analyzer - Analyzer used at search time
-• normalizer - Normalizer for keyword fields
-• boost - Field-level query boost (deprecated in 8.x)
-• coerce - Attempt to clean up values
-• copy_to - Copy field values to another field
-• doc_values - Enable/disable doc values (default: true)
-• dynamic - Control dynamic field mapping
-• eager_global_ordinals - Pre-load global ordinals
-• enabled - Enable/disable field indexing
-• fielddata - Enable fielddata for text fields
-• fields - Multi-fields definition
-• format - Date format specification
-• ignore_above - Ignore strings above length
-• ignore_malformed - Ignore malformed values
-• index - Enable/disable indexing
-• index_options - What info to store in index
-• index_phrases - Index 2-shingles for phrase queries
-• index_prefixes - Index prefixes for prefix queries
-• meta - Metadata about the field
-• norms - Enable/disable norms (length normalization)
-• null_value - Replace null with specified value
-• position_increment_gap - Gap between array elements
-• properties - Sub-fields for object/nested
-• similarity - Scoring algorithm
-• store - Store original field value
-• term_vector - Store term vectors
+| Type | Description |
+|------|-------------|
+| `text` | Full-text searchable content |
+| `keyword` | Exact value matching, aggregations, sorting |
+| `long`, `integer`, `short`, `byte` | Numeric (integer) |
+| `double`, `float`, `half_float`, `scaled_float` | Numeric (floating point) |
+| `date` | Date/time values |
+| `boolean` | true/false |
+| `ip` | IPv4 and IPv6 addresses |
+| `geo_point` | Latitude/longitude pairs |
+| `geo_shape` | Complex geographic shapes |
+| `object` | JSON object (flattened) |
+| `nested` | Array of objects (preserved relationships) |
+| `flattened` | Entire JSON object as single field |
+| `join` | Parent/child relationships |
+| `binary` | Base64-encoded binary |
+| `range` | Integer, float, long, double, date, ip ranges |
+| `completion` | Autocomplete suggestions |
+| `search_as_you_type` | Prefix/infix search |
+| `token_count` | Count of tokens |
+| `dense_vector` | Dense vectors for ML |
+| `sparse_vector` | Sparse vectors |
+| `rank_feature` | Numeric feature for ranking |
+| `rank_features` | Multiple ranking features |
+| `alias` | Alternative name for a field |
+| `histogram` | Pre-aggregated histogram |
 
-Dynamic Mapping:
-- dynamic: true (default) - New fields auto-mapped
-- dynamic: false - New fields ignored (still in _source)
-- dynamic: strict - Reject documents with unmapped fields
-- dynamic: runtime - New fields as runtime fields
+### Mapping Parameters
 
-Dynamic Templates:
-```
+| Parameter | Description |
+|-----------|-------------|
+| `analyzer` | Specifies the analyzer for text fields |
+| `search_analyzer` | Analyzer used at search time |
+| `normalizer` | Normalizer for keyword fields |
+| `boost` | Field-level query boost (deprecated in 8.x) |
+| `coerce` | Attempt to clean up values |
+| `copy_to` | Copy field values to another field |
+| `doc_values` | Enable/disable doc values (default: true) |
+| `dynamic` | Control dynamic field mapping |
+| `eager_global_ordinals` | Pre-load global ordinals |
+| `enabled` | Enable/disable field indexing |
+| `fielddata` | Enable fielddata for text fields |
+| `fields` | Multi-fields definition |
+| `format` | Date format specification |
+| `ignore_above` | Ignore strings above length |
+| `ignore_malformed` | Ignore malformed values |
+| `index` | Enable/disable indexing |
+| `index_options` | What info to store in index |
+| `index_phrases` | Index 2-shingles for phrase queries |
+| `index_prefixes` | Index prefixes for prefix queries |
+| `meta` | Metadata about the field |
+| `norms` | Enable/disable norms (length normalization) |
+| `null_value` | Replace null with specified value |
+| `position_increment_gap` | Gap between array elements |
+| `properties` | Sub-fields for object/nested |
+| `similarity` | Scoring algorithm |
+| `store` | Store original field value |
+| `term_vector` | Store term vectors |
+
+### Dynamic Mapping
+
+| Value | Behavior |
+|-------|----------|
+| `true` (default) | New fields auto-mapped |
+| `false` | New fields ignored (still in _source) |
+| `strict` | Reject documents with unmapped fields |
+| `runtime` | New fields as runtime fields |
+
+### Dynamic Templates
+
+```json
 "dynamic_templates": [
   {
     "template_name": {
@@ -207,8 +231,9 @@ Dynamic Templates:
 ]
 ```
 
-Multi-fields Example:
-```
+### Multi-fields Example
+
+```json
 "properties": {
   "title": {
     "type": "text",
@@ -226,17 +251,19 @@ Multi-fields Example:
 }
 ```
 
-------------------------------------------------------------------------------
-1.3 INDEX TEMPLATES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 1.3 Index Templates
+
+### Topics
 - Create and manage index templates
 - Create and manage component templates
 - Configure index settings in templates
 - Template priority and pattern matching
 
-Index Template Structure:
-```
+### Index Template Structure
+
+```json
 PUT _index_template/my_template
 {
   "index_patterns": ["logs-*"],
@@ -261,8 +288,9 @@ PUT _index_template/my_template
 }
 ```
 
-Component Templates:
-```
+### Component Templates
+
+```json
 PUT _component_template/my_component
 {
   "template": {
@@ -275,22 +303,24 @@ PUT _component_template/my_component
 }
 ```
 
-Template Priority:
+### Template Priority
 - Higher priority values take precedence
 - Component templates applied in order listed
 - Index template settings override component settings
 
-------------------------------------------------------------------------------
-1.4 INDEX ALIASES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 1.4 Index Aliases
+
+### Topics
 - Create and manage aliases
 - Filter aliases
 - Routing aliases
 - Write index designation
 
-Alias Operations:
-```
+### Alias Operations
+
+```json
 POST _aliases
 {
   "actions": [
@@ -308,52 +338,55 @@ POST _aliases
 }
 ```
 
-Alias Use Cases:
-• Zero-downtime reindexing
-• Multi-index searches
-• Filtered views of data
-• Time-based index management
-• Index abstraction layer
+### Alias Use Cases
+- Zero-downtime reindexing
+- Multi-index searches
+- Filtered views of data
+- Time-based index management
+- Index abstraction layer
 
-------------------------------------------------------------------------------
-1.5 INDEX LIFECYCLE MANAGEMENT (ILM)
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 1.5 Index Lifecycle Management (ILM)
+
+### Topics
 - Define ILM policies
 - Configure policy phases (hot, warm, cold, frozen, delete)
 - Apply policies to indices
 - Rollover configuration
 
-ILM Phases:
-1. HOT Phase:
-   - rollover: Trigger based on age, size, doc count
-   - set_priority: Index priority
-   - shrink: Reduce shard count
-   - forcemerge: Merge segments
-   - readonly: Make index read-only
+### ILM Phases
 
-2. WARM Phase:
-   - allocate: Move to warm nodes
-   - set_priority: Lower priority
-   - shrink: Reduce shards
-   - forcemerge: Optimize segments
-   - readonly: Read-only mode
+#### 1. HOT Phase
+- `rollover`: Trigger based on age, size, doc count
+- `set_priority`: Index priority
+- `shrink`: Reduce shard count
+- `forcemerge`: Merge segments
+- `readonly`: Make index read-only
 
-3. COLD Phase:
-   - allocate: Move to cold nodes
-   - set_priority: Lowest priority
-   - searchable_snapshot: Mount as searchable snapshot
-   - freeze: Freeze index (deprecated)
+#### 2. WARM Phase
+- `allocate`: Move to warm nodes
+- `set_priority`: Lower priority
+- `shrink`: Reduce shards
+- `forcemerge`: Optimize segments
+- `readonly`: Read-only mode
 
-4. FROZEN Phase:
-   - searchable_snapshot: Partial mount from snapshot
+#### 3. COLD Phase
+- `allocate`: Move to cold nodes
+- `set_priority`: Lowest priority
+- `searchable_snapshot`: Mount as searchable snapshot
+- `freeze`: Freeze index (deprecated)
 
-5. DELETE Phase:
-   - wait_for_snapshot: Wait before deletion
-   - delete: Remove index
+#### 4. FROZEN Phase
+- `searchable_snapshot`: Partial mount from snapshot
 
-ILM Policy Example:
-```
+#### 5. DELETE Phase
+- `wait_for_snapshot`: Wait before deletion
+- `delete`: Remove index
+
+### ILM Policy Example
+
+```json
 PUT _ilm/policy/my_policy
 {
   "policy": {
@@ -397,23 +430,25 @@ PUT _ilm/policy/my_policy
 }
 ```
 
-------------------------------------------------------------------------------
-1.6 DATA STREAMS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 1.6 Data Streams
+
+### Topics
 - Create and manage data streams
 - Configure backing indices
 - Data stream naming conventions
 - Timestamp field requirements
 
-Data Stream Concepts:
-• Append-only time series data
-• Automatic backing index management
-• Built-in ILM integration
-• @timestamp field required
+### Data Stream Concepts
+- Append-only time series data
+- Automatic backing index management
+- Built-in ILM integration
+- `@timestamp` field required
 
-Create Data Stream:
-```
+### Create Data Stream
+
+```json
 PUT _index_template/my_data_stream_template
 {
   "index_patterns": ["logs-*"],
@@ -431,20 +466,21 @@ PUT _index_template/my_data_stream_template
 PUT _data_stream/logs-myapp
 ```
 
-Data Stream Operations:
-```
+### Data Stream Operations
+
+```json
 GET _data_stream/logs-*
 POST logs-myapp/_rollover
 DELETE _data_stream/logs-myapp
 ```
 
-================================================================================
-DOMAIN 2: SEARCHING DATA (35-40% of exam)
-================================================================================
+---
 
-2.1 FULL-TEXT QUERIES
-------------------------------------------------------------------------------
-Topics:
+# Domain 2: Searching Data (35-40% of exam)
+
+## 2.1 Full-Text Queries
+
+### Topics
 - match query
 - match_phrase query
 - match_phrase_prefix query
@@ -454,8 +490,9 @@ Topics:
 - combined_fields query
 - intervals query
 
-Match Query:
-```
+### Match Query
+
+```json
 {
   "query": {
     "match": {
@@ -475,8 +512,9 @@ Match Query:
 }
 ```
 
-Match Phrase Query:
-```
+### Match Phrase Query
+
+```json
 {
   "query": {
     "match_phrase": {
@@ -490,8 +528,9 @@ Match Phrase Query:
 }
 ```
 
-Multi-Match Query:
-```
+### Multi-Match Query
+
+```json
 {
   "query": {
     "multi_match": {
@@ -506,16 +545,20 @@ Multi-Match Query:
 }
 ```
 
-Multi-Match Types:
-• best_fields - Default, highest score from any field
-• most_fields - Sum scores from all matching fields
-• cross_fields - Treat fields as one big field
-• phrase - Run match_phrase on each field
-• phrase_prefix - Run match_phrase_prefix on each field
-• bool_prefix - Creates bool query with term queries
+### Multi-Match Types
 
-Query String:
-```
+| Type | Description |
+|------|-------------|
+| `best_fields` | Default, highest score from any field |
+| `most_fields` | Sum scores from all matching fields |
+| `cross_fields` | Treat fields as one big field |
+| `phrase` | Run match_phrase on each field |
+| `phrase_prefix` | Run match_phrase_prefix on each field |
+| `bool_prefix` | Creates bool query with term queries |
+
+### Query String
+
+```json
 {
   "query": {
     "query_string": {
@@ -535,8 +578,9 @@ Query String:
 }
 ```
 
-Combined Fields Query (8.x):
-```
+### Combined Fields Query (8.x)
+
+```json
 {
   "query": {
     "combined_fields": {
@@ -548,8 +592,9 @@ Combined Fields Query (8.x):
 }
 ```
 
-Intervals Query (Advanced Proximity Search):
-```
+### Intervals Query (Advanced Proximity Search)
+
+```json
 {
   "query": {
     "intervals": {
@@ -566,8 +611,11 @@ Intervals Query (Advanced Proximity Search):
     }
   }
 }
+```
 
-// Match any of the intervals
+Match any of the intervals:
+
+```json
 {
   "query": {
     "intervals": {
@@ -584,10 +632,11 @@ Intervals Query (Advanced Proximity Search):
 }
 ```
 
-------------------------------------------------------------------------------
-2.2 TERM-LEVEL QUERIES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 2.2 Term-Level Queries
+
+### Topics
 - term query
 - terms query
 - terms_set query
@@ -599,8 +648,9 @@ Topics:
 - fuzzy query
 - ids query
 
-Term Query:
-```
+### Term Query
+
+```json
 {
   "query": {
     "term": {
@@ -614,8 +664,9 @@ Term Query:
 }
 ```
 
-Terms Query:
-```
+### Terms Query
+
+```json
 {
   "query": {
     "terms": {
@@ -626,8 +677,9 @@ Terms Query:
 }
 ```
 
-Terms Lookup:
-```
+### Terms Lookup
+
+```json
 {
   "query": {
     "terms": {
@@ -641,8 +693,9 @@ Terms Lookup:
 }
 ```
 
-Range Query (Numeric):
-```
+### Range Query (Numeric)
+
+```json
 {
   "query": {
     "range": {
@@ -656,8 +709,9 @@ Range Query (Numeric):
 }
 ```
 
-Range Query (Date):
-```
+### Range Query (Date)
+
+```json
 {
   "query": {
     "range": {
@@ -672,21 +726,28 @@ Range Query (Date):
 }
 ```
 
-Range Operators:
-• gt - Greater than
-• gte - Greater than or equal
-• lt - Less than
-• lte - Less than or equal
+### Range Operators
 
-Date Math:
-• now - Current timestamp
-• now-1d - Yesterday
-• now-1M - One month ago
-• now/d - Start of current day
-• 2024-01-01||+1M/d - Jan 1 + 1 month, rounded to day
+| Operator | Description |
+|----------|-------------|
+| `gt` | Greater than |
+| `gte` | Greater than or equal |
+| `lt` | Less than |
+| `lte` | Less than or equal |
 
-Prefix Query:
-```
+### Date Math
+
+| Expression | Description |
+|------------|-------------|
+| `now` | Current timestamp |
+| `now-1d` | Yesterday |
+| `now-1M` | One month ago |
+| `now/d` | Start of current day |
+| `2024-01-01\|\|+1M/d` | Jan 1 + 1 month, rounded to day |
+
+### Prefix Query
+
+```json
 {
   "query": {
     "prefix": {
@@ -700,8 +761,9 @@ Prefix Query:
 }
 ```
 
-Wildcard Query:
-```
+### Wildcard Query
+
+```json
 {
   "query": {
     "wildcard": {
@@ -715,10 +777,12 @@ Wildcard Query:
   }
 }
 ```
-Note: * matches any characters, ? matches single character
 
-Regexp Query:
-```
+> **Note:** `*` matches any characters, `?` matches single character
+
+### Regexp Query
+
+```json
 {
   "query": {
     "regexp": {
@@ -734,8 +798,9 @@ Regexp Query:
 }
 ```
 
-Fuzzy Query:
-```
+### Fuzzy Query
+
+```json
 {
   "query": {
     "fuzzy": {
@@ -751,12 +816,16 @@ Fuzzy Query:
 }
 ```
 
-Fuzziness Values:
-• AUTO - Based on term length (0-2: 0, 3-5: 1, >5: 2)
-• 0, 1, 2 - Exact edit distance
+### Fuzziness Values
 
-Exists Query:
-```
+| Value | Description |
+|-------|-------------|
+| `AUTO` | Based on term length (0-2: 0, 3-5: 1, >5: 2) |
+| `0, 1, 2` | Exact edit distance |
+
+### Exists Query
+
+```json
 {
   "query": {
     "exists": {
@@ -766,8 +835,9 @@ Exists Query:
 }
 ```
 
-Terms Set Query:
-```
+### Terms Set Query
+
+```json
 {
   "query": {
     "terms_set": {
@@ -783,8 +853,9 @@ Terms Set Query:
 }
 ```
 
-IDs Query:
-```
+### IDs Query
+
+```json
 {
   "query": {
     "ids": {
@@ -794,18 +865,20 @@ IDs Query:
 }
 ```
 
-------------------------------------------------------------------------------
-2.3 COMPOUND QUERIES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 2.3 Compound Queries
+
+### Topics
 - bool query
 - boosting query
 - constant_score query
 - dis_max query
 - function_score query
 
-Bool Query:
-```
+### Bool Query
+
+```json
 {
   "query": {
     "bool": {
@@ -830,14 +903,18 @@ Bool Query:
 }
 ```
 
-Bool Clauses:
-• must - Must match, contributes to score
-• must_not - Must not match, no scoring
-• should - Optional matching, contributes to score
-• filter - Must match, no scoring (cached)
+### Bool Clauses
 
-Boosting Query:
-```
+| Clause | Description |
+|--------|-------------|
+| `must` | Must match, contributes to score |
+| `must_not` | Must not match, no scoring |
+| `should` | Optional matching, contributes to score |
+| `filter` | Must match, no scoring (cached) |
+
+### Boosting Query
+
+```json
 {
   "query": {
     "boosting": {
@@ -853,8 +930,9 @@ Boosting Query:
 }
 ```
 
-Constant Score Query:
-```
+### Constant Score Query
+
+```json
 {
   "query": {
     "constant_score": {
@@ -867,8 +945,9 @@ Constant Score Query:
 }
 ```
 
-Dis Max Query:
-```
+### Dis Max Query
+
+```json
 {
   "query": {
     "dis_max": {
@@ -882,8 +961,9 @@ Dis Max Query:
 }
 ```
 
-Function Score Query:
-```
+### Function Score Query
+
+```json
 {
   "query": {
     "function_score": {
@@ -934,33 +1014,41 @@ Function Score Query:
 }
 ```
 
-Score Modes:
-• multiply - Multiply function scores
-• sum - Add function scores
-• avg - Average function scores
-• first - Use first function with matching filter
-• max - Maximum function score
-• min - Minimum function score
+### Score Modes
 
-Boost Modes:
-• multiply - Query score * function score
-• replace - Only function score
-• sum - Query score + function score
-• avg - Average of scores
-• max - Maximum of scores
-• min - Minimum of scores
+| Mode | Description |
+|------|-------------|
+| `multiply` | Multiply function scores |
+| `sum` | Add function scores |
+| `avg` | Average function scores |
+| `first` | Use first function with matching filter |
+| `max` | Maximum function score |
+| `min` | Minimum function score |
 
-------------------------------------------------------------------------------
-2.4 JOINING QUERIES
-------------------------------------------------------------------------------
-Topics:
+### Boost Modes
+
+| Mode | Description |
+|------|-------------|
+| `multiply` | Query score * function score |
+| `replace` | Only function score |
+| `sum` | Query score + function score |
+| `avg` | Average of scores |
+| `max` | Maximum of scores |
+| `min` | Minimum of scores |
+
+---
+
+## 2.4 Joining Queries
+
+### Topics
 - nested query
 - has_child query
 - has_parent query
 - parent_id query
 
-Nested Query:
-```
+### Nested Query
+
+```json
 {
   "query": {
     "nested": {
@@ -985,15 +1073,19 @@ Nested Query:
 }
 ```
 
-Nested Score Modes:
-• avg - Average score of matching nested docs
-• sum - Sum of scores
-• min - Minimum score
-• max - Maximum score
-• none - No scoring
+### Nested Score Modes
 
-Has Child Query:
-```
+| Mode | Description |
+|------|-------------|
+| `avg` | Average score of matching nested docs |
+| `sum` | Sum of scores |
+| `min` | Minimum score |
+| `max` | Maximum score |
+| `none` | No scoring |
+
+### Has Child Query
+
+```json
 {
   "query": {
     "has_child": {
@@ -1010,8 +1102,9 @@ Has Child Query:
 }
 ```
 
-Has Parent Query:
-```
+### Has Parent Query
+
+```json
 {
   "query": {
     "has_parent": {
@@ -1026,8 +1119,9 @@ Has Parent Query:
 }
 ```
 
-Parent-Child Setup:
-```
+### Parent-Child Setup
+
+```json
 PUT my_index
 {
   "mappings": {
@@ -1043,17 +1137,19 @@ PUT my_index
 }
 ```
 
-------------------------------------------------------------------------------
-2.5 GEO QUERIES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 2.5 Geo Queries
+
+### Topics
 - geo_bounding_box query
 - geo_distance query
 - geo_polygon query (deprecated)
 - geo_shape query
 
-Geo Distance Query:
-```
+### Geo Distance Query
+
+```json
 {
   "query": {
     "geo_distance": {
@@ -1069,8 +1165,9 @@ Geo Distance Query:
 }
 ```
 
-Geo Bounding Box:
-```
+### Geo Bounding Box
+
+```json
 {
   "query": {
     "geo_bounding_box": {
@@ -1090,8 +1187,9 @@ Geo Bounding Box:
 }
 ```
 
-Geo Shape Query:
-```
+### Geo Shape Query
+
+```json
 {
   "query": {
     "geo_shape": {
@@ -1109,16 +1207,20 @@ Geo Shape Query:
 }
 ```
 
-Geo Relations:
-• intersects - Default, shapes overlap
-• within - Indexed shape within query shape
-• contains - Indexed shape contains query shape
-• disjoint - Shapes don't overlap
+### Geo Relations
 
-------------------------------------------------------------------------------
-2.6 SPECIALIZED QUERIES
-------------------------------------------------------------------------------
-Topics:
+| Relation | Description |
+|----------|-------------|
+| `intersects` | Default, shapes overlap |
+| `within` | Indexed shape within query shape |
+| `contains` | Indexed shape contains query shape |
+| `disjoint` | Shapes don't overlap |
+
+---
+
+## 2.6 Specialized Queries
+
+### Topics
 - more_like_this query
 - script query
 - script_score query
@@ -1127,8 +1229,9 @@ Topics:
 - pinned query
 - knn query (vector search)
 
-More Like This:
-```
+### More Like This
+
+```json
 {
   "query": {
     "more_like_this": {
@@ -1149,8 +1252,9 @@ More Like This:
 }
 ```
 
-Script Query:
-```
+### Script Query
+
+```json
 {
   "query": {
     "script": {
@@ -1165,8 +1269,9 @@ Script Query:
 }
 ```
 
-Percolate Query:
-```
+### Percolate Query
+
+```json
 {
   "query": {
     "percolate": {
@@ -1179,8 +1284,9 @@ Percolate Query:
 }
 ```
 
-Pinned Query:
-```
+### Pinned Query
+
+```json
 {
   "query": {
     "pinned": {
@@ -1193,12 +1299,13 @@ Pinned Query:
 }
 ```
 
-KNN Query (Vector Search):
-```
+### KNN Query (Vector Search)
+
+```json
 {
   "knn": {
     "field": "image_vector",
-    "query_vector": [0.1, 0.2, 0.3, ...],
+    "query_vector": [0.1, 0.2, 0.3],
     "k": 10,
     "num_candidates": 100,
     "filter": {
@@ -1208,10 +1315,11 @@ KNN Query (Vector Search):
 }
 ```
 
-------------------------------------------------------------------------------
-2.7 SEARCH FEATURES
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 2.7 Search Features
+
+### Topics
 - Pagination (from/size, search_after, scroll)
 - Sorting
 - Source filtering
@@ -1221,10 +1329,11 @@ Topics:
 - Search templates
 - Profile API
 
-Pagination Options:
+### Pagination Options
 
-From/Size (up to 10,000 results):
-```
+#### From/Size (up to 10,000 results)
+
+```json
 {
   "from": 0,
   "size": 10,
@@ -1232,8 +1341,9 @@ From/Size (up to 10,000 results):
 }
 ```
 
-Search After:
-```
+#### Search After
+
+```json
 {
   "size": 10,
   "query": { "match_all": {} },
@@ -1245,8 +1355,9 @@ Search After:
 }
 ```
 
-Scroll API (for processing large result sets):
-```
+#### Scroll API (for processing large result sets)
+
+```json
 // Initial request
 POST /my-index/_search?scroll=5m
 {
@@ -1267,10 +1378,12 @@ DELETE /_search/scroll
   "scroll_id": "DXF1ZXJ5QW5kRmV0Y2g..."
 }
 ```
-Note: Scroll is deprecated for deep pagination. Use Point in Time (PIT) instead.
 
-Point in Time (PIT) - Recommended:
-```
+> **Note:** Scroll is deprecated for deep pagination. Use Point in Time (PIT) instead.
+
+#### Point in Time (PIT) - Recommended
+
+```json
 POST /my-index/_pit?keep_alive=5m
 
 {
@@ -1291,8 +1404,9 @@ DELETE /_pit
 }
 ```
 
-Sorting:
-```
+### Sorting
+
+```json
 {
   "sort": [
     { "date": { "order": "desc", "format": "strict_date_optional_time_nanos" } },
@@ -1315,8 +1429,9 @@ Sorting:
 }
 ```
 
-Source Filtering:
-```
+### Source Filtering
+
+```json
 // Disable _source entirely
 { "_source": false }
 
@@ -1338,8 +1453,9 @@ Source Filtering:
 }
 ```
 
-Highlighting:
-```
+### Highlighting
+
+```json
 {
   "query": { "match": { "content": "elasticsearch" } },
   "highlight": {
@@ -1363,13 +1479,17 @@ Highlighting:
 }
 ```
 
-Highlighter Types:
-• unified - Default, best for most cases
-• plain - Standard highlighter
-• fvh - Fast vector highlighter (requires term_vector)
+### Highlighter Types
 
-Field Collapsing:
-```
+| Type | Description |
+|------|-------------|
+| `unified` | Default, best for most cases |
+| `plain` | Standard highlighter |
+| `fvh` | Fast vector highlighter (requires term_vector) |
+
+### Field Collapsing
+
+```json
 {
   "query": { "match_all": {} },
   "collapse": {
@@ -1383,8 +1503,9 @@ Field Collapsing:
 }
 ```
 
-Search Templates:
-```
+### Search Templates
+
+```json
 PUT _scripts/my_template
 {
   "script": {
@@ -1410,24 +1531,27 @@ POST my-index/_search/template
 }
 ```
 
-Profile API:
-```
+### Profile API
+
+```json
 {
   "profile": true,
   "query": { "match": { "content": "elasticsearch" } }
 }
 ```
 
-Explain API:
-```
+### Explain API
+
+```json
 GET /my-index/_explain/1
 {
   "query": { "match": { "content": "elasticsearch" } }
 }
 ```
 
-Async Search (8.x - for long-running queries):
-```
+### Async Search (8.x - for long-running queries)
+
+```json
 // Submit async search
 POST /my-index/_async_search?wait_for_completion_timeout=1s
 {
@@ -1447,8 +1571,9 @@ GET /_async_search/status/<async_search_id>
 DELETE /_async_search/<async_search_id>
 ```
 
-Multi-Search API (_msearch):
-```
+### Multi-Search API (_msearch)
+
+```json
 POST /_msearch
 {"index": "index1"}
 {"query": {"match": {"title": "elasticsearch"}}}
@@ -1458,8 +1583,9 @@ POST /_msearch
 {"query": {"match_all": {}}, "size": 5}
 ```
 
-Field Capabilities API:
-```
+### Field Capabilities API
+
+```json
 GET /my-index/_field_caps?fields=title,content,*date*
 
 // Across multiple indices
@@ -1471,21 +1597,22 @@ GET /logs-*/_field_caps?fields=message,@timestamp
 }
 ```
 
-Validate Query API:
-```
+### Validate Query API
+
+```json
 GET /my-index/_validate/query?explain=true
 {
   "query": { "match": { "content": "elasticsearch" } }
 }
 ```
 
-================================================================================
-DOMAIN 3: DEVELOPING SEARCH APPLICATIONS (15-20% of exam)
-================================================================================
+---
 
-3.1 TEXT ANALYSIS
-------------------------------------------------------------------------------
-Topics:
+# Domain 3: Developing Search Applications (15-20% of exam)
+
+## 3.1 Text Analysis
+
+### Topics
 - Built-in analyzers
 - Custom analyzers
 - Character filters
@@ -1493,18 +1620,22 @@ Topics:
 - Token filters
 - Analyze API
 
-Built-in Analyzers:
-• standard - Default, grammar-based tokenization
-• simple - Lowercase, splits on non-letters
-• whitespace - Splits on whitespace only
-• stop - Like simple + stop words removal
-• keyword - No-op, entire input as single token
-• pattern - Regex-based splitting
-• language analyzers - english, french, german, etc.
-• fingerprint - Deduplication and sorting
+### Built-in Analyzers
 
-Custom Analyzer Structure:
-```
+| Analyzer | Description |
+|----------|-------------|
+| `standard` | Default, grammar-based tokenization |
+| `simple` | Lowercase, splits on non-letters |
+| `whitespace` | Splits on whitespace only |
+| `stop` | Like simple + stop words removal |
+| `keyword` | No-op, entire input as single token |
+| `pattern` | Regex-based splitting |
+| `language analyzers` | english, french, german, etc. |
+| `fingerprint` | Deduplication and sorting |
+
+### Custom Analyzer Structure
+
+```json
 PUT my-index
 {
   "settings": {
@@ -1544,58 +1675,68 @@ PUT my-index
 }
 ```
 
-Character Filters:
-• html_strip - Remove HTML tags
-• mapping - Replace characters/strings
-• pattern_replace - Regex replacement
+### Character Filters
 
-Tokenizers:
-• standard - Grammar-based word tokenization
-• letter - Non-letter character splits
-• lowercase - Like letter + lowercase
-• whitespace - Whitespace splits
-• uax_url_email - Like standard, preserves URLs/emails
-• classic - Grammar-based, English-optimized
-• thai - Thai text segmentation
-• ngram - N-gram tokenization
-• edge_ngram - Edge n-gram tokenization
-• keyword - No tokenization
-• pattern - Regex-based tokenization
-• char_group - Split on character groups
-• simple_pattern - Simple pattern matching
-• simple_pattern_split - Pattern-based splitting
-• path_hierarchy - File path tokenization
+| Filter | Description |
+|--------|-------------|
+| `html_strip` | Remove HTML tags |
+| `mapping` | Replace characters/strings |
+| `pattern_replace` | Regex replacement |
 
-Common Token Filters:
-• lowercase - Convert to lowercase
-• uppercase - Convert to uppercase
-• stop - Remove stop words
-• stemmer - Language-specific stemming
-• snowball - Snowball stemming
-• porter_stem - Porter stemming
-• kstem - KStem stemming
-• hunspell - Hunspell stemming
-• synonym - Synonym expansion
-• synonym_graph - Graph-aware synonyms
-• word_delimiter - Split on word delimiters
-• word_delimiter_graph - Graph-aware word delimiter
-• asciifolding - Convert to ASCII equivalents
-• ngram - Generate n-grams
-• edge_ngram - Generate edge n-grams
-• shingle - Word shingles (word n-grams)
-• truncate - Truncate tokens to length
-• trim - Remove whitespace
-• limit - Limit token count
-• unique - Remove duplicates
-• reverse - Reverse tokens
-• elision - Remove elisions
-• pattern_capture - Capture regex groups
-• pattern_replace - Regex replacement
-• fingerprint - Create fingerprint
-• phonetic - Phonetic encoding (plugin)
+### Tokenizers
 
-Analyze API:
-```
+| Tokenizer | Description |
+|-----------|-------------|
+| `standard` | Grammar-based word tokenization |
+| `letter` | Non-letter character splits |
+| `lowercase` | Like letter + lowercase |
+| `whitespace` | Whitespace splits |
+| `uax_url_email` | Like standard, preserves URLs/emails |
+| `classic` | Grammar-based, English-optimized |
+| `thai` | Thai text segmentation |
+| `ngram` | N-gram tokenization |
+| `edge_ngram` | Edge n-gram tokenization |
+| `keyword` | No tokenization |
+| `pattern` | Regex-based tokenization |
+| `char_group` | Split on character groups |
+| `simple_pattern` | Simple pattern matching |
+| `simple_pattern_split` | Pattern-based splitting |
+| `path_hierarchy` | File path tokenization |
+
+### Common Token Filters
+
+| Filter | Description |
+|--------|-------------|
+| `lowercase` | Convert to lowercase |
+| `uppercase` | Convert to uppercase |
+| `stop` | Remove stop words |
+| `stemmer` | Language-specific stemming |
+| `snowball` | Snowball stemming |
+| `porter_stem` | Porter stemming |
+| `kstem` | KStem stemming |
+| `hunspell` | Hunspell stemming |
+| `synonym` | Synonym expansion |
+| `synonym_graph` | Graph-aware synonyms |
+| `word_delimiter` | Split on word delimiters |
+| `word_delimiter_graph` | Graph-aware word delimiter |
+| `asciifolding` | Convert to ASCII equivalents |
+| `ngram` | Generate n-grams |
+| `edge_ngram` | Generate edge n-grams |
+| `shingle` | Word shingles (word n-grams) |
+| `truncate` | Truncate tokens to length |
+| `trim` | Remove whitespace |
+| `limit` | Limit token count |
+| `unique` | Remove duplicates |
+| `reverse` | Reverse tokens |
+| `elision` | Remove elisions |
+| `pattern_capture` | Capture regex groups |
+| `pattern_replace` | Regex replacement |
+| `fingerprint` | Create fingerprint |
+| `phonetic` | Phonetic encoding (plugin) |
+
+### Analyze API
+
+```json
 POST _analyze
 {
   "analyzer": "standard",
@@ -1616,8 +1757,9 @@ POST _analyze
 }
 ```
 
-N-gram Configuration:
-```
+### N-gram Configuration
+
+```json
 "tokenizer": {
   "my_ngram": {
     "type": "ngram",
@@ -1628,8 +1770,9 @@ N-gram Configuration:
 }
 ```
 
-Edge N-gram:
-```
+### Edge N-gram
+
+```json
 "tokenizer": {
   "my_edge_ngram": {
     "type": "edge_ngram",
@@ -1640,8 +1783,9 @@ Edge N-gram:
 }
 ```
 
-Synonym Filter:
-```
+### Synonym Filter
+
+```json
 "filter": {
   "my_synonyms": {
     "type": "synonym",
@@ -1656,15 +1800,17 @@ Synonym Filter:
 }
 ```
 
-------------------------------------------------------------------------------
-3.2 NORMALIZERS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 3.2 Normalizers
+
+### Topics
 - Custom normalizers for keyword fields
 - Character and token filters for normalizers
 
-Normalizer Definition:
-```
+### Normalizer Definition
+
+```json
 PUT my-index
 {
   "settings": {
@@ -1689,16 +1835,18 @@ PUT my-index
 }
 ```
 
-------------------------------------------------------------------------------
-3.3 SUGGESTERS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 3.3 Suggesters
+
+### Topics
 - Term suggester
 - Phrase suggester
 - Completion suggester
 
-Term Suggester:
-```
+### Term Suggester
+
+```json
 POST my-index/_search
 {
   "suggest": {
@@ -1718,8 +1866,9 @@ POST my-index/_search
 }
 ```
 
-Phrase Suggester:
-```
+### Phrase Suggester
+
+```json
 POST my-index/_search
 {
   "suggest": {
@@ -1749,8 +1898,9 @@ POST my-index/_search
 }
 ```
 
-Completion Suggester (Autocomplete):
-```
+### Completion Suggester (Autocomplete)
+
+```json
 PUT my-index
 {
   "mappings": {
@@ -1792,8 +1942,9 @@ POST my-index/_search
 }
 ```
 
-Context Suggester:
-```
+### Context Suggester
+
+```json
 PUT my-index
 {
   "mappings": {
@@ -1837,16 +1988,18 @@ POST my-index/_search
 }
 ```
 
-------------------------------------------------------------------------------
-3.4 RUNTIME FIELDS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 3.4 Runtime Fields
+
+### Topics
 - Define runtime fields in mappings
 - Define runtime fields at query time
 - Painless scripting for runtime fields
 
-Runtime Field in Mapping:
-```
+### Runtime Field in Mapping
+
+```json
 PUT my-index
 {
   "mappings": {
@@ -1868,8 +2021,9 @@ PUT my-index
 }
 ```
 
-Runtime Field at Query Time:
-```
+### Runtime Field at Query Time
+
+```json
 GET my-index/_search
 {
   "runtime_mappings": {
@@ -1889,31 +2043,32 @@ GET my-index/_search
 }
 ```
 
-Runtime Field Types:
-• boolean
-• date
-• double
-• geo_point
-• ip
-• keyword
-• long
-• lookup (cross-index lookups)
+### Runtime Field Types
+- `boolean`
+- `date`
+- `double`
+- `geo_point`
+- `ip`
+- `keyword`
+- `long`
+- `lookup` (cross-index lookups)
 
-================================================================================
-DOMAIN 4: DATA PROCESSING (15-20% of exam)
-================================================================================
+---
 
-4.1 INGEST PIPELINES
-------------------------------------------------------------------------------
-Topics:
+# Domain 4: Data Processing (15-20% of exam)
+
+## 4.1 Ingest Pipelines
+
+### Topics
 - Create and manage ingest pipelines
 - Simulate pipeline processing
 - Common processors
 - Conditional processing
 - Pipeline chaining
 
-Pipeline Structure:
-```
+### Pipeline Structure
+
+```json
 PUT _ingest/pipeline/my_pipeline
 {
   "description": "Pipeline description",
@@ -1944,10 +2099,11 @@ PUT _ingest/pipeline/my_pipeline
 }
 ```
 
-Common Processors:
+### Common Processors
 
-Set Processor:
-```
+#### Set Processor
+
+```json
 {
   "set": {
     "field": "my_field",
@@ -1959,8 +2115,9 @@ Set Processor:
 }
 ```
 
-Remove Processor:
-```
+#### Remove Processor
+
+```json
 {
   "remove": {
     "field": ["field1", "field2"],
@@ -1969,8 +2126,9 @@ Remove Processor:
 }
 ```
 
-Rename Processor:
-```
+#### Rename Processor
+
+```json
 {
   "rename": {
     "field": "old_field",
@@ -1980,8 +2138,9 @@ Rename Processor:
 }
 ```
 
-Convert Processor:
-```
+#### Convert Processor
+
+```json
 {
   "convert": {
     "field": "price",
@@ -1991,10 +2150,12 @@ Convert Processor:
   }
 }
 ```
-Types: integer, long, float, double, string, boolean, auto
 
-Grok Processor:
-```
+Types: `integer`, `long`, `float`, `double`, `string`, `boolean`, `auto`
+
+#### Grok Processor
+
+```json
 {
   "grok": {
     "field": "message",
@@ -2010,18 +2171,22 @@ Grok Processor:
 }
 ```
 
-Common Grok Patterns:
-• %{IP:field} - IP address
-• %{NUMBER:field:int} - Number with type conversion
-• %{WORD:field} - Single word
-• %{GREEDYDATA:field} - Match everything
-• %{TIMESTAMP_ISO8601:field} - ISO timestamp
-• %{COMBINEDAPACHELOG} - Apache combined log
-• %{SYSLOGBASE} - Syslog base
-• %{LOGLEVEL:field} - Log level
+### Common Grok Patterns
 
-Dissect Processor:
-```
+| Pattern | Description |
+|---------|-------------|
+| `%{IP:field}` | IP address |
+| `%{NUMBER:field:int}` | Number with type conversion |
+| `%{WORD:field}` | Single word |
+| `%{GREEDYDATA:field}` | Match everything |
+| `%{TIMESTAMP_ISO8601:field}` | ISO timestamp |
+| `%{COMBINEDAPACHELOG}` | Apache combined log |
+| `%{SYSLOGBASE}` | Syslog base |
+| `%{LOGLEVEL:field}` | Log level |
+
+#### Dissect Processor
+
+```json
 {
   "dissect": {
     "field": "message",
@@ -2031,8 +2196,9 @@ Dissect Processor:
 }
 ```
 
-Date Processor:
-```
+#### Date Processor
+
+```json
 {
   "date": {
     "field": "date_string",
@@ -2043,8 +2209,9 @@ Date Processor:
 }
 ```
 
-JSON Processor:
-```
+#### JSON Processor
+
+```json
 {
   "json": {
     "field": "json_string",
@@ -2054,8 +2221,9 @@ JSON Processor:
 }
 ```
 
-Split Processor:
-```
+#### Split Processor
+
+```json
 {
   "split": {
     "field": "tags",
@@ -2066,8 +2234,9 @@ Split Processor:
 }
 ```
 
-Join Processor:
-```
+#### Join Processor
+
+```json
 {
   "join": {
     "field": "tag_array",
@@ -2077,8 +2246,9 @@ Join Processor:
 }
 ```
 
-Append Processor:
-```
+#### Append Processor
+
+```json
 {
   "append": {
     "field": "tags",
@@ -2088,8 +2258,9 @@ Append Processor:
 }
 ```
 
-Trim Processor:
-```
+#### Trim Processor
+
+```json
 {
   "trim": {
     "field": "message",
@@ -2098,8 +2269,9 @@ Trim Processor:
 }
 ```
 
-Lowercase/Uppercase Processor:
-```
+#### Lowercase/Uppercase Processor
+
+```json
 {
   "lowercase": {
     "field": "status"
@@ -2112,8 +2284,9 @@ Lowercase/Uppercase Processor:
 }
 ```
 
-GeoIP Processor:
-```
+#### GeoIP Processor
+
+```json
 {
   "geoip": {
     "field": "ip",
@@ -2124,8 +2297,9 @@ GeoIP Processor:
 }
 ```
 
-User Agent Processor:
-```
+#### User Agent Processor
+
+```json
 {
   "user_agent": {
     "field": "user_agent",
@@ -2135,8 +2309,9 @@ User Agent Processor:
 }
 ```
 
-Script Processor:
-```
+#### Script Processor
+
+```json
 {
   "script": {
     "lang": "painless",
@@ -2151,8 +2326,9 @@ Script Processor:
 }
 ```
 
-Pipeline Processor (Chaining):
-```
+#### Pipeline Processor (Chaining)
+
+```json
 {
   "pipeline": {
     "name": "other_pipeline",
@@ -2161,8 +2337,9 @@ Pipeline Processor (Chaining):
 }
 ```
 
-Drop Processor:
-```
+#### Drop Processor
+
+```json
 {
   "drop": {
     "if": "ctx.level == 'DEBUG'"
@@ -2170,8 +2347,9 @@ Drop Processor:
 }
 ```
 
-Foreach Processor:
-```
+#### Foreach Processor
+
+```json
 {
   "foreach": {
     "field": "items",
@@ -2184,8 +2362,9 @@ Foreach Processor:
 }
 ```
 
-Conditional Processing:
-```
+#### Conditional Processing
+
+```json
 {
   "set": {
     "if": "ctx.status == 'error'",
@@ -2195,8 +2374,9 @@ Conditional Processing:
 }
 ```
 
-Simulate Pipeline:
-```
+### Simulate Pipeline
+
+```json
 POST _ingest/pipeline/_simulate
 {
   "pipeline": {
@@ -2217,16 +2397,18 @@ POST _ingest/pipeline/my_pipeline/_simulate
 }
 ```
 
-------------------------------------------------------------------------------
-4.2 ENRICH PROCESSORS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 4.2 Enrich Processors
+
+### Topics
 - Create enrich policies
 - Execute enrich policies
 - Use enrich processors in pipelines
 
-Enrich Policy:
-```
+### Enrich Policy
+
+```json
 PUT _enrich/policy/users_policy
 {
   "match": {
@@ -2239,8 +2421,9 @@ PUT _enrich/policy/users_policy
 POST _enrich/policy/users_policy/_execute
 ```
 
-Enrich Processor:
-```
+### Enrich Processor
+
+```json
 {
   "enrich": {
     "policy_name": "users_policy",
@@ -2252,8 +2435,9 @@ Enrich Processor:
 }
 ```
 
-Geo Match Enrich:
-```
+### Geo Match Enrich
+
+```json
 PUT _enrich/policy/geo_policy
 {
   "geo_match": {
@@ -2264,16 +2448,18 @@ PUT _enrich/policy/geo_policy
 }
 ```
 
-------------------------------------------------------------------------------
-4.2.1 TRANSFORMS (Exam Important)
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 4.2.1 Transforms (⚠️ Exam Important)
+
+### Topics
 - Create and manage transforms
 - Pivot transforms for aggregations
 - Latest transforms for current state
 
-Pivot Transform:
-```
+### Pivot Transform
+
+```json
 PUT _transform/sales_summary
 {
   "source": {
@@ -2306,8 +2492,9 @@ PUT _transform/sales_summary
 }
 ```
 
-Latest Transform:
-```
+### Latest Transform
+
+```json
 PUT _transform/device_latest_status
 {
   "source": { "index": "device-events-*" },
@@ -2319,8 +2506,9 @@ PUT _transform/device_latest_status
 }
 ```
 
-Transform Management:
-```
+### Transform Management
+
+```json
 POST _transform/sales_summary/_start
 POST _transform/sales_summary/_stop
 GET _transform/sales_summary/_stats
@@ -2328,27 +2516,32 @@ GET _transform/_preview
 DELETE _transform/sales_summary
 ```
 
-------------------------------------------------------------------------------
-4.3 PAINLESS SCRIPTING
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 4.3 Painless Scripting
+
+### Topics
 - Script contexts
 - Doc values access
 - Params
 - Stored scripts
 - Scripted fields
 
-Script Contexts:
-• filter - Boolean filter scripts
-• score - Scoring scripts
-• update - Update scripts
-• ingest - Ingest processor scripts
-• aggregation - Aggregation scripts
-• field - Runtime field scripts
-• sort - Sort scripts
+### Script Contexts
 
-Accessing Document Values:
-```
+| Context | Description |
+|---------|-------------|
+| `filter` | Boolean filter scripts |
+| `score` | Scoring scripts |
+| `update` | Update scripts |
+| `ingest` | Ingest processor scripts |
+| `aggregation` | Aggregation scripts |
+| `field` | Runtime field scripts |
+| `sort` | Sort scripts |
+
+### Accessing Document Values
+
+```java
 // Doc values (most efficient for sorting/aggregations)
 doc['field'].value
 doc['field'].values
@@ -2363,8 +2556,9 @@ ctx._source['field']
 params.param_name
 ```
 
-Stored Scripts:
-```
+### Stored Scripts
+
+```json
 PUT _scripts/my_script
 {
   "script": {
@@ -2387,8 +2581,9 @@ GET my-index/_search
 }
 ```
 
-Common Painless Operations:
-```
+### Common Painless Operations
+
+```java
 // String operations
 def str = doc['field'].value;
 str.toLowerCase()
@@ -2435,35 +2630,39 @@ def result = condition ? valueIfTrue : valueIfFalse;
 def value = doc['field'].size() > 0 ? doc['field'].value : 'default';
 ```
 
-================================================================================
-DOMAIN 5: CLUSTER MANAGEMENT (15-20% of exam)
-================================================================================
+---
 
-5.1 CLUSTER CONFIGURATION
-------------------------------------------------------------------------------
-Topics:
+# Domain 5: Cluster Management (15-20% of exam)
+
+## 5.1 Cluster Configuration
+
+### Topics
 - Node roles and configuration
 - Cluster settings (persistent/transient)
 - Discovery and cluster formation
 - Shard allocation
 
-Node Roles:
-• master - Cluster management, master-eligible
-• data - Data storage and search
-• data_content - Content tier data
-• data_hot - Hot tier data
-• data_warm - Warm tier data
-• data_cold - Cold tier data
-• data_frozen - Frozen tier data
-• ingest - Ingest pipeline processing
-• ml - Machine learning
-• remote_cluster_client - Cross-cluster operations
-• transform - Transform processing
-• voting_only - Voting but not master-eligible
-• coordinating - No special role (routing only)
+### Node Roles
 
-Node Configuration (elasticsearch.yml):
-```
+| Role | Description |
+|------|-------------|
+| `master` | Cluster management, master-eligible |
+| `data` | Data storage and search |
+| `data_content` | Content tier data |
+| `data_hot` | Hot tier data |
+| `data_warm` | Warm tier data |
+| `data_cold` | Cold tier data |
+| `data_frozen` | Frozen tier data |
+| `ingest` | Ingest pipeline processing |
+| `ml` | Machine learning |
+| `remote_cluster_client` | Cross-cluster operations |
+| `transform` | Transform processing |
+| `voting_only` | Voting but not master-eligible |
+| `coordinating` | No special role (routing only) |
+
+### Node Configuration (elasticsearch.yml)
+
+```yaml
 node.name: node-1
 node.roles: [master, data_hot, ingest]
 
@@ -2479,8 +2678,9 @@ cluster.initial_master_nodes: ["node-1", "node-2", "node-3"]
 cluster.name: my-cluster
 ```
 
-Cluster Settings:
-```
+### Cluster Settings
+
+```json
 PUT _cluster/settings
 {
   "persistent": {
@@ -2495,8 +2695,9 @@ PUT _cluster/settings
 GET _cluster/settings?include_defaults=true
 ```
 
-Allocation Settings:
-```
+### Allocation Settings
+
+```json
 {
   "cluster.routing.allocation.enable": "all|primaries|new_primaries|none",
   "cluster.routing.allocation.node_concurrent_recoveries": 2,
@@ -2511,8 +2712,9 @@ Allocation Settings:
 }
 ```
 
-Allocation Filtering:
-```
+### Allocation Filtering
+
+```json
 PUT my-index/_settings
 {
   "index.routing.allocation.include.rack": "rack1,rack2",
@@ -2521,21 +2723,25 @@ PUT my-index/_settings
 }
 ```
 
-------------------------------------------------------------------------------
-5.2 SHARD MANAGEMENT
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 5.2 Shard Management
+
+### Topics
 - Primary and replica shards
 - Shard allocation awareness
 - Forced awareness
 - Shard sizing best practices
 
-Shard Allocation Awareness:
-```
+### Shard Allocation Awareness
+
+```yaml
 # elasticsearch.yml
 node.attr.rack: rack1
 node.attr.zone: zone1
+```
 
+```json
 # Cluster settings
 PUT _cluster/settings
 {
@@ -2545,8 +2751,9 @@ PUT _cluster/settings
 }
 ```
 
-Forced Awareness:
-```
+### Forced Awareness
+
+```json
 PUT _cluster/settings
 {
   "persistent": {
@@ -2556,8 +2763,9 @@ PUT _cluster/settings
 }
 ```
 
-Index Shard Settings:
-```
+### Index Shard Settings
+
+```json
 PUT my-index
 {
   "settings": {
@@ -2568,8 +2776,9 @@ PUT my-index
 }
 ```
 
-Shrink Index:
-```
+### Shrink Index
+
+```json
 PUT my-index/_settings
 {
   "settings": {
@@ -2588,8 +2797,9 @@ POST my-index/_shrink/shrunk-index
 }
 ```
 
-Split Index:
-```
+### Split Index
+
+```json
 PUT my-index/_settings
 {
   "settings": {
@@ -2605,28 +2815,34 @@ POST my-index/_split/split-index
 }
 ```
 
-Shard Sizing Guidelines:
-• Target 10-50GB per shard (sweet spot: 20-40GB)
-• Avoid very small shards (<1GB) - causes overhead
-• Avoid very large shards (>50GB) - slow recovery
-• Aim for ~20 shards per GB of heap (max)
-• Consider search/indexing workload balance
-• Plan for future growth with rollover
-• Use _forcemerge for read-only indices
-• Rule of thumb: total shards = (data size / 30GB) * (1 + replicas)
+### Shard Sizing Guidelines
 
-------------------------------------------------------------------------------
-5.3 SNAPSHOTS AND RESTORE
-------------------------------------------------------------------------------
-Topics:
+| Guideline | Recommendation |
+|-----------|----------------|
+| Target size | 10-50GB per shard (sweet spot: 20-40GB) |
+| Minimum | Avoid very small shards (<1GB) - causes overhead |
+| Maximum | Avoid very large shards (>50GB) - slow recovery |
+| Heap ratio | Aim for ~20 shards per GB of heap (max) |
+| Workload | Consider search/indexing workload balance |
+| Growth | Plan for future growth with rollover |
+| Optimization | Use `_forcemerge` for read-only indices |
+| Rule of thumb | total shards = (data size / 30GB) * (1 + replicas) |
+
+---
+
+## 5.3 Snapshots and Restore
+
+### Topics
 - Register snapshot repositories
 - Create and manage snapshots
 - Restore indices from snapshots
 - Snapshot lifecycle management (SLM)
 
-Repository Registration:
-```
-# Shared filesystem
+### Repository Registration
+
+#### Shared Filesystem
+
+```json
 PUT _snapshot/my_fs_repo
 {
   "type": "fs",
@@ -2638,8 +2854,11 @@ PUT _snapshot/my_fs_repo
     "max_snapshot_bytes_per_sec": "50mb"
   }
 }
+```
 
-# S3
+#### S3
+
+```json
 PUT _snapshot/my_s3_repo
 {
   "type": "s3",
@@ -2650,8 +2869,11 @@ PUT _snapshot/my_s3_repo
     "compress": true
   }
 }
+```
 
-# Azure
+#### Azure
+
+```json
 PUT _snapshot/my_azure_repo
 {
   "type": "azure",
@@ -2660,8 +2882,11 @@ PUT _snapshot/my_azure_repo
     "base_path": "snapshots"
   }
 }
+```
 
-# GCS
+#### GCS
+
+```json
 PUT _snapshot/my_gcs_repo
 {
   "type": "gcs",
@@ -2672,8 +2897,9 @@ PUT _snapshot/my_gcs_repo
 }
 ```
 
-Create Snapshot:
-```
+### Create Snapshot
+
+```json
 PUT _snapshot/my_repo/snapshot_1?wait_for_completion=true
 {
   "indices": "index_1,index_2",
@@ -2687,16 +2913,18 @@ PUT _snapshot/my_repo/snapshot_1?wait_for_completion=true
 }
 ```
 
-List Snapshots:
-```
+### List Snapshots
+
+```json
 GET _snapshot/my_repo/_all
 GET _snapshot/my_repo/snapshot_1
 GET _snapshot/my_repo/snapshot_*
 GET _snapshot/_status
 ```
 
-Restore Snapshot:
-```
+### Restore Snapshot
+
+```json
 POST _snapshot/my_repo/snapshot_1/_restore
 {
   "indices": "index_1,index_2",
@@ -2713,13 +2941,15 @@ POST _snapshot/my_repo/snapshot_1/_restore
 }
 ```
 
-Delete Snapshot:
-```
+### Delete Snapshot
+
+```json
 DELETE _snapshot/my_repo/snapshot_1
 ```
 
-Snapshot Lifecycle Management (SLM):
-```
+### Snapshot Lifecycle Management (SLM)
+
+```json
 PUT _slm/policy/daily-snapshots
 {
   "schedule": "0 30 1 * * ?",
@@ -2742,18 +2972,20 @@ GET _slm/policy/daily-snapshots
 GET _slm/stats
 ```
 
-------------------------------------------------------------------------------
-5.4 CLUSTER MONITORING
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 5.4 Cluster Monitoring
+
+### Topics
 - Cluster health API
 - Node stats and info
 - Index stats
 - Task management
 - Cat APIs
 
-Cluster Health:
-```
+### Cluster Health
+
+```json
 GET _cluster/health
 GET _cluster/health/my-index
 GET _cluster/health?level=indices
@@ -2761,26 +2993,32 @@ GET _cluster/health?level=shards
 GET _cluster/health?wait_for_status=yellow&timeout=30s
 ```
 
-Health Status:
-• green - All shards allocated
-• yellow - All primaries allocated, some replicas not
-• red - Some primary shards not allocated
+### Health Status
 
-Cluster State:
-```
+| Status | Description |
+|--------|-------------|
+| 🟢 `green` | All shards allocated |
+| 🟡 `yellow` | All primaries allocated, some replicas not |
+| 🔴 `red` | Some primary shards not allocated |
+
+### Cluster State
+
+```json
 GET _cluster/state
 GET _cluster/state/metadata,routing_table
 GET _cluster/state/_all/my-index
 ```
 
-Cluster Stats:
-```
+### Cluster Stats
+
+```json
 GET _cluster/stats
 GET _cluster/stats/nodes/node-1,node-2
 ```
 
-Node Info:
-```
+### Node Info
+
+```json
 GET _nodes
 GET _nodes/node-1
 GET _nodes/_local
@@ -2790,30 +3028,35 @@ GET _nodes/hot_threads
 GET _nodes/node-1/stats/jvm,os
 ```
 
-Node Stats Categories:
-• indices - Index statistics
-• os - Operating system stats
-• process - Process stats
-• jvm - JVM stats
-• thread_pool - Thread pool stats
-• fs - File system stats
-• transport - Transport layer stats
-• http - HTTP stats
-• breakers - Circuit breaker stats
-• script - Script stats
-• discovery - Discovery stats
-• ingest - Ingest stats
+### Node Stats Categories
 
-Index Stats:
-```
+| Category | Description |
+|----------|-------------|
+| `indices` | Index statistics |
+| `os` | Operating system stats |
+| `process` | Process stats |
+| `jvm` | JVM stats |
+| `thread_pool` | Thread pool stats |
+| `fs` | File system stats |
+| `transport` | Transport layer stats |
+| `http` | HTTP stats |
+| `breakers` | Circuit breaker stats |
+| `script` | Script stats |
+| `discovery` | Discovery stats |
+| `ingest` | Ingest stats |
+
+### Index Stats
+
+```json
 GET my-index/_stats
 GET my-index/_stats/docs,store
 GET _stats
 GET _all/_stats
 ```
 
-Task Management:
-```
+### Task Management
+
+```json
 GET _tasks
 GET _tasks?detailed=true
 GET _tasks?nodes=node-1
@@ -2822,8 +3065,9 @@ GET _tasks/task_id
 POST _tasks/task_id/_cancel
 ```
 
-Cat APIs:
-```
+### Cat APIs
+
+```bash
 GET _cat/health?v
 GET _cat/nodes?v
 GET _cat/indices?v
@@ -2841,15 +3085,19 @@ GET _cat/plugins?v
 GET _cat/tasks?v
 ```
 
-Cat API Parameters:
-• v - Verbose (column headers)
-• help - Show available columns
-• h=col1,col2 - Select columns
-• s=col:desc - Sort by column
-• format=json - Output format
+### Cat API Parameters
 
-Allocation Explanation:
-```
+| Parameter | Description |
+|-----------|-------------|
+| `v` | Verbose (column headers) |
+| `help` | Show available columns |
+| `h=col1,col2` | Select columns |
+| `s=col:desc` | Sort by column |
+| `format=json` | Output format |
+
+### Allocation Explanation
+
+```json
 GET _cluster/allocation/explain
 {
   "index": "my-index",
@@ -2858,16 +3106,18 @@ GET _cluster/allocation/explain
 }
 ```
 
-------------------------------------------------------------------------------
-5.5 CROSS-CLUSTER OPERATIONS
-------------------------------------------------------------------------------
-Topics:
+---
+
+## 5.5 Cross-Cluster Operations
+
+### Topics
 - Cross-cluster search (CCS)
 - Cross-cluster replication (CCR)
 - Remote cluster configuration
 
-Remote Cluster Configuration:
-```
+### Remote Cluster Configuration
+
+```json
 PUT _cluster/settings
 {
   "persistent": {
@@ -2880,16 +3130,18 @@ PUT _cluster/settings
 }
 ```
 
-Cross-Cluster Search:
-```
+### Cross-Cluster Search
+
+```json
 GET cluster_one:my-index,cluster_two:my-index/_search
 {
   "query": { "match_all": {} }
 }
 ```
 
-Cross-Cluster Replication:
-```
+### Cross-Cluster Replication
+
+```json
 # On follower cluster
 PUT /follower-index/_ccr/follow
 {
@@ -2906,14 +3158,15 @@ PUT _ccr/auto_follow/my_pattern
 }
 ```
 
-================================================================================
-                         AGGREGATIONS REFERENCE
-================================================================================
+---
 
-BUCKET AGGREGATIONS
-------------------------------------------------------------------------------
-Terms Aggregation:
-```
+# Aggregations Reference
+
+## Bucket Aggregations
+
+### Terms Aggregation
+
+```json
 {
   "aggs": {
     "genres": {
@@ -2933,8 +3186,9 @@ Terms Aggregation:
 }
 ```
 
-Date Histogram:
-```
+### Date Histogram
+
+```json
 {
   "aggs": {
     "sales_over_time": {
@@ -2956,8 +3210,9 @@ Date Histogram:
 }
 ```
 
-Histogram:
-```
+### Histogram
+
+```json
 {
   "aggs": {
     "prices": {
@@ -2972,8 +3227,9 @@ Histogram:
 }
 ```
 
-Range Aggregation:
-```
+### Range Aggregation
+
+```json
 {
   "aggs": {
     "price_ranges": {
@@ -2991,8 +3247,9 @@ Range Aggregation:
 }
 ```
 
-Date Range:
-```
+### Date Range
+
+```json
 {
   "aggs": {
     "date_ranges": {
@@ -3009,8 +3266,9 @@ Date Range:
 }
 ```
 
-Filter Aggregation:
-```
+### Filter Aggregation
+
+```json
 {
   "aggs": {
     "errors": {
@@ -3023,8 +3281,9 @@ Filter Aggregation:
 }
 ```
 
-Filters Aggregation:
-```
+### Filters Aggregation
+
+```json
 {
   "aggs": {
     "messages": {
@@ -3040,8 +3299,9 @@ Filters Aggregation:
 }
 ```
 
-Nested Aggregation:
-```
+### Nested Aggregation
+
+```json
 {
   "aggs": {
     "comments": {
@@ -3056,8 +3316,9 @@ Nested Aggregation:
 }
 ```
 
-Reverse Nested:
-```
+### Reverse Nested
+
+```json
 {
   "aggs": {
     "comments": {
@@ -3082,8 +3343,9 @@ Reverse Nested:
 }
 ```
 
-Composite Aggregation:
-```
+### Composite Aggregation
+
+```json
 {
   "aggs": {
     "my_buckets": {
@@ -3100,8 +3362,9 @@ Composite Aggregation:
 }
 ```
 
-Geo Distance:
-```
+### Geo Distance
+
+```json
 {
   "aggs": {
     "rings_around_amsterdam": {
@@ -3120,10 +3383,13 @@ Geo Distance:
 }
 ```
 
-METRIC AGGREGATIONS
-------------------------------------------------------------------------------
-Basic Metrics:
-```
+---
+
+## Metric Aggregations
+
+### Basic Metrics
+
+```json
 {
   "aggs": {
     "avg_price": { "avg": { "field": "price", "missing": 0 } },
@@ -3141,8 +3407,9 @@ Basic Metrics:
 }
 ```
 
-Stats and Extended Stats:
-```
+### Stats and Extended Stats
+
+```json
 {
   "aggs": {
     "price_stats": { "stats": { "field": "price" } },
@@ -3156,8 +3423,9 @@ Stats and Extended Stats:
 }
 ```
 
-Percentiles:
-```
+### Percentiles
+
+```json
 {
   "aggs": {
     "load_time_percentiles": {
@@ -3178,8 +3446,9 @@ Percentiles:
 }
 ```
 
-Top Hits:
-```
+### Top Hits
+
+```json
 {
   "aggs": {
     "top_tags": {
@@ -3201,8 +3470,9 @@ Top Hits:
 }
 ```
 
-Scripted Metric:
-```
+### Scripted Metric
+
+```json
 {
   "aggs": {
     "profit": {
@@ -3217,8 +3487,9 @@ Scripted Metric:
 }
 ```
 
-Weighted Average:
-```
+### Weighted Average
+
+```json
 {
   "aggs": {
     "weighted_grade": {
@@ -3231,10 +3502,13 @@ Weighted Average:
 }
 ```
 
-PIPELINE AGGREGATIONS
-------------------------------------------------------------------------------
-Derivative:
-```
+---
+
+## Pipeline Aggregations
+
+### Derivative
+
+```json
 {
   "aggs": {
     "sales_per_month": {
@@ -3248,8 +3522,9 @@ Derivative:
 }
 ```
 
-Cumulative Sum:
-```
+### Cumulative Sum
+
+```json
 {
   "aggs": {
     "sales_per_month": {
@@ -3263,8 +3538,9 @@ Cumulative Sum:
 }
 ```
 
-Moving Function (moving_fn) - Replaces deprecated moving_avg:
-```
+### Moving Function (moving_fn) - Replaces deprecated moving_avg
+
+```json
 {
   "aggs": {
     "daily_sales": {
@@ -3284,16 +3560,20 @@ Moving Function (moving_fn) - Replaces deprecated moving_avg:
 }
 ```
 
-Available MovingFunctions:
-• MovingFunctions.unweightedAvg(values) - Simple average
-• MovingFunctions.linearWeightedAvg(values) - Linear weighted average
-• MovingFunctions.ewma(values, alpha) - Exponential weighted moving average
-• MovingFunctions.holt(values, alpha, beta) - Holt linear
-• MovingFunctions.holtWinters(values, alpha, beta, gamma, period, pad) - Holt-Winters
-• MovingFunctions.max(values) / min(values) / sum(values) / stdDev(values)
+### Available MovingFunctions
 
-Bucket Script:
-```
+| Function | Description |
+|----------|-------------|
+| `MovingFunctions.unweightedAvg(values)` | Simple average |
+| `MovingFunctions.linearWeightedAvg(values)` | Linear weighted average |
+| `MovingFunctions.ewma(values, alpha)` | Exponential weighted moving average |
+| `MovingFunctions.holt(values, alpha, beta)` | Holt linear |
+| `MovingFunctions.holtWinters(values, alpha, beta, gamma, period, pad)` | Holt-Winters |
+| `MovingFunctions.max/min/sum/stdDev(values)` | Statistical functions |
+
+### Bucket Script
+
+```json
 {
   "aggs": {
     "sales_per_month": {
@@ -3316,8 +3596,9 @@ Bucket Script:
 }
 ```
 
-Bucket Selector:
-```
+### Bucket Selector
+
+```json
 {
   "aggs": {
     "sales_per_month": {
@@ -3336,8 +3617,9 @@ Bucket Selector:
 }
 ```
 
-Bucket Sort:
-```
+### Bucket Sort
+
+```json
 {
   "aggs": {
     "sales_per_month": {
@@ -3357,126 +3639,141 @@ Bucket Sort:
 }
 ```
 
-================================================================================
-                         EXAM TIPS AND BEST PRACTICES
-================================================================================
+---
 
-GENERAL EXAM STRATEGIES
-------------------------------------------------------------------------------
-1. Time Management:
-   - 3 hours for the exam - pace yourself
-   - Don't spend too much time on difficult questions
-   - Flag questions to review later
-   - Save time for verification
+# 💡 Exam Tips and Best Practices
 
-2. Environment Familiarity:
-   - Practice in a similar Kibana Dev Tools environment
-   - Know keyboard shortcuts
-   - Understand query formatting
+## General Exam Strategies
 
-3. Documentation Access:
-   - Official documentation is available during exam
-   - Know where to find specific topics quickly
-   - Practice navigating documentation
+### 1. Time Management
+- 3 hours for the exam - pace yourself
+- Don't spend too much time on difficult questions
+- Flag questions to review later
+- Save time for verification
 
-4. Common Mistakes to Avoid:
-   - Forgetting .keyword suffix for aggregations/sorting
-   - Incorrect field paths in nested queries
-   - Missing required fields in mappings
-   - Wrong query clause (must vs filter)
-   - Incorrect date math syntax
+### 2. Environment Familiarity
+- Practice in a similar Kibana Dev Tools environment
+- Know keyboard shortcuts
+- Understand query formatting
 
-PERFORMANCE OPTIMIZATION TIPS
-------------------------------------------------------------------------------
-1. Query Optimization:
-   - Use filter context when scoring not needed
-   - Prefer term-level queries for exact matches
-   - Avoid leading wildcards
-   - Use routing for related documents
-   - Limit returned fields with _source filtering
+### 3. Documentation Access
+- Official documentation is available during exam
+- Know where to find specific topics quickly
+- Practice navigating documentation
 
-2. Index Design:
-   - Right-size shards (20-50GB target)
-   - Use appropriate refresh intervals
-   - Consider doc values for sorting/aggregations
-   - Use index sorting for common sort patterns
-   - Optimize mappings (disable unused features)
+### 4. Common Mistakes to Avoid
+- ❌ Forgetting `.keyword` suffix for aggregations/sorting
+- ❌ Incorrect field paths in nested queries
+- ❌ Missing required fields in mappings
+- ❌ Wrong query clause (must vs filter)
+- ❌ Incorrect date math syntax
 
-3. Cluster Performance:
-   - Size heap to 50% of RAM (max 32GB)
-   - Use dedicated master nodes for large clusters
-   - Implement proper shard allocation awareness
-   - Monitor and tune thread pools
-   - Use circuit breakers appropriately
+---
 
-COMMON API PATTERNS
-------------------------------------------------------------------------------
-Index Operations:
+## Performance Optimization Tips
+
+### 1. Query Optimization
+- Use filter context when scoring not needed
+- Prefer term-level queries for exact matches
+- Avoid leading wildcards
+- Use routing for related documents
+- Limit returned fields with `_source` filtering
+
+### 2. Index Design
+- Right-size shards (20-50GB target)
+- Use appropriate refresh intervals
+- Consider doc values for sorting/aggregations
+- Use index sorting for common sort patterns
+- Optimize mappings (disable unused features)
+
+### 3. Cluster Performance
+- Size heap to 50% of RAM (max 32GB)
+- Use dedicated master nodes for large clusters
+- Implement proper shard allocation awareness
+- Monitor and tune thread pools
+- Use circuit breakers appropriately
+
+---
+
+## Common API Patterns
+
+### Index Operations
+```bash
 GET _cat/indices?v
 PUT my-index
 DELETE my-index
 POST my-index/_refresh
 POST my-index/_forcemerge
 POST my-index/_flush
+```
 
-Mapping Operations:
+### Mapping Operations
+```bash
 GET my-index/_mapping
 PUT my-index/_mapping { ... }
+```
 
-Search Operations:
+### Search Operations
+```bash
 GET my-index/_search { ... }
 POST my-index/_search { ... }
 GET my-index/_count { ... }
 GET my-index/_validate/query { ... }
+```
 
-Document Operations:
+### Document Operations
+```bash
 PUT my-index/_doc/1 { ... }
 POST my-index/_doc { ... }
 GET my-index/_doc/1
 DELETE my-index/_doc/1
 POST my-index/_update/1 { ... }
+```
 
-Cluster Operations:
+### Cluster Operations
+```bash
 GET _cluster/health
 GET _cluster/state
 GET _cluster/settings
 PUT _cluster/settings { ... }
+```
 
-================================================================================
-                         PRACTICE RESOURCES
-================================================================================
+---
 
-1. Official Elastic Training:
-   - Elastic Training Portal
-   - Elasticsearch Engineer I & II courses
-   - Hands-on labs
+# 📚 Practice Resources
 
-2. Practice Environments:
-   - Elastic Cloud free trial
-   - Local Docker/Kubernetes deployment
-   - Elasticsearch Service on AWS/Azure/GCP
+## 1. Official Elastic Training
+- Elastic Training Portal
+- Elasticsearch Engineer I & II courses
+- Hands-on labs
 
-3. Sample Datasets:
-   - Sample data in Kibana
-   - Elastic Examples repository
-   - Kaggle datasets
+## 2. Practice Environments
+- Elastic Cloud free trial
+- Local Docker/Kubernetes deployment
+- Elasticsearch Service on AWS/Azure/GCP
 
-4. Documentation:
-   - Elasticsearch Reference Guide
-   - Elasticsearch Definitive Guide
-   - Elastic Blog
+## 3. Sample Datasets
+- Sample data in Kibana
+- Elastic Examples repository
+- Kaggle datasets
 
-5. Community Resources:
-   - Elastic Community Forums
-   - Stack Overflow
-   - GitHub Elastic repositories
+## 4. Documentation
+- Elasticsearch Reference Guide
+- Elasticsearch Definitive Guide
+- Elastic Blog
 
-================================================================================
-                         VERSION-SPECIFIC NOTES (8.x)
-================================================================================
+## 5. Community Resources
+- Elastic Community Forums
+- Stack Overflow
+- GitHub Elastic repositories
 
-Key Changes in Elasticsearch 8.x:
-1. Security enabled by default (IMPORTANT!)
+---
+
+# 🆕 Version-Specific Notes (8.x)
+
+## Key Changes in Elasticsearch 8.x
+
+1. **Security enabled by default** (IMPORTANT!)
 2. Native support for kNN vector search
 3. Runtime fields improvements
 4. Improved data streams
@@ -3489,8 +3786,9 @@ Key Changes in Elasticsearch 8.x:
 11. ES|QL - New query language (8.11+)
 12. Connectors and Crawler improvements
 
-Security Basics (8.x - Enabled by Default):
-```
+## Security Basics (8.x - Enabled by Default)
+
+```json
 # Check security status
 GET _xpack/security
 
@@ -3529,8 +3827,9 @@ POST _security/api_key
 }
 ```
 
-Index Settings Limits (Prevent Mapping Explosion):
-```
+## Index Settings Limits (Prevent Mapping Explosion)
+
+```json
 PUT my-index/_settings
 {
   "index.mapping.total_fields.limit": 2000,
@@ -3540,8 +3839,9 @@ PUT my-index/_settings
 }
 ```
 
-Index Sorting (Optimize common queries):
-```
+## Index Sorting (Optimize common queries)
+
+```json
 PUT my-index
 {
   "settings": {
@@ -3553,177 +3853,175 @@ PUT my-index
 }
 ```
 
-Deprecated/Removed Features:
-- types (removed - single type per index)
-- _all field (deprecated)
-- _all field (deprecated)
-- freeze/unfreeze APIs (deprecated)
-- mapping type parameter (removed)
-- legacy template API (use _index_template)
-- boost parameter in mappings (deprecated)
+## Deprecated/Removed Features
 
-================================================================================
-                         QUICK REFERENCE CHEAT SHEET
-================================================================================
+| Feature | Status |
+|---------|--------|
+| types | Removed - single type per index |
+| `_all` field | Deprecated |
+| freeze/unfreeze APIs | Deprecated |
+| mapping type parameter | Removed |
+| legacy template API | Use `_index_template` |
+| boost parameter in mappings | Deprecated |
 
-MOST COMMON EXAM COMMANDS:
---------------------------
-// Document Operations
-PUT my-index/_doc/1 { }                    // Index with ID
-POST my-index/_doc { }                     // Index auto-ID
-POST my-index/_update/1 { "doc": { } }     // Update
-DELETE my-index/_doc/1                     // Delete
-POST _bulk { }                             // Bulk operations
-POST _reindex { }                          // Reindex
-POST my-index/_update_by_query { }         // Update by query
-POST my-index/_delete_by_query { }         // Delete by query
+---
 
-// Index Operations
-PUT my-index                               // Create index
-DELETE my-index                            // Delete index
-GET my-index/_mapping                      // Get mapping
-PUT my-index/_mapping { }                  // Update mapping
-GET my-index/_settings                     // Get settings
-PUT my-index/_settings { }                 // Update settings
+# 📋 Quick Reference Cheat Sheet
 
-// Search Operations
-GET my-index/_search { }                   // Search
-GET my-index/_count { }                    // Count
-GET my-index/_explain/1 { }                // Explain
-POST _msearch { }                          // Multi-search
-POST my-index/_async_search { }            // Async search
+## Most Common Exam Commands
 
-// Cluster Operations
-GET _cluster/health                        // Health
-GET _cluster/settings                      // Settings
-GET _cat/indices?v                         // List indices
-GET _cat/shards?v                          // List shards
-GET _cat/nodes?v                           // List nodes
+### Document Operations
+```bash
+PUT my-index/_doc/1 { }                    # Index with ID
+POST my-index/_doc { }                     # Index auto-ID
+POST my-index/_update/1 { "doc": { } }     # Update
+DELETE my-index/_doc/1                     # Delete
+POST _bulk { }                             # Bulk operations
+POST _reindex { }                          # Reindex
+POST my-index/_update_by_query { }         # Update by query
+POST my-index/_delete_by_query { }         # Delete by query
+```
 
-// Templates & Pipelines
-PUT _index_template/name { }               // Index template
-PUT _component_template/name { }           // Component template
-PUT _ingest/pipeline/name { }              // Ingest pipeline
-POST _ingest/pipeline/_simulate { }        // Simulate pipeline
+### Index Operations
+```bash
+PUT my-index                               # Create index
+DELETE my-index                            # Delete index
+GET my-index/_mapping                      # Get mapping
+PUT my-index/_mapping { }                  # Update mapping
+GET my-index/_settings                     # Get settings
+PUT my-index/_settings { }                 # Update settings
+```
 
-// Snapshots
-PUT _snapshot/repo_name { }                // Register repo
-PUT _snapshot/repo/snap_name { }           // Create snapshot
-POST _snapshot/repo/snap/_restore { }      // Restore
+### Search Operations
+```bash
+GET my-index/_search { }                   # Search
+GET my-index/_count { }                    # Count
+GET my-index/_explain/1 { }                # Explain
+POST _msearch { }                          # Multi-search
+POST my-index/_async_search { }            # Async search
+```
 
-QUERY TYPE SELECTION GUIDE:
----------------------------
-| Use Case                    | Query Type              |
-|-----------------------------|-------------------------|
-| Exact match (keyword)       | term, terms             |
-| Full-text search            | match, multi_match      |
-| Phrase search               | match_phrase            |
-| Autocomplete                | match_phrase_prefix     |
-| Numeric/date range          | range                   |
-| Field exists check          | exists                  |
-| Pattern matching            | wildcard, regexp        |
-| Typo tolerance              | fuzzy, match+fuzziness  |
-| Combine conditions          | bool                    |
-| Find similar docs           | more_like_this          |
-| Nested objects              | nested                  |
-| Parent/child                | has_parent, has_child   |
-| Geographic                  | geo_distance, geo_shape |
-| Vector similarity           | knn                     |
+### Cluster Operations
+```bash
+GET _cluster/health                        # Health
+GET _cluster/settings                      # Settings
+GET _cat/indices?v                         # List indices
+GET _cat/shards?v                          # List shards
+GET _cat/nodes?v                           # List nodes
+```
 
-AGGREGATION SELECTION GUIDE:
-----------------------------
-| Use Case                    | Aggregation Type        |
-|-----------------------------|-------------------------|
-| Group by category           | terms                   |
-| Time-based grouping         | date_histogram          |
-| Numeric ranges              | histogram, range        |
-| Single value stats          | avg, sum, min, max      |
-| Multiple stats              | stats, extended_stats   |
-| Unique count                | cardinality             |
-| Percentiles                 | percentiles             |
-| Top documents per bucket    | top_hits                |
-| Filter then aggregate       | filter, filters         |
-| Calculate change over time  | derivative              |
-| Running totals              | cumulative_sum          |
-| Moving averages             | moving_fn               |
-| Custom calculations         | bucket_script           |
+### Templates & Pipelines
+```bash
+PUT _index_template/name { }               # Index template
+PUT _component_template/name { }           # Component template
+PUT _ingest/pipeline/name { }              # Ingest pipeline
+POST _ingest/pipeline/_simulate { }        # Simulate pipeline
+```
 
-================================================================================
-                         COMMON ERRORS & TROUBLESHOOTING
-================================================================================
+### Snapshots
+```bash
+PUT _snapshot/repo_name { }                # Register repo
+PUT _snapshot/repo/snap_name { }           # Create snapshot
+POST _snapshot/repo/snap/_restore { }      # Restore
+```
 
-ERROR: "mapper_parsing_exception"
-CAUSE: Document field doesn't match mapping
-FIX: Check field type, use ignore_malformed, or update mapping
+---
 
-ERROR: "search_phase_execution_exception" (no mapping for [field.keyword])
-CAUSE: Using .keyword on a field that's not text type
-FIX: Remove .keyword suffix or check mapping
+## Query Type Selection Guide
 
-ERROR: "illegal_argument_exception" (Fielddata disabled on text fields)
-CAUSE: Trying to aggregate/sort on text field
-FIX: Use field.keyword or enable fielddata (not recommended)
+| Use Case | Query Type |
+|----------|------------|
+| Exact match (keyword) | `term`, `terms` |
+| Full-text search | `match`, `multi_match` |
+| Phrase search | `match_phrase` |
+| Autocomplete | `match_phrase_prefix` |
+| Numeric/date range | `range` |
+| Field exists check | `exists` |
+| Pattern matching | `wildcard`, `regexp` |
+| Typo tolerance | `fuzzy`, `match`+fuzziness |
+| Combine conditions | `bool` |
+| Find similar docs | `more_like_this` |
+| Nested objects | `nested` |
+| Parent/child | `has_parent`, `has_child` |
+| Geographic | `geo_distance`, `geo_shape` |
+| Vector similarity | `knn` |
 
-ERROR: "resource_already_exists_exception"
-CAUSE: Index already exists
-FIX: Delete existing index or use different name
+---
 
-ERROR: "index_not_found_exception"
-CAUSE: Index doesn't exist
-FIX: Create index first or use ignore_unavailable
+## Aggregation Selection Guide
 
-ERROR: "version_conflict_engine_exception"
-CAUSE: Concurrent updates to same document
-FIX: Use retry_on_conflict or conflicts=proceed
+| Use Case | Aggregation Type |
+|----------|------------------|
+| Group by category | `terms` |
+| Time-based grouping | `date_histogram` |
+| Numeric ranges | `histogram`, `range` |
+| Single value stats | `avg`, `sum`, `min`, `max` |
+| Multiple stats | `stats`, `extended_stats` |
+| Unique count | `cardinality` |
+| Percentiles | `percentiles` |
+| Top documents per bucket | `top_hits` |
+| Filter then aggregate | `filter`, `filters` |
+| Calculate change over time | `derivative` |
+| Running totals | `cumulative_sum` |
+| Moving averages | `moving_fn` |
+| Custom calculations | `bucket_script` |
 
-ERROR: "circuit_breaking_exception"
-CAUSE: Request too large for available memory
-FIX: Reduce request size, increase memory, or paginate
+---
 
-ERROR: "cluster_block_exception" (index read-only)
-CAUSE: Disk watermark exceeded
-FIX: Free disk space, then: PUT my-index/_settings {"index.blocks.read_only_allow_delete": null}
+# 🔧 Common Errors & Troubleshooting
 
-================================================================================
-                         PRACTICE SCENARIOS
-================================================================================
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `mapper_parsing_exception` | Document field doesn't match mapping | Check field type, use `ignore_malformed`, or update mapping |
+| `search_phase_execution_exception` (no mapping for [field.keyword]) | Using `.keyword` on a field that's not text type | Remove `.keyword` suffix or check mapping |
+| `illegal_argument_exception` (Fielddata disabled on text fields) | Trying to aggregate/sort on text field | Use `field.keyword` or enable fielddata (not recommended) |
+| `resource_already_exists_exception` | Index already exists | Delete existing index or use different name |
+| `index_not_found_exception` | Index doesn't exist | Create index first or use `ignore_unavailable` |
+| `version_conflict_engine_exception` | Concurrent updates to same document | Use `retry_on_conflict` or `conflicts=proceed` |
+| `circuit_breaking_exception` | Request too large for available memory | Reduce request size, increase memory, or paginate |
+| `cluster_block_exception` (index read-only) | Disk watermark exceeded | Free disk space, then: `PUT my-index/_settings {"index.blocks.read_only_allow_delete": null}` |
 
-SCENARIO 1: Log Analytics Setup
-- Create index template for logs-* with proper mappings
-- Set up ILM policy (hot->warm->cold->delete)
+---
+
+# 🎯 Practice Scenarios
+
+## Scenario 1: Log Analytics Setup
+- Create index template for `logs-*` with proper mappings
+- Set up ILM policy (hot→warm→cold→delete)
 - Create data stream
 - Build ingest pipeline for log parsing (grok)
 - Create filtered aliases
 
-SCENARIO 2: E-commerce Search
+## Scenario 2: E-commerce Search
 - Design product index with multi-fields
 - Implement autocomplete with completion suggester
 - Build search with bool query (must/should/filter)
 - Add aggregations for faceted navigation
 - Implement highlighting
 
-SCENARIO 3: Time-Series Data
+## Scenario 3: Time-Series Data
 - Create transform for hourly summaries
 - Set up date_histogram aggregations
 - Implement rollover with ILM
 - Configure searchable snapshots for cold data
 
-================================================================================
-                              END OF GUIDE
-================================================================================
+---
 
-Last Updated: February 2026
-Elasticsearch Version: 8.x
-Certification: Elastic Certified Engineer
+# ✅ Final Tips
 
-Remember: Hands-on practice is the key to passing this exam!
-Practice, practice, practice in a real Elasticsearch environment.
+> **Remember:** Hands-on practice is the key to passing this exam!
+> Practice, practice, practice in a real Elasticsearch environment.
 
-FINAL TIP: During the exam, if stuck:
-1. Check the documentation (it's allowed!)
-2. Use _validate/query to test queries
-3. Use _ingest/pipeline/_simulate to test pipelines  
-4. Start simple, then add complexity
-5. Verify with GET requests before moving on
+## During the Exam, If Stuck:
 
-================================================================================
+1. ✅ Check the documentation (it's allowed!)
+2. ✅ Use `_validate/query` to test queries
+3. ✅ Use `_ingest/pipeline/_simulate` to test pipelines
+4. ✅ Start simple, then add complexity
+5. ✅ Verify with GET requests before moving on
+
+---
+
+**Last Updated:** February 2026  
+**Elasticsearch Version:** 8.x  
+**Certification:** Elastic Certified Engineer
