@@ -14,9 +14,153 @@
 
 ---
 
-## Phase 1: Core Networking Fundamentals (4-5 hours) 🔴
+## Modules Index
 
-### Module 1: Virtual Network Fundamentals
+- [1 Virtual Network Fundamentals](#module-1-virtual-network-fundamentals)
+- [2 Virtual Network NAT](#module-2-virtual-network-nat)
+- [3 NSGs Deep Dive](#module-3-nsgs-deep-dive)
+- [4 Azure DNS](#module-4-azure-dns)
+- [5 VNet Peering](#module-5-vnet-peering)
+- [6 VPN Gateway](#module-6-vpn-gateway)
+- [7 ExpressRoute](#module-7-expressroute)
+- [8 Virtual WAN](#module-8-virtual-wan)
+- [9 Azure Load Balancer](#module-9-azure-load-balancer)
+- [10 Application Gateway](#module-10-application-gateway)
+- [11 Traffic Manager](#module-11-traffic-manager)
+- [12 Azure Front Door](#module-12-azure-front-door)
+- [13 Network Routing](#module-13-network-routing)
+- [14 Service Endpoints & Private Link](#module-14-service-endpoints--private-link)
+- [15 Azure Firewall](#module-15-azure-firewall)
+- [16 Network Security Best Practices](#module-16-network-security-best-practices)
+- [17 Network Watcher](#module-17-network-watcher)
+
+---
+
+## How to Use This Guide (Bulletproof Mode)
+
+- **Pass 1 (Concepts):** Read each phase once without labs. Aim for definitions and boundaries.  
+- **Pass 2 (Hands-on):** Execute the labs for each phase using Azure CLI or Portal.  
+- **Pass 3 (Recall):** Use the “Key Exam Points,” “Common Exam Traps,” and checklists to self-test.  
+- **Pass 4 (Teach-back):** Explain each phase out loud in 2–3 minutes; if you stumble, revisit.  
+- **Evidence of mastery:** You can answer *why* a service is chosen, not just *what* it is.  
+
+---
+
+
+## 📋 Quick Reference: Numbers to Memorize
+
+| Item | Value |
+|------|-------|
+| Reserved IPs per subnet | **5** |
+| NSG rule priority range | **100-4096** |
+| Default NSG rules priority | **65000-65500** |
+| GatewaySubnet minimum size | **/27** (recommended), /29 (absolute minimum) |
+| AzureFirewallSubnet minimum | **/26** |
+| AzureBastionSubnet minimum | **/26** |
+| VPN Gateway deployment time | **30-45 minutes** |
+| Max VNets per peering | Direct peering only (non-transitive) |
+| Standard LB max backend pools | **5000** VMs |
+| Application Gateway max instances | **125** |
+
+---
+
+## ✅ Exam Readiness Checklist (Bulletproof)
+
+- [ ] I can design a hub-spoke network from scratch and defend the design.
+- [ ] I can explain **when to use** VNet peering vs VPN Gateway vs ExpressRoute.
+- [ ] I can map **any** requirement to the correct load balancer (LB/AppGW/Front Door/Traffic Manager).
+- [ ] I can troubleshoot a connectivity issue in under 10 minutes using Network Watcher.
+- [ ] I can explain Service Endpoints vs Private Endpoints without notes.
+- [ ] I know subnet size requirements for Gateway/Bastion/Firewall subnets.
+- [ ] I can read effective NSG rules and identify the blocking rule.
+- [ ] I can explain Basic vs Standard SKUs for Public IPs, LB, and WAF.
+
+---
+
+## 🧪 Final Comprehensive Lab (3-4 hours)
+
+### Scenario: Build Enterprise Hub-Spoke Network
+
+```
+                    ┌─────────────┐
+                    │   Internet  │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │  Azure      │
+                    │  Firewall   │
+                    └──────┬──────┘
+                           │
+┌──────────────────────────┼──────────────────────────┐
+│                    Hub VNet                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
+│  │ Firewall    │  │   Gateway   │  │   Bastion   │  │
+│  │ Subnet      │  │   Subnet    │  │   Subnet    │  │
+│  └─────────────┘  └─────────────┘  └─────────────┘  │
+└──────────────────────────┬──────────────────────────┘
+                           │ Peering
+         ┌─────────────────┼─────────────────┐
+         │                 │                 │
+   ┌─────▼─────┐     ┌─────▼─────┐     ┌─────▼─────┐
+   │  Spoke 1  │     │  Spoke 2  │     │  Spoke 3  │
+   │  (Web)    │     │  (App)    │     │  (Data)   │
+   │           │     │           │     │           │
+   │ App GW +  │     │ Internal  │     │ Private   │
+   │ VMs + NSG │     │ LB + VMs  │     │ Endpoint  │
+   └───────────┘     └───────────┘     └───────────┘
+```
+
+### Tasks
+
+1. **Create VNets** (Hub: 10.0.0.0/16, Spokes: 10.1.0.0/16, 10.2.0.0/16, 10.3.0.0/16)
+2. **Configure peering** with gateway transit from hub
+3. **Deploy Azure Firewall** with DNAT and network rules
+4. **Create NSGs** for each spoke subnet
+5. **Deploy Application Gateway** with WAF in Spoke 1
+6. **Deploy Internal Load Balancer** in Spoke 2
+7. **Create Private Endpoint** to Storage in Spoke 3
+8. **Configure UDRs** to route spoke traffic through firewall
+9. **Deploy Bastion** for secure VM access
+10. **Enable Network Watcher** and test connectivity
+
+---
+
+## ✅ Study Checklist
+
+- [ ] Completed all 11 phases
+- [ ] Finished all 9 hands-on labs
+- [ ] Built final hub-spoke lab
+- [ ] Can explain Service Endpoints vs Private Endpoints
+- [ ] Know all SKU differences (Basic vs Standard)
+- [ ] Memorized key numbers (reserved IPs, priorities, subnet sizes)
+- [ ] Practiced with Azure CLI and PowerShell
+- [ ] Taken at least 2 practice exams (MeasureUp/Whizlabs)
+
+---
+
+## 📚 Recommended Resources
+
+| Resource | Link |
+|----------|------|
+| Microsoft Learn | https://learn.microsoft.com/en-us/training/paths/az-104-manage-virtual-networks/ |
+| John Savill's YouTube | AZ-104 Networking Study Cram |
+| Practice Tests | MeasureUp (official), Whizlabs |
+| Azure Free Account | $200 credit for hands-on labs |
+
+---
+
+**Good luck with AZ-104!** 🎉
+
+
+
+---
+
+# Module 1: Virtual Network Fundamentals
+
+## Phase 1: Core Networking Fundamentals
+_Time: 4-5 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] What is Azure Virtual Network (VNet)
 - [ ] VNet address space (CIDR notation)
@@ -26,7 +170,16 @@
 - [ ] Static vs Dynamic IP allocation
 - [ ] IP address SKUs (Basic vs Standard)
 
-### Module 1B: Virtual Network NAT
+
+
+---
+
+# Module 2: Virtual Network NAT
+
+## Phase 1: Core Networking Fundamentals
+_Time: 4-5 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] Azure NAT Gateway overview
 - [ ] Outbound connectivity
@@ -56,11 +209,16 @@ az network vnet subnet create --name DbSubnet --vnet-name MyVNet --resource-grou
 az network nat gateway create --name MyNatGateway --resource-group MyRG --public-ip-addresses MyPublicIP
 ```
 
+
+
 ---
 
-## Phase 2: Network Security Groups (5-6 hours) 🔴
+# Module 3: NSGs Deep Dive
 
-### Module 2: NSGs Deep Dive
+## Phase 2: Network Security Groups
+_Time: 5-6 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] NSG overview and purpose
 - [ ] Inbound security rules
@@ -88,6 +246,7 @@ az network nat gateway create --name MyNatGateway --resource-group MyRG --public
 - NSG at **both** subnet and NIC? Traffic must pass **both**
 - Default outbound = **Allow** (DenyAllOutBound doesn't exist by default)
 - ASGs can only be used within the **same VNet**
+- NSGs are **stateful** (return traffic is allowed automatically)
 
 #### 🧪 Hands-On Lab 2
 
@@ -110,11 +269,16 @@ az network vnet subnet update --name WebSubnet --vnet-name MyVNet \
   --resource-group MyRG --network-security-group WebNSG
 ```
 
+
+
 ---
 
-## Phase 3: Name Resolution (3-4 hours) 🟡
+# Module 4: Azure DNS
 
-### Module 4: Azure DNS
+## Phase 3: Name Resolution
+_Time: 3-4 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Azure DNS zones (public)
 - [ ] Azure Private DNS zones
@@ -133,6 +297,7 @@ az network vnet subnet update --name WebSubnet --vnet-name MyVNet \
 | Auto-registration | Only works with **one** VNet link per zone |
 | Alias records | Point to Azure resource, auto-update when IP changes |
 | Record types | A = IPv4, AAAA = IPv6, CNAME = alias, MX = mail |
+| Azure DNS vs Private DNS | Public zones serve internet names; Private zones are VNet-only |
 
 #### 🧪 Hands-On Lab 3
 
@@ -150,11 +315,16 @@ az network private-dns record-set a add-record --zone-name contoso.internal \
   --resource-group MyRG --record-set-name webserver --ipv4-address 10.0.1.4
 ```
 
+
+
 ---
 
-## Phase 4: VNet Connectivity (6-8 hours) 🔴
+# Module 5: VNet Peering
 
-### Module 5: VNet Peering
+## Phase 4: VNet Connectivity
+_Time: 6-8 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] VNet peering overview
 - [ ] Regional VNet peering
@@ -167,7 +337,16 @@ az network private-dns record-set a add-record --zone-name contoso.internal \
 - [ ] Hub-spoke topology
 - [ ] Peering connection states (Initiated, Connected, Disconnected)
 
-### Module 6: VPN Gateway
+
+
+---
+
+# Module 6: VPN Gateway
+
+## Phase 4: VNet Connectivity
+_Time: 6-8 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] VPN Gateway overview
 - [ ] Gateway SKUs and performance (VpnGw1-5, VpnGw1AZ-5AZ)
@@ -197,6 +376,7 @@ az network private-dns record-set a add-record --zone-name contoso.internal \
 - Peering must be created on **both** VNets
 - Cannot peer VNets with **overlapping address spaces**
 - "Use remote gateways" = spoke side; "Allow gateway transit" = hub side
+- VPN Gateway is **not** the same as VNet peering; peering is simpler and lower latency
 
 #### 🧪 Hands-On Lab 4
 
@@ -213,11 +393,16 @@ az network vnet peering create --name SpokeToHub --resource-group MyRG \
   --allow-vnet-access true --use-remote-gateways true
 ```
 
+
+
 ---
 
-## Phase 5: Advanced Connectivity (3-4 hours) 🟢
+# Module 7: ExpressRoute
 
-### Module 7: ExpressRoute
+## Phase 5: Advanced Connectivity
+_Time: 3-4 hours • Priority: 🟢_
+
+## Module Focus
 
 - [ ] ExpressRoute overview
 - [ ] ExpressRoute circuits
@@ -229,7 +414,16 @@ az network vnet peering create --name SpokeToHub --resource-group MyRG \
 - [ ] Redundancy and resiliency
 - [ ] ExpressRoute vs VPN Gateway
 
-### Module 8: Virtual WAN
+
+
+---
+
+# Module 8: Virtual WAN
+
+## Phase 5: Advanced Connectivity
+_Time: 3-4 hours • Priority: 🟢_
+
+## Module Focus
 
 - [ ] Azure Virtual WAN overview
 - [ ] Virtual WAN hubs
@@ -248,11 +442,16 @@ az network vnet peering create --name SpokeToHub --resource-group MyRG \
 | FastPath | Bypasses gateway for performance (10 Gbps+) |
 | Virtual WAN Basic | VPN only; Standard = VPN + ExpressRoute + VNet |
 
+
+
 ---
 
-## Phase 6: Layer 4 Load Balancing (4-5 hours) 🔴
+# Module 9: Azure Load Balancer
 
-### Module 9: Azure Load Balancer
+## Phase 6: Layer 4 Load Balancing
+_Time: 4-5 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] Azure Load Balancer overview
 - [ ] Public vs Internal Load Balancer
@@ -282,6 +481,7 @@ az network vnet peering create --name SpokeToHub --resource-group MyRG \
 - Basic LB has **no SLA**
 - Standard LB backends must be in **same VNet**
 - Cannot mix Basic and Standard SKUs
+- Load Balancer is **L4** only; HTTP routing belongs to App Gateway/Front Door
 
 #### 🧪 Hands-On Lab 5
 
@@ -300,11 +500,16 @@ az network lb rule create --lb-name MyLoadBalancer --resource-group MyRG \
   --protocol Tcp --frontend-port 80 --backend-port 80 --probe-name MyHealthProbe
 ```
 
+
+
 ---
 
-## Phase 7: Layer 7 Load Balancing (5-6 hours) 🔴
+# Module 10: Application Gateway
 
-### Module 10: Application Gateway
+## Phase 7: Layer 7 Load Balancing
+_Time: 5-6 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] Application Gateway overview
 - [ ] Layer 7 load balancing
@@ -331,6 +536,7 @@ az network lb rule create --lb-name MyLoadBalancer --resource-group MyRG \
 | Path-based routing | /images/* → pool1, /api/* → pool2 |
 | WAF modes | Detection (log only) vs Prevention (block) |
 | Subnet requirement | Dedicated subnet, no other resources |
+| App Gateway vs Front Door | App Gateway = regional L7; Front Door = global L7 anycast |
 
 #### 🧪 Hands-On Lab 6
 
@@ -346,11 +552,16 @@ az network application-gateway create --name MyAppGateway --resource-group MyRG 
   --frontend-port 80 --http-settings-port 80 --http-settings-protocol Http
 ```
 
+
+
 ---
 
-## Phase 8: Global Traffic Routing (3-4 hours) 🟡
+# Module 11: Traffic Manager
 
-### Module 11: Traffic Manager
+## Phase 8: Global Traffic Routing
+_Time: 3-4 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Traffic Manager overview
 - [ ] DNS-based traffic routing
@@ -366,7 +577,16 @@ az network application-gateway create --name MyAppGateway --resource-group MyRG 
 - [ ] Health checks
 - [ ] Nested profiles
 
-### Module 12: Azure Front Door
+
+
+---
+
+# Module 12: Azure Front Door
+
+## Phase 8: Global Traffic Routing
+_Time: 3-4 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Front Door overview
 - [ ] Global load balancing
@@ -398,11 +618,23 @@ az network application-gateway create --name MyAppGateway --resource-group MyRG 
 | SSL Offload | ❌ | ✅ | ❌ | ✅ |
 | Caching | ❌ | ✅ | ❌ | ❌ |
 
+#### ✅ Quick Decision Guide
+
+- **Need global HTTP/HTTPS + WAF + caching:** Front Door  
+- **Need DNS-based failover/geo routing:** Traffic Manager  
+- **Need regional TCP/UDP load balancing:** Load Balancer  
+- **Need regional L7 routing + WAF for VMs/AKS:** Application Gateway
+
+
+
 ---
 
-## Phase 9: Routing & Endpoints (5-6 hours) 🔴
+# Module 13: Network Routing
 
-### Module 13: Network Routing
+## Phase 9: Routing & Endpoints
+_Time: 5-6 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] System routes
 - [ ] User-defined routes (UDR)
@@ -417,7 +649,16 @@ az network application-gateway create --name MyAppGateway --resource-group MyRG 
 - [ ] Forced tunneling
 - [ ] Route propagation
 
-### Module 14: Service Endpoints & Private Link
+
+
+---
+
+# Module 14: Service Endpoints & Private Link
+
+## Phase 9: Routing & Endpoints
+_Time: 5-6 hours • Priority: 🔴_
+
+## Module Focus
 
 - [ ] Virtual Network service endpoints
 - [ ] Service endpoint policies
@@ -435,6 +676,8 @@ az network application-gateway create --name MyAppGateway --resource-group MyRG 
 | Virtual appliance | Requires IP forwarding enabled on NIC |
 | Forced tunneling | Route 0.0.0.0/0 to on-prem |
 | Route propagation | Disable to prevent gateway routes in route table |
+| Service endpoints | Public endpoint remains; traffic stays on backbone |
+| Private endpoints | Private IP in VNet + Private DNS zone |
 
 #### Service Endpoints vs Private Endpoints
 
@@ -469,11 +712,16 @@ az network private-endpoint create --name MyPrivateEndpoint --resource-group MyR
   --group-id blob --connection-name MyConnection
 ```
 
+
+
 ---
 
-## Phase 10: Advanced Security (4-5 hours) 🟡
+# Module 15: Azure Firewall
 
-### Module 3: Azure Firewall
+## Phase 10: Advanced Security
+_Time: 4-5 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Azure Firewall overview
 - [ ] Firewall SKUs (Standard, Premium, Basic)
@@ -486,7 +734,16 @@ az network private-endpoint create --name MyPrivateEndpoint --resource-group MyR
 - [ ] Firewall policies
 - [ ] Forced tunneling
 
-### Module 17: Network Security Best Practices
+
+
+---
+
+# Module 16: Network Security Best Practices
+
+## Phase 10: Advanced Security
+_Time: 4-5 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Defense in depth
 - [ ] Network segmentation
@@ -505,6 +762,7 @@ az network private-endpoint create --name MyPrivateEndpoint --resource-group MyR
 | Premium features | TLS inspection, IDPS, URL filtering, Web categories |
 | Bastion | No public IP on VM needed, uses port 443 |
 | DDoS Standard | Adaptive tuning, cost protection, metrics/alerts |
+| Azure Firewall vs NSG | Firewall = centralized L3-7; NSG = L3-4 per subnet/NIC |
 
 #### 🧪 Hands-On Lab 8
 
@@ -517,11 +775,16 @@ az network bastion create --name MyBastion --resource-group MyRG \
   --vnet-name MyVNet --public-ip-address MyBastionIP
 ```
 
+
+
 ---
 
-## Phase 11: Monitoring & Troubleshooting (3-4 hours) 🟡
+# Module 17: Network Watcher
 
-### Module 15: Network Watcher
+## Phase 11: Monitoring & Troubleshooting
+_Time: 3-4 hours • Priority: 🟡_
+
+## Module Focus
 
 - [ ] Network Watcher overview
 - [ ] IP flow verify
@@ -545,6 +808,14 @@ az network bastion create --name MyBastion --resource-group MyRG \
 | NSG diagnostics | View effective security rules |
 | Packet capture | Capture network traffic for analysis |
 | Traffic analytics | Visualize NSG flow logs |
+
+#### 🔍 Troubleshooting Flow (Bulletproof)
+
+1. **Check NSG effective rules** (subnet + NIC).  
+2. **Check route tables** (UDR/BGP/system).  
+3. **Validate DNS resolution** (Private DNS links, record sets).  
+4. **Confirm service health** (LB/AppGW probes).  
+5. **Validate gateways** (VPN/ER status and routes).  
 
 #### 🧪 Hands-On Lab 9
 
@@ -577,6 +848,19 @@ az network watcher show-next-hop --vm MyVM --resource-group MyRG \
 | Max VNets per peering | Direct peering only (non-transitive) |
 | Standard LB max backend pools | **5000** VMs |
 | Application Gateway max instances | **125** |
+
+---
+
+## ✅ Exam Readiness Checklist (Bulletproof)
+
+- [ ] I can design a hub-spoke network from scratch and defend the design.
+- [ ] I can explain **when to use** VNet peering vs VPN Gateway vs ExpressRoute.
+- [ ] I can map **any** requirement to the correct load balancer (LB/AppGW/Front Door/Traffic Manager).
+- [ ] I can troubleshoot a connectivity issue in under 10 minutes using Network Watcher.
+- [ ] I can explain Service Endpoints vs Private Endpoints without notes.
+- [ ] I know subnet size requirements for Gateway/Bastion/Firewall subnets.
+- [ ] I can read effective NSG rules and identify the blocking rule.
+- [ ] I can explain Basic vs Standard SKUs for Public IPs, LB, and WAF.
 
 ---
 
