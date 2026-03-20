@@ -1463,3 +1463,620 @@ emptyDir configMap secret         Online           Offline           │        
                                                                  ├── Restore to new PVC
                                                                  └── Requires CSI driver
 ```
+
+### Networking
+```
+
+KUBERNETES NETWORKING
+│
+├─── 1. NETWORKING MODEL (Fundamentals)
+│    ├── Every Pod gets its own IP address
+│    ├── Pods can communicate with all other Pods without NAT
+│    ├── Agents on a node can communicate with all Pods on that node
+│    ├── IP that a Pod sees itself as = IP others see it as (no NAT)
+│    └── Flat network — all Pods in a shared networking namespace
+│
+│
+├─── 2. POD NETWORKING
+│    │
+│    ├── Network Namespace
+│    │   ├── Each Pod = its own network namespace
+│    │   ├── Containers in same Pod share the namespace (localhost)
+│    │   └── veth pair connects Pod namespace ↔ Node root namespace
+│    │
+│    ├── Pod-to-Pod Communication
+│    │   ├── Same Node → via Linux bridge (cbr0)
+│    │   └── Cross Node → via overlay network / CNI plugin routing
+│    │
+│    ├── Pod IP Assignment
+│    │   ├── IPAM (IP Address Management) handled by CNI
+│    │   └── --pod-cidr / --cluster-cidr defines Pod IP range
+│    │
+│    └── DNS in Pods
+│        ├── Every Pod gets DNS via CoreDNS
+│        ├── Pod DNS: <pod-ip-dashed>.<namespace>.pod.cluster.local
+│        └── /etc/resolv.conf points to CoreDNS ClusterIP
+│
+│
+├─── 3. CONTAINER NETWORK INTERFACE (CNI)
+│    │
+│    ├── What is CNI?
+│    │   ├── CNCF project — standard for container networking
+│    │   ├── Plugin-based architecture
+│    │   ├── Kubelet invokes CNI plugin when Pod is created/deleted
+│    │   └── Responsible for: IP assignment, routing, network setup
+│    │
+│    ├── Kubelet CNI Options
+│    │   ├── --cni-bin-dir=/opt/cni/bin     (plugin binaries)
+│    │   ├── --cni-conf-dir=/etc/cni/net.d  (plugin config files)
+│    │   ├── --network-plugin=cni            (enable CNI)
+│    │   └── --pod-cidr=10.244.0.0/16       (Pod IP range)
+│    │
+│    ├── Popular CNI Plugins
+│    │   ├── Flannel       — simple overlay (VXLAN)
+│    │   ├── Calico        — BGP routing + Network Policies
+│    │   ├── Weave Net     — mesh overlay
+│    │   ├── Cilium        — eBPF-based, advanced observability
+│    │   └── Canal         — Flannel + Calico combined
+│    │
+│    └── Example: CNI Config (/etc/cni/net.d/10-flannel.conf)
+│        ┌──────────────────────────────────────────┐
+│        │ {                                        │
+│        │   "name": "cbr0",                       │
+│        │   "cniVersion": "0.3.1",                │
+│        │   "type": "flannel",                    │
+│        │   "delegate": {                         │
+│        │     "isDefaultGateway": true,           │
+│        │     "hairpinMode": true                 │
+│        │   }                                     │
+│        │ }                                       │
+│        └──────────────────────────────────────────┘
+│
+│
+├─── 4. SERVICES
+│    │
+│    ├── Why Services?
+│    │   ├── Pods are ephemeral — IPs change
+│    │   ├── Service = stable virtual IP + DNS name
+│    │   └── kube-proxy maintains iptables/IPVS rules
+│    │
+│    ├── Service Types
+│    │   │
+│    │   ├── ClusterIP (default)
+│    │   │   ├── Internal-only virtual IP
+│    │   │   ├── Accessible only within the cluster
+│    │   │   ├── spec.type: ClusterIP
+│    │   │   └── Use: internal microservice communication
+│    │   │
+│    │   ├── NodePort
+│    │   │   ├── Exposes service on <NodeIP>:<NodePort>
+│    │   │   ├── Port range: 30000–32767
+│    │   │   ├── Builds on top of ClusterIP
+│    │   │   ├── Options:
+│    │   │   │   ├── spec.ports[].nodePort: 30080
+│    │   │   │   ├── spec.ports[].port: 80         (service port)
+│    │   │   │   └── spec.ports[].targetPort: 8080 (container port)
+│    │   │   └── Use: dev/test, direct external access
+│    │   │
+│    │   ├── LoadBalancer
+│    │   │   ├── Provisions external cloud load balancer
+│    │   │   ├── Builds on top of NodePort + ClusterIP
+│    │   │   ├── Options:
+│    │   │   │   ├── spec.loadBalancerIP (request specific IP)
+│    │   │   │   ├── spec.loadBalancerSourceRanges (IP whitelist)
+│    │   │   │   └── spec.externalTrafficPolicy: Local|Cluster
+│    │   │   └── Use: production external-facing services
+│    │   │
+│    │   └── ExternalName
+│    │       ├── Maps service to external DNS name (CNAME)
+│    │       ├── No proxy, no ClusterIP
+│    │       ├── spec.externalName: my.database.example.com
+│    │       └── Use: reference external services by K8s DNS name
+│    │
+│    └── kube-proxy Modes
+│        ├── iptables (default) — rule-based packet routing
+│        ├── IPVS — hash-table-based, better performance at scale
+│        └── userspace (legacy) — rarely used
+│
+│
+├─── 5. INGRESS
+│    │
+│    │
+│    ├─── 5a. INGRESS ARCHITECTURE OVERVIEW
+│    │    ┌──────────────────────────────────────────────────────┐
+│    │    │                                                      │
+│    │    │   Client                                             │
+│    │    │     │                                                │
+│    │    │     ▼                                                │
+│    │    │   [ Ingress Controller Service ]  (NodePort/LB)     │
+│    │    │     │                                                │
+│    │    │     ▼                                                │
+│    │    │   [ Ingress Controller Pod ]  (nginx/traefik/etc)   │
+│    │    │     │    reads                                       │
+│    │    │     ▼                                                │
+│    │    │   [ Ingress Resource ]  (rules YAML)                │
+│    │    │     │    routes to                                   │
+│    │    │     ▼                                                │
+│    │    │   [ Backend Services ]  ──►  [ Pods ]               │
+│    │    │                                                      │
+│    │    └──────────────────────────────────────────────────────┘
+│    │
+│    │
+│    ├─── 5b. INGRESS CONTROLLER
+│    │    │
+│    │    ├── What?
+│    │    │   ├── A Pod running reverse proxy software
+│    │    │   ├── Watches Ingress resources via K8s API
+│    │    │   ├── Dynamically reconfigures itself based on rules
+│    │    │   └── NOT auto-installed — you must deploy one
+│    │    │
+│    │    ├── Popular Ingress Controllers
+│    │    │   ├── NGINX Ingress Controller  (most common)
+│    │    │   ├── Traefik
+│    │    │   ├── HAProxy
+│    │    │   ├── Istio Gateway
+│    │    │   ├── Kong
+│    │    │   └── AWS ALB Ingress Controller
+│    │    │
+│    │    ├── NGINX Controller Deployment Components
+│    │    │   │
+│    │    │   ├── 1. Namespace
+│    │    │   │      └── ingress-nginx
+│    │    │   │
+│    │    │   ├── 2. ServiceAccount
+│    │    │   │      └── ingress-nginx
+│    │    │   │
+│    │    │   ├── 3. ConfigMap
+│    │    │   │      ├── ingress-nginx-controller  (nginx settings)
+│    │    │   │      ├── tcp-services
+│    │    │   │      └── udp-services
+│    │    │   │
+│    │    │   ├── 4. RBAC
+│    │    │   │      ├── ClusterRole: ingress-nginx
+│    │    │   │      │   └── rules: get/list/watch on ingresses,
+│    │    │   │      │       services, endpoints, secrets, configmaps
+│    │    │   │      ├── ClusterRoleBinding: ingress-nginx
+│    │    │   │      │   └── binds ClusterRole → ServiceAccount
+│    │    │   │      ├── Role: ingress-nginx  (namespace-scoped)
+│    │    │   │      │   └── rules: get/update configmaps,
+│    │    │   │      │       leader election
+│    │    │   │      └── RoleBinding: ingress-nginx
+│    │    │   │          └── binds Role → ServiceAccount
+│    │    │   │
+│    │    │   ├── 5. Deployment
+│    │    │   │      └── ingress-nginx-controller
+│    │    │   │          ├── image: k8s.gcr.io/ingress-nginx/controller
+│    │    │   │          ├── args: --configmap, --ingress-class
+│    │    │   │          └── ports: 80 (HTTP), 443 (HTTPS)
+│    │    │   │
+│    │    │   └── 6. Ingress Controller Service
+│    │    │          ├── type: LoadBalancer (prod) / NodePort (dev)
+│    │    │          └── exposes controller Pods externally
+│    │    │
+│    │    └── NGINX Controller Components — Mind Map
+│    │
+│    │       NGINX Ingress Controller Stack
+│    │       │
+│    │       ├── Namespace ─────────── ingress-nginx
+│    │       │
+│    │       ├── ConfigMap ─────────── nginx-configuration
+│    │       │                         tcp-services
+│    │       │                         udp-services
+│    │       │
+│    │       ├── ServiceAccount ────── ingress-nginx-sa
+│    │       │
+│    │       ├── RBAC
+│    │       │   ├── ClusterRole ───── ingress-nginx (cluster-wide)
+│    │       │   ├── ClusterRoleBinding
+│    │       │   ├── Role ──────────── ingress-nginx (namespaced)
+│    │       │   └── RoleBinding
+│    │       │
+│    │       ├── Deployment ────────── ingress-nginx-controller
+│    │       │
+│    │       └── Service ───────────── ingress-nginx-controller
+│    │                                 (type: LoadBalancer/NodePort)
+│    │
+│    │
+│    ├─── 5c. INGRESS RESOURCE
+│    │    │
+│    │    ├── What?
+│    │    │   ├── A K8s object (kind: Ingress)
+│    │    │   ├── Defines HTTP/HTTPS routing rules
+│    │    │   └── Watched by Ingress Controller
+│    │    │
+│    │    ├── Ingress Resource Rules
+│    │    │   │
+│    │    │   ├── Host-based routing
+│    │    │   │   └── spec.rules[].host: app.example.com
+│    │    │   │
+│    │    │   ├── Path-based routing
+│    │    │   │   ├── spec.rules[].http.paths[].path: /api
+│    │    │   │   └── spec.rules[].http.paths[].pathType:
+│    │    │   │       ├── Prefix  — matches /api, /api/v1, /api/anything
+│    │    │   │       ├── Exact   — matches /api only
+│    │    │   │       └── ImplementationSpecific — controller decides
+│    │    │   │
+│    │    │   ├── Backend
+│    │    │   │   ├── service.name: my-service
+│    │    │   │   └── service.port.number: 80
+│    │    │   │
+│    │    │   ├── Default Backend
+│    │    │   │   └── Catch-all for unmatched requests (404 page)
+│    │    │   │
+│    │    │   └── TLS
+│    │    │       ├── spec.tls[].hosts: [app.example.com]
+│    │    │       └── spec.tls[].secretName: app-tls-secret
+│    │    │
+│    │    └── Example: Ingress Resource YAML
+│    │        ┌──────────────────────────────────────────────────┐
+│    │        │ apiVersion: networking.k8s.io/v1                 │
+│    │        │ kind: Ingress                                    │
+│    │        │ metadata:                                        │
+│    │        │   name: my-app-ingress                           │
+│    │        │   namespace: default                             │
+│    │        │   annotations:                                   │
+│    │        │     nginx.ingress.kubernetes.io/rewrite-target: /│
+│    │        │ spec:                                            │
+│    │        │   ingressClassName: nginx                        │
+│    │        │   tls:                                           │
+│    │        │   - hosts:                                       │
+│    │        │     - app.example.com                            │
+│    │        │     secretName: app-tls-secret                   │
+│    │        │   rules:                                         │
+│    │        │   - host: app.example.com                        │
+│    │        │     http:                                        │
+│    │        │       paths:                                     │
+│    │        │       - path: /api                               │
+│    │        │         pathType: Prefix                         │
+│    │        │         backend:                                 │
+│    │        │           service:                               │
+│    │        │             name: api-service                    │
+│    │        │             port:                                │
+│    │        │               number: 80                         │
+│    │        │       - path: /web                               │
+│    │        │         pathType: Prefix                         │
+│    │        │         backend:                                 │
+│    │        │           service:                               │
+│    │        │             name: web-service                    │
+│    │        │             port:                                │
+│    │        │               number: 80                         │
+│    │        │   defaultBackend:                                │
+│    │        │     service:                                     │
+│    │        │       name: default-http-backend                 │
+│    │        │       port:                                      │
+│    │        │         number: 80                               │
+│    │        └──────────────────────────────────────────────────┘
+│    │
+│    │
+│    └─── 5d. EXAMPLE: NGINX INGRESS CONTROLLER CONFIG
+│         ┌──────────────────────────────────────────────────────┐
+│         │ # --- ServiceAccount ---                             │
+│         │ apiVersion: v1                                       │
+│         │ kind: ServiceAccount                                 │
+│         │ metadata:                                            │
+│         │   name: ingress-nginx                                │
+│         │   namespace: ingress-nginx                           │
+│         │ ---                                                  │
+│         │ # --- ClusterRole ---                                │
+│         │ apiVersion: rbac.authorization.k8s.io/v1             │
+│         │ kind: ClusterRole                                    │
+│         │ metadata:                                            │
+│         │   name: ingress-nginx                                │
+│         │ rules:                                               │
+│         │ - apiGroups: [""]                                    │
+│         │   resources: [configmaps, endpoints, nodes,          │
+│         │               pods, secrets, services]               │
+│         │   verbs: [get, list, watch]                          │
+│         │ - apiGroups: [networking.k8s.io]                     │
+│         │   resources: [ingresses, ingressclasses]             │
+│         │   verbs: [get, list, watch]                          │
+│         │ - apiGroups: [networking.k8s.io]                     │
+│         │   resources: [ingresses/status]                      │
+│         │   verbs: [update]                                    │
+│         │ ---                                                  │
+│         │ # --- ClusterRoleBinding ---                         │
+│         │ apiVersion: rbac.authorization.k8s.io/v1             │
+│         │ kind: ClusterRoleBinding                             │
+│         │ metadata:                                            │
+│         │   name: ingress-nginx                                │
+│         │ roleRef:                                             │
+│         │   apiGroup: rbac.authorization.k8s.io                │
+│         │   kind: ClusterRole                                  │
+│         │   name: ingress-nginx                                │
+│         │ subjects:                                            │
+│         │ - kind: ServiceAccount                               │
+│         │   name: ingress-nginx                                │
+│         │   namespace: ingress-nginx                           │
+│         │ ---                                                  │
+│         │ # --- ConfigMap ---                                  │
+│         │ apiVersion: v1                                       │
+│         │ kind: ConfigMap                                      │
+│         │ metadata:                                            │
+│         │   name: nginx-configuration                          │
+│         │   namespace: ingress-nginx                           │
+│         │ data:                                                │
+│         │   proxy-body-size: "8m"                              │
+│         │   use-forwarded-headers: "true"                      │
+│         │ ---                                                  │
+│         │ # --- Deployment ---                                 │
+│         │ apiVersion: apps/v1                                  │
+│         │ kind: Deployment                                     │
+│         │ metadata:                                            │
+│         │   name: ingress-nginx-controller                     │
+│         │   namespace: ingress-nginx                           │
+│         │ spec:                                                │
+│         │   replicas: 2                                        │
+│         │   selector:                                          │
+│         │     matchLabels:                                     │
+│         │       app: ingress-nginx                             │
+│         │   template:                                          │
+│         │     metadata:                                        │
+│         │       labels:                                        │
+│         │         app: ingress-nginx                           │
+│         │     spec:                                            │
+│         │       serviceAccountName: ingress-nginx              │
+│         │       containers:                                    │
+│         │       - name: controller                             │
+│         │         image: registry.k8s.io/ingress-nginx/        │
+│         │                controller:v1.9.0                     │
+│         │         args:                                        │
+│         │           - /nginx-ingress-controller                │
+│         │           - --configmap=ingress-nginx/               │
+│         │             nginx-configuration                      │
+│         │           - --ingress-class=nginx                    │
+│         │         ports:                                       │
+│         │         - containerPort: 80                          │
+│         │           name: http                                 │
+│         │         - containerPort: 443                         │
+│         │           name: https                                │
+│         │ ---                                                  │
+│         │ # --- Controller Service ---                         │
+│         │ apiVersion: v1                                       │
+│         │ kind: Service                                        │
+│         │ metadata:                                            │
+│         │   name: ingress-nginx-controller                     │
+│         │   namespace: ingress-nginx                           │
+│         │ spec:                                                │
+│         │   type: LoadBalancer                                 │
+│         │   selector:                                          │
+│         │     app: ingress-nginx                               │
+│         │   ports:                                             │
+│         │   - name: http                                       │
+│         │     port: 80                                         │
+│         │     targetPort: 80                                   │
+│         │   - name: https                                      │
+│         │     port: 443                                        │
+│         │     targetPort: 443                                  │
+│         └──────────────────────────────────────────────────────┘
+│
+│
+├─── 6. NETWORK POLICIES
+│    ├── Control Pod-to-Pod traffic (firewall rules)
+│    ├── Require a CNI that supports them (Calico, Cilium)
+│    ├── Default: all traffic allowed
+│    ├── podSelector — which Pods the policy applies to
+│    ├── policyTypes — Ingress, Egress, or both
+│    └── ingress/egress rules — from/to + ports
+│
+│
+└─── 7. DNS (CoreDNS)
+     ├── Runs as Pods in kube-system namespace
+     ├── Service DNS: <svc>.<ns>.svc.cluster.local
+     ├── Pod DNS: <pod-ip-dashed>.<ns>.pod.cluster.local
+     └── Configurable via CoreDNS ConfigMap
+```
+
+
+# ═══════════════════════════════════════════════════════════════
+#  QUICK-REFERENCE: SERVICE TYPES COMPARISON
+# ═══════════════════════════════════════════════════════════════
+
+```
+┌──────────────┬─────────────┬──────────────┬───────────────┬───────────────┐
+│              │ ClusterIP   │ NodePort     │ LoadBalancer  │ ExternalName  │
+├──────────────┼─────────────┼──────────────┼───────────────┼───────────────┤
+│ Scope        │ Internal    │ External     │ External      │ External DNS  │
+│ Gets ClustIP │ Yes         │ Yes          │ Yes           │ No            │
+│ Gets NodePort│ No          │ Yes (30000-  │ Yes           │ No            │
+│              │             │  32767)      │               │               │
+│ Gets Ext LB  │ No          │ No           │ Yes           │ No            │
+│ Use Case     │ Inter-svc   │ Dev/Test     │ Production    │ External ref  │
+│ Traffic Flow │ ClustIP→Pod │ NodeIP:Port  │ LB→NodePort   │ CNAME alias   │
+│              │             │  →ClustIP    │  →ClustIP→Pod │               │
+│              │             │   →Pod       │               │               │
+└──────────────┴─────────────┴──────────────┴───────────────┴───────────────┘
+```
+
+
+# ═══════════════════════════════════════════════════════════════
+#  QUICK-REFERENCE: INGRESS FULL STACK MIND MAP
+# ═══════════════════════════════════════════════════════════════
+
+```
+                    INGRESS ECOSYSTEM
+                          │
+        ┌─────────────────┼─────────────────┐
+        │                 │                 │
+   CONTROLLER         RESOURCE          SERVICE
+   (the engine)     (the rules)     (the entry point)
+        │                 │                 │
+        │                 │                 │
+  ┌─────┴──────┐    ┌─────┴──────┐    ┌────┴─────┐
+  │ Deployment │    │ Rules      │    │ type:    │
+  │ (Pod with  │    │  ├ host    │    │ NodePort │
+  │  nginx/    │    │  ├ path    │    │   or     │
+  │  traefik)  │    │  ├ pathType│    │ LoadBal  │
+  └─────┬──────┘    │  └ backend │    └────┬─────┘
+        │           │ TLS        │         │
+  Needs:│           │  ├ hosts   │    Exposes the
+  ┌─────┴────────┐  │  └ secret  │    controller
+  │ ServiceAcct  │  │ Default    │    Pods to
+  │ ConfigMap    │  │  Backend   │    external
+  │ ClusterRole  │  │ Annotations│    traffic
+  │ ClustRoleBind│  │ ingressClass│
+  │ Role         │  └────────────┘
+  │ RoleBinding  │
+  └──────────────┘
+
+
+  REQUEST FLOW:
+  ═════════════
+  Internet → Ingress Service (LB/NodePort)
+               → Ingress Controller Pod
+                  → reads Ingress Resource rules
+                     → routes to Backend Service
+                        → forwards to Pod
+```
+
+
+# ═══════════════════════════════════════════════════════════════
+#  QUICK-REFERENCE: CNI COMMAND EXAMPLES
+# ═══════════════════════════════════════════════════════════════
+
+```
+# Check current CNI plugin
+ls /etc/cni/net.d/
+cat /etc/cni/net.d/10-flannel.conflist
+
+# Check kubelet CNI config
+ps aux | grep kubelet | grep cni
+# Look for: --cni-bin-dir  --cni-conf-dir  --network-plugin
+
+# Install Flannel CNI
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+
+# Install Calico CNI
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
+
+# Install NGINX Ingress Controller (Helm)
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+
+# Verify
+kubectl get pods -n ingress-nginx
+kubectl get svc  -n ingress-nginx
+kubectl get ingress --all-namespaces
+```
+
+
+# ═══════════════════════════════════════════════════════════════
+#  MASTER MIND MAP — ENTIRE K8S NETWORKING AT A GLANCE
+# ═══════════════════════════════════════════════════════════════
+
+```
+                        KUBERNETES NETWORKING
+                                 │
+     ┌───────────────┬───────────┼────────────┬──────────────┐
+     │               │           │            │              │
+ NETWORKING     CONTAINER    SERVICES     INGRESS       NETWORK
+   MODEL        NETWORK     (Layer 4)    (Layer 7       POLICIES
+                INTERFACE                 HTTP/S)      (Firewall)
+                 (CNI)
+     │               │           │            │              │
+     │               │           │            │              │
+
+
+ 1. NETWORKING MODEL
+ ───────────────────
+ ├── Every Pod gets its own unique IP
+ ├── No NAT — Pods talk directly
+ ├── Flat network across all nodes
+ ├── veth pair (virtual ethernet)
+ │   connects Pod ↔ Node namespace
+ ├── Linux bridge (cbr0) for same-node
+ └── CoreDNS for service discovery
+     <service>.<namespace>.svc.cluster.local
+
+
+ 2. CONTAINER NETWORK INTERFACE (CNI)
+ ────────────────────────────────────
+ ├── CNI Plugins
+ │   ├── Flannel  — simple VXLAN overlay
+ │   ├── Calico   — BGP routing + Network Policies
+ │   ├── Cilium   — eBPF-based, advanced observability
+ │   ├── Weave Net — mesh overlay network
+ │   └── Canal    — Flannel + Calico combined
+ │
+ ├── Kubelet CNI Flags
+ │   ├── --cni-bin-dir=/opt/cni/bin
+ │   ├── --cni-conf-dir=/etc/cni/net.d
+ │   └── --network-plugin=cni
+ │
+ └── IPAM (IP Address Management)
+     └── Assigns Pod IPs from --pod-cidr range
+
+
+ 3. SERVICES (Layer 4 Load Balancing)
+ ────────────────────────────────────
+ ├── ClusterIP (default)
+ │   └── Internal-only virtual IP
+ │
+ ├── NodePort
+ │   └── Exposes on <NodeIP>:<Port 30000-32767>
+ │
+ ├── LoadBalancer
+ │   └── Cloud provider external load balancer
+ │
+ ├── ExternalName
+ │   └── DNS CNAME to external service
+ │
+ └── kube-proxy Modes
+     ├── iptables (default)
+     └── IPVS (better at scale)
+
+
+ 4. INGRESS (Layer 7 HTTP/HTTPS Routing)
+ ───────────────────────────────────────
+ │
+ ├── Ingress Controller (the engine)
+ │   ├── Controllers Available
+ │   │   ├── NGINX Ingress Controller
+ │   │   ├── Traefik
+ │   │   ├── HAProxy
+ │   │   ├── Istio Gateway
+ │   │   └── Kong
+ │   │
+ │   └── Deployment Components
+ │       ├── Namespace
+ │       ├── ServiceAccount
+ │       ├── ConfigMap (nginx config, tcp/udp services)
+ │       ├── ClusterRole (cluster-wide permissions)
+ │       ├── ClusterRoleBinding
+ │       ├── Role (namespace-scoped permissions)
+ │       ├── RoleBinding
+ │       ├── Deployment (controller Pods)
+ │       └── Service (LoadBalancer or NodePort)
+ │
+ ├── Ingress Resource (the rules)
+ │   ├── Host-based routing   (app.example.com)
+ │   ├── Path-based routing   (/api, /web)
+ │   ├── Path Types: Prefix | Exact | ImplementationSpecific
+ │   ├── Backend service + port
+ │   ├── Default Backend (catch-all 404)
+ │   └── TLS termination (secret reference)
+ │
+ └── Ingress Controller Service (the entry point)
+     └── Exposes controller externally via
+         LoadBalancer (production) or NodePort (dev)
+
+
+ 5. NETWORK POLICIES (Pod-level Firewall)
+ ────────────────────────────────────────
+ ├── podSelector — which Pods the policy targets
+ ├── policyTypes — Ingress, Egress, or both
+ ├── ingress rules — allowed inbound (from + ports)
+ ├── egress rules  — allowed outbound (to + ports)
+ └── Requires CNI support (Calico, Cilium)
+
+
+ REQUEST FLOW (end to end):
+ ══════════════════════════
+ Internet
+   └─► Ingress Controller Service (LoadBalancer / NodePort)
+         └─► Ingress Controller Pod (NGINX / Traefik)
+               └─► reads Ingress Resource rules
+                     └─► routes to Backend ClusterIP Service
+                           └─► forwards to application Pod
+```
+
