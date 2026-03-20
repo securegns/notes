@@ -1864,14 +1864,14 @@ KUBERNETES NETWORKING
      ├── Service DNS: <svc>.<ns>.svc.cluster.local
      ├── Pod DNS: <pod-ip-dashed>.<ns>.pod.cluster.local
      └── Configurable via CoreDNS ConfigMap
-```
+
 
 
 # ═══════════════════════════════════════════════════════════════
 #  QUICK-REFERENCE: SERVICE TYPES COMPARISON
 # ═══════════════════════════════════════════════════════════════
 
-```
+
 ┌──────────────┬─────────────┬──────────────┬───────────────┬───────────────┐
 │              │ ClusterIP   │ NodePort     │ LoadBalancer  │ ExternalName  │
 ├──────────────┼─────────────┼──────────────┼───────────────┼───────────────┤
@@ -1885,14 +1885,13 @@ KUBERNETES NETWORKING
 │              │             │  →ClustIP    │  →ClustIP→Pod │               │
 │              │             │   →Pod       │               │               │
 └──────────────┴─────────────┴──────────────┴───────────────┴───────────────┘
-```
+
 
 
 # ═══════════════════════════════════════════════════════════════
 #  QUICK-REFERENCE: INGRESS FULL STACK MIND MAP
 # ═══════════════════════════════════════════════════════════════
 
-```
                     INGRESS ECOSYSTEM
                           │
         ┌─────────────────┼─────────────────┐
@@ -1926,14 +1925,14 @@ KUBERNETES NETWORKING
                   → reads Ingress Resource rules
                      → routes to Backend Service
                         → forwards to Pod
-```
+
 
 
 # ═══════════════════════════════════════════════════════════════
 #  QUICK-REFERENCE: CNI COMMAND EXAMPLES
 # ═══════════════════════════════════════════════════════════════
 
-```
+
 # Check current CNI plugin
 ls /etc/cni/net.d/
 cat /etc/cni/net.d/10-flannel.conflist
@@ -1957,14 +1956,11 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
 kubectl get pods -n ingress-nginx
 kubectl get svc  -n ingress-nginx
 kubectl get ingress --all-namespaces
-```
 
 
-# ═══════════════════════════════════════════════════════════════
 #  MASTER MIND MAP — ENTIRE K8S NETWORKING AT A GLANCE
-# ═══════════════════════════════════════════════════════════════
 
-```
+
                         KUBERNETES NETWORKING
                                  │
      ┌───────────────┬───────────┼────────────┬──────────────┐
