@@ -1364,3 +1364,102 @@ Before the exam, you should be able to confidently explain each of these. Check 
 > **Study Priority Order:** Kubernetes Fundamentals (44%) → Container Orchestration (28%) → Application Delivery (16%) → Architecture (12%)
 >
 > **Time allocation:** Spend ~50% of study time on Domain 1, ~25% on Domain 2, ~15% on Domain 3, ~10% on Domain 4.
+
+
+# Mindmap
+
+### Storage
+```                                            KUBERNETES STORAGE
+                                                    │
+              ┌─────────────────┬───────────────────┼───────────────────┬──────────────────┐
+              │                 │                    │                  │                  │
+        CORE OBJECTS      PROVISIONING        ACCESS MODES       RECLAIM POLICIES    STORAGE TYPES
+              │                 │                    │                  │                  │
+       ┌──────┼──────┐    ┌────┴─────┐        ┌────┼────┐        ┌──────┼──────┐           │
+       │      │      │    │          │        │    │    │        │      │      │           │
+       PV    PVC     SC  Static   Dynamic    RWO  RWX  ROX    Retain Delete Recycle        │
+                     │    │          │        │    │    │        │      │      │           │
+                     │   Admin     Auto       │    │    │        │      │  (deprecated)    │
+                     │  creates  created      │    │    │      Keep   Delete               │
+                     │  PV       via SC       │    │    │      data    PV                  │
+                     │  manually              │    │    │      after   + data              │
+                     ├── provisioner          │    │    │      PVC     when PVC            │
+                     ├── parameters           │    │    │      delete  deleted             │
+                     ├── reclaimPolicy       Read Read Read                                │
+                     ├── volumeBindingMode   Write Many Only                               │
+                     │     ├─ Immediate      Once (multi (multi                            │
+                     │     └─ WaitForFirst   (single node) node)                           │
+                     │        Consumer        node)                                        │
+                     └── allowVolume                                                       │
+                           Expansion                                                       │
+                           (true/false)                                                    │
+                                                                                           │
+       PersistentVolumeClaim                                                               │
+              │                                                                            │
+              ├── accessModes                                         ┌────────────────────┘
+              ├── resources.requests                                  │
+              │     └── storage: 5Gi                       STORAGE TYPES / VOLUME PLUGINS
+              ├── storageClassName                                   │
+              ├── selector                              ┌────────────┼────────────────────────────┐
+              │     ├── matchLabels                     │            │                            │
+              │     └── matchExpressions          LOCAL / NODE  NETWORK / CLOUD          SPECIAL PURPOSE
+              └── volumeMode                            │            │                            │
+                    ├── Filesystem (default)            │            │                            │
+                    └── Block (raw block)               │            │                            │
+                                                        │            │                            │
+       PersistentVolume                                 │            │                            │
+              │                                         │            │                            │
+              ├── capacity                     emptyDir (pod    awsElasticBlockStore     configMap (inject
+              ├── accessModes                   lifetime,        (EBS)                    config as files)
+              ├── persistentVolumeReclaimPolicy  tmpfs          gcePersistentDisk         secret (inject
+              ├── storageClassName               optional)       (GCE PD)                 secrets as files)
+              ├── mountOptions                 hostPath (node   azureDisk                downwardAPI (pod/
+              ├── nodeAffinity                  directory       azureFile                  container info)
+              └── volumeMode                    mounted)       nfs                       projected (combine
+                                               local (PV       iscsi                      multiple sources)
+                                                backed by      cephfs
+                                                local disk)    glusterfs (deprecated)
+                                                               fc (Fibre Channel)
+                                                                        │
+                                                               CSI (Container Storage Interface)
+                                                                        │
+                                                               ├── Standard plugin interface
+                                                               ├── Any vendor can implement
+                                                               ├── Replaces in-tree plugins
+                                                               └── Examples:
+                                                                     ├── ebs.csi.aws.com
+                                                                     ├── pd.csi.storage.gke.io
+                                                                     ├── disk.csi.azure.com
+                                                                     └── csi.vsphere.vmware.com
+
+
+──────────────────────────────────────────────────────────────────────────────────────────────────
+
+  VOLUME LIFECYCLE                    BINDING LOGIC                      PROVISIONER TYPES
+        │                                  │                                     │
+  ┌─────┼──────┐              ┌────────────┼─────────────┐              ┌────────┴────────┐
+  │     │      │              │            │             │              │                 │
+Provision Bind Reclaim     By Size    By Access    By StorageClass    In-Tree           CSI
+  │     │      │            PV >=     Mode Match    Name Match        Plugins          Drivers
+  │     │      │           PVC size   (RWO=RWO)    (SC name must       │                 │
+Static/ PV↔PVC Retain/    (1Gi PV    (RWX=RWX)     match or both    AWS EBS        ebs.csi.aws.com
+Dynamic matched Delete/    fits                      empty)          GCE PD     pd.csi.storage.gke.io
+               Recycle    500Mi PVC)                                 Azure      disk.csi.azure.com
+
+
+──────────────────────────────────────────────────────────────────────────────────────────────────
+
+  EPHEMERAL VOLUMES                   VOLUME EXPANSION                   VOLUME SNAPSHOTS
+        │                                    │                               (CSI only)
+  ┌─────┼──────┐                    ┌────────┴────────┐                       │
+  │     │      │                    │                 │              ┌────────┼──────────┐
+emptyDir configMap secret         Online           Offline           │        │          │
+  │      │      │              (expand while   (must delete    VolumeSnapshot │    VolumeSnapshot
+(dies  (readonly (readonly      pod running)    pod first)      Class         │     Content
+ with   mounted)  mounted)          │                │           │       VolumeSnapshot
+ pod)                        allowVolumeExpansion: true          │            │
+                             (set in StorageClass)               │            │
+                                                                 ├── Point-in-time copy
+                                                                 ├── Restore to new PVC
+                                                                 └── Requires CSI driver
+```
