@@ -364,3 +364,15 @@ Use this sentence to remember the *lifecycle order*:
 | **E**xpose | `expose`, `get svc` |
 
 A pod's life follows **CVRDE** — like a car (Create, View, Revise, Debug, Expose).
+
+
+
+```
+Deployment
+└── spec                        ← Deployment spec
+    └── template                ← Pod template (the blueprint for pods)
+        └── spec                ← Pod spec
+            └── containers[]   ← List of containers
+                ├── name
+                └── image       ← ← ← This is what you want to change
+```
