@@ -2231,3 +2231,88 @@ HPA
  └── Cloud queue →  external.metrics.k8s.io (cloud adapters)
 ```
 
+
+## Kubernetes Scaling — Complete Overview
+
+### The Full Landscape
+
+Kubernetes scaling operates at **3 levels**: Pod, Node, and Workload scheduling.
+
+---
+
+### Level 1: Pod-Level Scaling (What runs inside a node)
+
+| Type | Acronym | What it does |
+|---|---|---|
+| **Horizontal Pod Autoscaler** | HPA | Adds/removes **pod replicas** based on CPU/memory/custom metrics |
+| **Vertical Pod Autoscaler** | VPA | Adjusts **CPU & memory requests/limits** on existing pods |
+| **KEDA** | KEDA | Extends HPA — scales pods based on **external events** (Kafka lag, SQS queue depth, Redis, etc.) |
+| **Multidimensional Pod Autoscaler** | MPA | Google GKE-specific — combines VPA + HPA together |
+
+---
+
+### Level 2: Node-Level Scaling (The machines that run pods)
+
+| Type | Acronym | What it does |
+|---|---|---|
+| **Cluster Autoscaler** | CA | Adds/removes **nodes** when pods are unschedulable or nodes are underutilized |
+| **Karpenter** | — | AWS-native node provisioner — faster, more flexible than CA; provisions nodes in seconds |
+| **Node Auto Provisioner** | NAP | GKE's Karpenter equivalent |
+
+---
+
+### Level 3: Scheduling & Throughput Scaling
+
+| Type | What it does |
+|---|---|
+| **Proportional Autoscaler** | Scales system components (like `kube-dns`) proportionally to cluster size |
+| **Scheduled Scaling** | Cron-based scaling (via KEDA's cron scaler or external tools like Argo Rollouts) |
+
+---
+
+### How to Remember Them
+
+Use the mnemonic **"HVCK — Pod, Node, Schedule"**:
+
+```
+H — HPA       (Horizontal: more pods)
+V — VPA       (Vertical: bigger pods)
+C — KEDA      (event-driven: smarter pods)  ← K sounds like C
+K — Cluster Autoscaler + Karpenter (nodes)
+```
+
+Or think of it as **3 questions**:
+
+```
+1. "How many pods?"   → HPA, KEDA
+2. "How big is each pod?"  → VPA
+3. "How many nodes?"  → Cluster Autoscaler, Karpenter
+```
+
+---
+
+### Quick Comparison: When to Use What
+
+```
+External event (queue, stream)?  → KEDA
+Traffic/CPU spike?               → HPA
+OOM errors / resource waste?     → VPA
+Pods pending, no space?          → Cluster Autoscaler
+Need nodes in <30s?              → Karpenter
+```
+
+---
+
+### HPA vs KEDA vs VPA vs CA — One-liner each
+
+- **HPA** — "Scale out when busy" (reactive, metric-based)
+- **VPA** — "Scale up when cramped" (right-size resources)
+- **KEDA** — "Scale from zero on events" (event-driven, supports scale-to-zero)
+- **CA** — "Add machines when pods can't fit" (infrastructure layer)
+- **Karpenter** — "Add the *right* machine instantly" (smarter CA)
+
+---
+
+### Important Conflict Note
+
+> **VPA + HPA cannot both manage CPU/memory on the same pod** — they fight each other. Use VPA for resource sizing in staging, HPA for scaling in production. Or use KEDA with custom metrics + VPA together safely.
