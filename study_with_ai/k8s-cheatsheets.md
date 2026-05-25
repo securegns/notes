@@ -653,3 +653,64 @@ Internet
 > **Class registers → Controller works → Ingress instructs → Service delivers → Pod serves**
 
 You write the **Ingress resource**. You reference the **IngressClass** by name. The **Controller** reads it and does the actual work.
+
+
+
+
+### Why this matters — Requests vs Limits
+
+| Concept | Purpose |
+|---|---|
+| **Request** | What the scheduler uses to **find a node** with enough capacity |
+| **Limit** | The **maximum** the container is allowed to use at runtime |
+
+```
+Scheduler looks at REQUESTS to place pods
+Kubelet enforces LIMITS at runtime
+```
+
+If request = limit, the pod is in **Guaranteed QoS class** — the highest priority, least likely to be evicted.
+
+---
+
+### The 3 QoS Classes
+
+| Class | Condition | Eviction priority |
+|---|---|---|
+| **Guaranteed** | requests = limits (both set) | Last to be evicted |
+| **Burstable** | requests < limits | Middle |
+| **BestEffort** | No requests or limits at all | First to be evicted |
+
+When you set only a limit → request gets copied → **Guaranteed QoS** automatically.
+
+---
+
+### Where Default Requests Come From
+
+The "admission-time mechanism" mentioned in the question refers to a **LimitRange** object:
+
+```yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: 200m        # default limit
+        memory: 128Mi
+      defaultRequest:
+        cpu: 100m        # default request
+        memory: 64Mi
+```
+
+If a LimitRange sets a `defaultRequest`, that overrides the copy-from-limit behavior.
+
+---
+
+**Memory tip:**
+
+> **"No request? Borrow from the limit."**  
+> Kubernetes never leaves `request` undefined — if you forgot it, it assumes you want exactly what you limited it to.  
+> Think of it as: *"If you only said the maximum, I'll assume that's also the minimum."*
