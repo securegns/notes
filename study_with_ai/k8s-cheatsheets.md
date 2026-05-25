@@ -376,3 +376,148 @@ Deployment
                 ├── name
                 └── image       ← ← ← This is what you want to change
 ```
+
+
+
+
+## `kubectl patch` — Complete Guide
+
+---
+
+### What is it?
+
+`kubectl patch` **partially updates** a live resource by merging only the fields you specify — without touching anything else and without recreating the resource.
+
+> Think of it as **surgical editing** — you change one thing, everything else stays untouched.
+
+Compare to alternatives:
+
+| Command | Behavior |
+|---|---|
+| `kubectl apply` | Replaces entire resource from a file |
+| `kubectl replace` | Replaces entire resource (destructive) |
+| `kubectl edit` | Opens editor — manual full-file edit |
+| `kubectl patch` | **Merges only the fields you specify** |
+
+---
+
+### Syntax
+
+```bash
+kubectl patch <resource> <name> -p '<JSON or YAML>'
+```
+
+Optional flag to specify patch type:
+```bash
+--type=strategic   # default — smart merge (handles lists well)
+--type=merge       # simple JSON merge
+--type=json        # JSON Patch (RFC 6902) — surgical array ops
+```
+
+---
+
+### Example 1 — Update a Container Image
+
+```bash
+kubectl patch deployment my-app \
+  -p '{"spec":{"template":{"spec":{"containers":[{"name":"app-container","image":"nginx:1.25"}]}}}}'
+```
+Changes only the image. Replicas, labels, everything else — untouched.
+
+---
+
+### Example 2 — Change Replica Count
+
+```bash
+kubectl patch deployment my-app \
+  -p '{"spec":{"replicas":5}}'
+```
+Same as `kubectl scale` but done via patch.
+
+---
+
+### Example 3 — Add/Update a Label
+
+```bash
+kubectl patch pod my-pod \
+  -p '{"metadata":{"labels":{"env":"production"}}}'
+```
+Adds the label `env=production` without removing existing labels.
+
+---
+
+### Example 4 — Update Resource Limits
+
+```bash
+kubectl patch deployment my-app \
+  -p '{"spec":{"template":{"spec":{"containers":[{"name":"app-container","resources":{"limits":{"cpu":"500m","memory":"256Mi"}}}]}}}}'
+```
+
+---
+
+### Example 5 — Mark a Node as Unschedulable
+
+```bash
+kubectl patch node my-node \
+  -p '{"spec":{"unschedulable":true}}'
+```
+Same effect as `kubectl cordon my-node`.
+
+---
+
+### Example 6 — Remove a Field (JSON Patch type)
+
+To **delete** a field, use `--type=json` with the `remove` operation:
+
+```bash
+kubectl patch deployment my-app --type=json \
+  -p '[{"op":"remove","path":"/spec/template/spec/containers/0/resources/limits"}]'
+```
+
+JSON Patch operations:
+
+| op | What it does |
+|---|---|
+| `add` | Add a field or array item |
+| `remove` | Delete a field |
+| `replace` | Replace a value |
+| `move` | Move a field |
+
+---
+
+### Example 7 — Update a Service Type
+
+```bash
+kubectl patch svc my-service \
+  -p '{"spec":{"type":"LoadBalancer"}}'
+```
+Changes a ClusterIP service to LoadBalancer without recreating it.
+
+---
+
+### When to Use Which Patch Type
+
+| Situation | Use |
+|---|---|
+| Updating simple fields | `--type=strategic` (default) |
+| Merging nested objects | `--type=merge` |
+| Deleting a specific field | `--type=json` with `remove` |
+| Precise array item targeting | `--type=json` with index path |
+
+---
+
+### The Golden Rule for `kubectl patch`
+
+Always follow the **exact JSON path** of the resource:
+
+```
+metadata         → labels, annotations, name
+spec             → deployment-level (replicas, selector)
+spec.template.spec → pod-level (containers, volumes, tolerations)
+```
+
+**Memory tip:**
+
+> `patch` = **"find the exact address, change only that room"**  
+> vs `apply/replace` = **"tear down and rebuild the whole house"**
+> 
