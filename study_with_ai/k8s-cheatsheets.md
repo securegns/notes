@@ -714,3 +714,99 @@ If a LimitRange sets a `defaultRequest`, that overrides the copy-from-limit beha
 > **"No request? Borrow from the limit."**  
 > Kubernetes never leaves `request` undefined — if you forgot it, it assumes you want exactly what you limited it to.  
 > Think of it as: *"If you only said the maximum, I'll assume that's also the minimum."*
+
+
+## Node Management Commands
+
+---
+
+### 1. `cordon` — Mark node as unschedulable
+No new pods will be scheduled here. Existing pods keep running.
+
+```bash
+kubectl cordon node-1
+```
+```
+node-1: SchedulingDisabled   ← new pods won't land here
+existing pods still running ✅
+```
+
+---
+
+### 2. `drain` — Evict all pods + cordon
+Safely empties a node for maintenance. Evicts all pods (reschedules them elsewhere).
+
+```bash
+kubectl drain node-1 --ignore-daemonsets --delete-emptydir-data
+```
+```
+node-1: cordoned + all pods evicted → moved to other nodes
+```
+
+**Common flags:**
+
+| Flag | Why needed |
+|---|---|
+| `--ignore-daemonsets` | DaemonSet pods can't move — skip them |
+| `--delete-emptydir-data` | Pods with emptyDir volumes lose data — force delete |
+
+---
+
+### 3. `uncordon` — Re-enable scheduling
+Done with maintenance? Let pods schedule here again.
+
+```bash
+kubectl uncordon node-1
+```
+```
+node-1: Ready   ← pods can land here again
+```
+
+---
+
+### 4. `taint` — Repel pods unless they tolerate it
+More fine-grained than cordon — only specific pods can run here.
+
+```bash
+# Add taint
+kubectl taint node node-1 env=prod:NoSchedule
+
+# Remove taint
+kubectl taint node node-1 env=prod:NoSchedule-
+```
+
+Pod must have a **toleration** to land on this node:
+```yaml
+tolerations:
+  - key: "env"
+    value: "prod"
+    effect: "NoSchedule"
+```
+
+---
+
+### The 3 Taint Effects
+
+| Effect | Behavior |
+|---|---|
+| `NoSchedule` | New pods without toleration won't be scheduled |
+| `PreferNoSchedule` | Kubernetes *tries* to avoid it, but not strict |
+| `NoExecute` | Evicts existing pods + blocks new ones |
+
+---
+
+### Full Mental Model
+
+```
+cordon     → "closed for new arrivals, existing guests stay"
+drain      → "evacuate everyone, then close"
+uncordon   → "reopen"
+taint      → "VIP only — need a special pass (toleration)"
+```
+
+**Memory tip:**
+
+> `cordon` = **rope around the node** (blocks entry)  
+> `drain` = **drain the pool** (remove everything)  
+> `uncordon` = **remove the rope**  
+> `taint` = **"no entry without a badge"** (toleration = badge)
