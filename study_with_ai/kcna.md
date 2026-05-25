@@ -2112,3 +2112,122 @@ $$\text{alpha} \rightarrow \text{beta} \rightarrow \text{stable (GA)}$$
 | stable (no suffix) | Low | Yes | Never without major version bump |
 
 **Key memory trick:** The number after `v` is the **major API revision**, and the number after `alpha`/`beta` is the **iteration count** within that stage — like `v1beta1 → v1beta2 → v1 (GA)`.
+
+
+
+## Kubernetes API Groups — Complete Reference
+
+Kubernetes organizes all its resources under **API groups**. There are two tiers:
+
+---
+
+### Tier 1 — Core Group (`/api/v1`)
+No group name. These are the foundational primitives:
+
+| Resource | Abbrev |
+|---|---|
+| Pod | `po` |
+| Service | `svc` |
+| ConfigMap | `cm` |
+| Secret | — |
+| Node | `no` |
+| Namespace | `ns` |
+| PersistentVolume | `pv` |
+| PersistentVolumeClaim | `pvc` |
+| ServiceAccount | `sa` |
+| Endpoints | `ep` |
+| ResourceQuota | `quota` |
+| LimitRange | — |
+
+> **Memory trick:** If you can `kubectl get <it>` without thinking twice, it's probably core (`/api/v1`).
+
+---
+
+### Tier 2 — Named Groups (`/apis/<group>/<version>`)
+
+#### Workloads
+| Group | Resources |
+|---|---|
+| `apps` | Deployment, ReplicaSet, StatefulSet, DaemonSet |
+| `batch` | Job, CronJob |
+
+#### Networking
+| Group | Resources |
+|---|---|
+| `networking.k8s.io` | Ingress, IngressClass, NetworkPolicy |
+| `discovery.k8s.io` | EndpointSlice |
+
+#### Storage
+| Group | Resources |
+|---|---|
+| `storage.k8s.io` | StorageClass, VolumeAttachment, CSIDriver, CSINode |
+
+#### Scaling & Metrics
+| Group | Resources | Provider |
+|---|---|---|
+| `autoscaling` | HorizontalPodAutoscaler | core k8s |
+| `metrics.k8s.io` | NodeMetrics, PodMetrics | **metrics-server** (add-on) |
+| `custom.metrics.k8s.io` | Any custom metric (e.g. `http_requests`) | **Prometheus Adapter** |
+| `external.metrics.k8s.io` | Cloud/external metrics (e.g. SQS queue depth) | Cloud adapters (Datadog, etc.) |
+
+> **cAdvisor** is NOT a k8s API group. It's embedded in `kubelet` and exposed at:
+> `GET /api/v1/nodes/{node}/proxy/metrics/cadvisor`
+
+#### Security & RBAC
+| Group | Resources |
+|---|---|
+| `rbac.authorization.k8s.io` | Role, ClusterRole, RoleBinding, ClusterRoleBinding |
+| `authentication.k8s.io` | TokenReview |
+| `authorization.k8s.io` | SubjectAccessReview, LocalSubjectAccessReview |
+| `certificates.k8s.io` | CertificateSigningRequest |
+
+#### Policy & Scheduling
+| Group | Resources |
+|---|---|
+| `policy` | PodDisruptionBudget |
+| `scheduling.k8s.io` | PriorityClass |
+| `flowcontrol.apiserver.k8s.io` | FlowSchema, PriorityLevelConfiguration |
+
+#### Extensibility
+| Group | Resources |
+|---|---|
+| `apiextensions.k8s.io` | **CustomResourceDefinition (CRD)** |
+| `admissionregistration.k8s.io` | MutatingWebhookConfiguration, ValidatingWebhookConfiguration |
+
+#### Cluster Infrastructure
+| Group | Resources |
+|---|---|
+| `coordination.k8s.io` | Lease (used for leader election) |
+| `node.k8s.io` | RuntimeClass |
+| `events.k8s.io` | Event (newer structured events) |
+
+#### Dynamic Resource Allocation (newer, 1.26+)
+| Group | Resources |
+|---|---|
+| `resource.k8s.io` | ResourceClaim, ResourceClass, ResourceClaimTemplate |
+
+---
+
+### How to Remember the Structure
+
+```
+kubectl api-resources --api-group=<group>   # list resources in a group
+kubectl api-versions                         # list all groups + versions
+```
+
+**The naming pattern:**
+```
+<domain>.<category>.k8s.io/<version>
+    │         │
+    │         └── what it governs (networking, storage, rbac...)
+    └── who provides it (empty = core k8s team)
+```
+
+**For metrics specifically (HPA scale chain):**
+```
+HPA
+ ├── CPU/Memory  →  metrics.k8s.io          (metrics-server)
+ ├── App metrics →  custom.metrics.k8s.io   (Prometheus Adapter)
+ └── Cloud queue →  external.metrics.k8s.io (cloud adapters)
+```
+
