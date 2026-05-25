@@ -2076,3 +2076,39 @@ kubectl get ingress --all-namespaces
                            └─► forwards to application Pod
 ```
 
+
+## Kubernetes API Versioning
+
+`v2beta3` means:
+- **v2** — second major iteration of this API (breaking changes from v1)
+- **beta** — feature is well-tested but not yet stable; schema may still change
+- **3** — third beta release in this v2 generation
+
+---
+
+## API Version Quick Reference
+
+| Version Pattern | Stability | Guarantees | Example |
+|---|---|---|---|
+| `v1` | **Stable (GA)** | No breaking changes; supported long-term | `v1` (Pods, Services) |
+| `v2` | **Stable (GA)** | Same as v1 but second major revision | `autoscaling/v2` (HPA) |
+| `v1alpha1` | **Alpha** | May be removed anytime; off by default | `batch/v1alpha1` |
+| `v1alpha2` | **Alpha** | Second alpha iteration, same instability | `resource.k8s.io/v1alpha2` |
+| `v1beta1` | **Beta** | Enabled by default; schema may change | `networking.k8s.io/v1beta1` |
+| `v1beta2` | **Beta** | Second beta iteration, more refined | `autoscaling/v2beta2` (old HPA) |
+| `v2beta1` | **Beta** | Beta on second major revision | `autoscaling/v2beta1` (old HPA) |
+| `v2beta3` | **Beta** | Third beta of second major revision | (hypothetical/internal use) |
+
+---
+
+## The Lifecycle Rule
+
+$$\text{alpha} \rightarrow \text{beta} \rightarrow \text{stable (GA)}$$
+
+| Stage | Risk | Default enabled? | Can be deleted? |
+|---|---|---|---|
+| `alpha` | High | No | Yes, anytime |
+| `beta` | Medium | Yes | Yes, with deprecation notice |
+| stable (no suffix) | Low | Yes | Never without major version bump |
+
+**Key memory trick:** The number after `v` is the **major API revision**, and the number after `alpha`/`beta` is the **iteration count** within that stage — like `v1beta1 → v1beta2 → v1 (GA)`.
