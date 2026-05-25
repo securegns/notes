@@ -238,3 +238,129 @@ Need nodes in <30s?              → Karpenter
 ### Important Conflict Note
 
 > **VPA + HPA cannot both manage CPU/memory on the same pod** — they fight each other. Use VPA for resource sizing in staging, HPA for scaling in production. Or use KEDA with custom metrics + VPA together safely.
+
+
+## kubectl Commands — Grouped by Relation
+
+---
+
+### 1. Create / Apply Resources
+| Command | What it does |
+|---|---|
+| `kubectl create -f file.yaml` | Creates a resource from a file |
+| `kubectl apply -f file.yaml` | Creates **or updates** a resource (idempotent) |
+| `kubectl run my-pod --image=nginx` | Creates a pod directly |
+
+**Memory tip:** Think **"birth"** — `create` gives birth once, `apply` gives birth or updates.
+
+---
+
+### 2. View / Inspect Resources
+| Command | What it does |
+|---|---|
+| `kubectl get pods` | List pods |
+| `kubectl get all` | List all resources |
+| `kubectl describe pod my-pod` | Detailed info about a resource |
+| `kubectl explain deployment` | Show API fields for a resource type |
+| `kubectl logs my-pod` | View logs from a pod |
+| `kubectl top pod` | Show CPU/memory usage |
+
+**Memory tip:** Think **"eyes"** — get, describe, explain, logs — all for *looking*.
+
+---
+
+### 3. Update / Modify Resources
+| Command | What it does |
+|---|---|
+| `kubectl set image deployment/my-app c=img:v2` | Update container image in-place |
+| `kubectl set env deployment/my-app KEY=val` | Update environment variables |
+| `kubectl set resources deployment/my-app --limits=cpu=200m` | Update resource limits |
+| `kubectl edit deployment my-app` | Open resource in editor to modify |
+| `kubectl patch deployment my-app -p '{...}'` | Apply a partial JSON/YAML patch |
+| `kubectl scale deployment my-app --replicas=5` | Change replica count |
+| `kubectl label pod my-pod env=prod` | Add/update a label |
+| `kubectl annotate pod my-pod note=test` | Add/update an annotation |
+
+**Memory tip:** Think **"surgery"** — `set`, `edit`, `patch`, `scale` all *modify without rebuilding*.
+
+---
+
+### 4. Replace / Delete Resources
+| Command | What it does |
+|---|---|
+| `kubectl replace -f file.yaml` | Replaces a resource (must already exist) |
+| `kubectl replace --force -f file.yaml` | Deletes then re-creates (destructive) |
+| `kubectl delete pod my-pod` | Delete a resource |
+| `kubectl delete -f file.yaml` | Delete resources defined in a file |
+
+**Memory tip:** Think **"demolish"** — `replace --force` and `delete` tear things down.
+
+---
+
+### 5. Rollout Management
+| Command | What it does |
+|---|---|
+| `kubectl rollout status deployment/my-app` | Watch rollout progress |
+| `kubectl rollout history deployment/my-app` | View revision history |
+| `kubectl rollout undo deployment/my-app` | Roll back to previous version |
+| `kubectl rollout undo deployment/my-app --to-revision=2` | Roll back to a specific version |
+| `kubectl rollout restart deployment/my-app` | Restart pods with a rolling update |
+| `kubectl rollout pause deployment/my-app` | Pause a rollout |
+| `kubectl rollout resume deployment/my-app` | Resume a paused rollout |
+
+**Memory tip:** Think **"time machine"** — `rollout` controls *when and how changes roll forward or back*.
+
+---
+
+### 6. Execute / Debug
+| Command | What it does |
+|---|---|
+| `kubectl exec -it my-pod -- bash` | Open a shell inside a pod |
+| `kubectl exec my-pod -- ls /app` | Run a single command in a pod |
+| `kubectl cp my-pod:/app/file ./file` | Copy files to/from a pod |
+| `kubectl port-forward pod/my-pod 8080:80` | Forward local port to pod port |
+
+**Memory tip:** Think **"enter the building"** — you're going *inside* the pod.
+
+---
+
+### 7. Namespaces & Context
+| Command | What it does |
+|---|---|
+| `kubectl config get-contexts` | List all contexts (clusters) |
+| `kubectl config use-context my-ctx` | Switch active context |
+| `kubectl config set-context --current --namespace=dev` | Set default namespace |
+| `kubectl get pods -n kube-system` | Run command in a specific namespace |
+| `kubectl get pods --all-namespaces` | List pods in every namespace |
+
+**Memory tip:** Think **"GPS"** — context and namespace tell kubectl *where* to operate.
+
+---
+
+### 8. Expose / Networking
+| Command | What it does |
+|---|---|
+| `kubectl expose deployment my-app --port=80` | Create a Service for a deployment |
+| `kubectl get svc` | List services |
+| `kubectl get ingress` | List ingress rules |
+
+**Memory tip:** Think **"open the door"** — expose makes a deployment reachable.
+
+---
+
+## Master Memory Strategy
+
+Use this sentence to remember the *lifecycle order*:
+
+> **"Create → View → Update → Rollout → Debug → Expose"**
+
+| Phase | Commands |
+|---|---|
+| **C**reate | `create`, `apply`, `run` |
+| **V**iew | `get`, `describe`, `logs`, `top` |
+| **U**pdate | `set`, `edit`, `patch`, `scale` |
+| **R**ollout | `rollout status/undo/restart` |
+| **D**ebug | `exec`, `cp`, `port-forward` |
+| **E**xpose | `expose`, `get svc` |
+
+A pod's life follows **CVRDE** — like a car (Create, View, Revise, Debug, Expose).
