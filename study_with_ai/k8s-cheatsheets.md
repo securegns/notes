@@ -520,4 +520,136 @@ spec.template.spec → pod-level (containers, volumes, tolerations)
 
 > `patch` = **"find the exact address, change only that room"**  
 > vs `apply/replace` = **"tear down and rebuild the whole house"**
-> 
+
+# [!] Ingress
+---
+
+## The 4 Ingress Components
+
+```
+IngressClass  →  Ingress Controller  →  Ingress Resource  →  Service  →  Pod
+  (registry)       (the worker)          (the rules)         (router)   (app)
+```
+
+---
+
+### 1. Ingress Controller
+**What it is:** A real running program (a pod) inside your cluster that actually does the routing work.
+
+- It watches for Ingress resources and implements their rules
+- It's NOT built into Kubernetes — you install it separately
+- Examples: `ingress-nginx`, `traefik`, `AWS ALB controller`, `HAProxy`
+
+```
+Without Ingress Controller → Ingress resources do NOTHING
+```
+
+```bash
+# Install nginx ingress controller
+helm install ingress-nginx ingress-nginx/ingress-nginx
+```
+
+---
+
+### 2. IngressClass
+**What it is:** A Kubernetes object that **registers** a controller and gives it a name.
+
+- It's the **bridge** between the name (e.g. `"nginx"`) and the actual controller program
+- Think of it as a **label** the controller wears
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx                         # ← the name apps will reference
+spec:
+  controller: k8s.io/ingress-nginx    # ← links to the actual controller
+```
+
+---
+
+### 3. Ingress Resource
+**What it is:** A Kubernetes object where you **define routing rules** — what URL/host goes to what service.
+
+- This is what YOU write as a developer/operator
+- It uses `ingressClassName` to say **"hey, nginx controller — you handle this"**
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  ingressClassName: nginx          # ← points to IngressClass named "nginx"
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service  # ← send to this Service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80
+```
+
+---
+
+### 4. Service
+**What it is:** Groups pods together and gives them a stable internal address. The Ingress routes **to** a Service, and the Service routes **to** Pods.
+
+---
+
+## The Full Hierarchy — Visual
+
+```
+Internet
+   ↓
+[ DNS: myapp.example.com → Cluster IP ]
+   ↓
+[ Ingress Controller Pod ]        ← installed separately (nginx/traefik/etc.)
+   ↓  reads
+[ IngressClass: "nginx" ]         ← registry/label for the controller
+   ↓  implements rules from
+[ Ingress Resource ]              ← YOUR routing rules (host, path → service)
+   ↓  routes to
+[ Service ]                       ← stable internal endpoint
+   ↓  load balances to
+[ Pods ]                          ← your actual app
+```
+
+---
+
+## To Answer Your Confusion Directly
+
+| You asked | Answer |
+|---|---|
+| "Ingress Controller creates the controller?" | No — you **install** the controller (it's a pod). It runs and watches for Ingress resources |
+| "Ingress resource defines what request goes where?" | **Yes, exactly** — host + path → service |
+| "ingressClassName is used in that step?" | Yes — it's inside the Ingress resource to tell **which controller** should implement those rules |
+
+---
+
+## Simple Analogy
+
+| Component | Real world |
+|---|---|
+| **Ingress Controller** | A postal sorting facility (the actual worker) |
+| **IngressClass** | The facility's registered name/address |
+| **Ingress Resource** | A routing instruction slip ("send myapp.com/api to warehouse B") |
+| **Service** | Warehouse B's internal address |
+| **Pods** | Workers inside warehouse B |
+
+**Memory tip:**
+
+> **Class registers → Controller works → Ingress instructs → Service delivers → Pod serves**
+
+You write the **Ingress resource**. You reference the **IngressClass** by name. The **Controller** reads it and does the actual work.
