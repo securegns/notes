@@ -1,0 +1,240 @@
+
+## Kubernetes API Versioning
+
+`v2beta3` means:
+- **v2** — second major iteration of this API (breaking changes from v1)
+- **beta** — feature is well-tested but not yet stable; schema may still change
+- **3** — third beta release in this v2 generation
+
+---
+
+## API Version Quick Reference
+
+| Version Pattern | Stability | Guarantees | Example |
+|---|---|---|---|
+| `v1` | **Stable (GA)** | No breaking changes; supported long-term | `v1` (Pods, Services) |
+| `v2` | **Stable (GA)** | Same as v1 but second major revision | `autoscaling/v2` (HPA) |
+| `v1alpha1` | **Alpha** | May be removed anytime; off by default | `batch/v1alpha1` |
+| `v1alpha2` | **Alpha** | Second alpha iteration, same instability | `resource.k8s.io/v1alpha2` |
+| `v1beta1` | **Beta** | Enabled by default; schema may change | `networking.k8s.io/v1beta1` |
+| `v1beta2` | **Beta** | Second beta iteration, more refined | `autoscaling/v2beta2` (old HPA) |
+| `v2beta1` | **Beta** | Beta on second major revision | `autoscaling/v2beta1` (old HPA) |
+| `v2beta3` | **Beta** | Third beta of second major revision | (hypothetical/internal use) |
+
+---
+
+## The Lifecycle Rule
+
+$$\text{alpha} \rightarrow \text{beta} \rightarrow \text{stable (GA)}$$
+
+| Stage | Risk | Default enabled? | Can be deleted? |
+|---|---|---|---|
+| `alpha` | High | No | Yes, anytime |
+| `beta` | Medium | Yes | Yes, with deprecation notice |
+| stable (no suffix) | Low | Yes | Never without major version bump |
+
+**Key memory trick:** The number after `v` is the **major API revision**, and the number after `alpha`/`beta` is the **iteration count** within that stage — like `v1beta1 → v1beta2 → v1 (GA)`.
+
+
+
+## Kubernetes API Groups — Complete Reference
+
+Kubernetes organizes all its resources under **API groups**. There are two tiers:
+
+---
+
+### Tier 1 — Core Group (`/api/v1`)
+No group name. These are the foundational primitives:
+
+| Resource | Abbrev |
+|---|---|
+| Pod | `po` |
+| Service | `svc` |
+| ConfigMap | `cm` |
+| Secret | — |
+| Node | `no` |
+| Namespace | `ns` |
+| PersistentVolume | `pv` |
+| PersistentVolumeClaim | `pvc` |
+| ServiceAccount | `sa` |
+| Endpoints | `ep` |
+| ResourceQuota | `quota` |
+| LimitRange | — |
+
+> **Memory trick:** If you can `kubectl get <it>` without thinking twice, it's probably core (`/api/v1`).
+
+---
+
+### Tier 2 — Named Groups (`/apis/<group>/<version>`)
+
+#### Workloads
+| Group | Resources |
+|---|---|
+| `apps` | Deployment, ReplicaSet, StatefulSet, DaemonSet |
+| `batch` | Job, CronJob |
+
+#### Networking
+| Group | Resources |
+|---|---|
+| `networking.k8s.io` | Ingress, IngressClass, NetworkPolicy |
+| `discovery.k8s.io` | EndpointSlice |
+
+#### Storage
+| Group | Resources |
+|---|---|
+| `storage.k8s.io` | StorageClass, VolumeAttachment, CSIDriver, CSINode |
+
+#### Scaling & Metrics
+| Group | Resources | Provider |
+|---|---|---|
+| `autoscaling` | HorizontalPodAutoscaler | core k8s |
+| `metrics.k8s.io` | NodeMetrics, PodMetrics | **metrics-server** (add-on) |
+| `custom.metrics.k8s.io` | Any custom metric (e.g. `http_requests`) | **Prometheus Adapter** |
+| `external.metrics.k8s.io` | Cloud/external metrics (e.g. SQS queue depth) | Cloud adapters (Datadog, etc.) |
+
+> **cAdvisor** is NOT a k8s API group. It's embedded in `kubelet` and exposed at:
+> `GET /api/v1/nodes/{node}/proxy/metrics/cadvisor`
+
+#### Security & RBAC
+| Group | Resources |
+|---|---|
+| `rbac.authorization.k8s.io` | Role, ClusterRole, RoleBinding, ClusterRoleBinding |
+| `authentication.k8s.io` | TokenReview |
+| `authorization.k8s.io` | SubjectAccessReview, LocalSubjectAccessReview |
+| `certificates.k8s.io` | CertificateSigningRequest |
+
+#### Policy & Scheduling
+| Group | Resources |
+|---|---|
+| `policy` | PodDisruptionBudget |
+| `scheduling.k8s.io` | PriorityClass |
+| `flowcontrol.apiserver.k8s.io` | FlowSchema, PriorityLevelConfiguration |
+
+#### Extensibility
+| Group | Resources |
+|---|---|
+| `apiextensions.k8s.io` | **CustomResourceDefinition (CRD)** |
+| `admissionregistration.k8s.io` | MutatingWebhookConfiguration, ValidatingWebhookConfiguration |
+
+#### Cluster Infrastructure
+| Group | Resources |
+|---|---|
+| `coordination.k8s.io` | Lease (used for leader election) |
+| `node.k8s.io` | RuntimeClass |
+| `events.k8s.io` | Event (newer structured events) |
+
+#### Dynamic Resource Allocation (newer, 1.26+)
+| Group | Resources |
+|---|---|
+| `resource.k8s.io` | ResourceClaim, ResourceClass, ResourceClaimTemplate |
+
+---
+
+### How to Remember the Structure
+
+```
+kubectl api-resources --api-group=<group>   # list resources in a group
+kubectl api-versions                         # list all groups + versions
+```
+
+**The naming pattern:**
+```
+<domain>.<category>.k8s.io/<version>
+    │         │
+    │         └── what it governs (networking, storage, rbac...)
+    └── who provides it (empty = core k8s team)
+```
+
+**For metrics specifically (HPA scale chain):**
+```
+HPA
+ ├── CPU/Memory  →  metrics.k8s.io          (metrics-server)
+ ├── App metrics →  custom.metrics.k8s.io   (Prometheus Adapter)
+ └── Cloud queue →  external.metrics.k8s.io (cloud adapters)
+```
+
+
+## Kubernetes Scaling — Complete Overview
+
+### The Full Landscape
+
+Kubernetes scaling operates at **3 levels**: Pod, Node, and Workload scheduling.
+
+---
+
+### Level 1: Pod-Level Scaling (What runs inside a node)
+
+| Type | Acronym | What it does |
+|---|---|---|
+| **Horizontal Pod Autoscaler** | HPA | Adds/removes **pod replicas** based on CPU/memory/custom metrics |
+| **Vertical Pod Autoscaler** | VPA | Adjusts **CPU & memory requests/limits** on existing pods |
+| **KEDA** | KEDA | Extends HPA — scales pods based on **external events** (Kafka lag, SQS queue depth, Redis, etc.) |
+| **Multidimensional Pod Autoscaler** | MPA | Google GKE-specific — combines VPA + HPA together |
+
+---
+
+### Level 2: Node-Level Scaling (The machines that run pods)
+
+| Type | Acronym | What it does |
+|---|---|---|
+| **Cluster Autoscaler** | CA | Adds/removes **nodes** when pods are unschedulable or nodes are underutilized |
+| **Karpenter** | — | AWS-native node provisioner — faster, more flexible than CA; provisions nodes in seconds |
+| **Node Auto Provisioner** | NAP | GKE's Karpenter equivalent |
+
+---
+
+### Level 3: Scheduling & Throughput Scaling
+
+| Type | What it does |
+|---|---|
+| **Proportional Autoscaler** | Scales system components (like `kube-dns`) proportionally to cluster size |
+| **Scheduled Scaling** | Cron-based scaling (via KEDA's cron scaler or external tools like Argo Rollouts) |
+
+---
+
+### How to Remember Them
+
+Use the mnemonic **"HVCK — Pod, Node, Schedule"**:
+
+```
+H — HPA       (Horizontal: more pods)
+V — VPA       (Vertical: bigger pods)
+C — KEDA      (event-driven: smarter pods)  ← K sounds like C
+K — Cluster Autoscaler + Karpenter (nodes)
+```
+
+Or think of it as **3 questions**:
+
+```
+1. "How many pods?"   → HPA, KEDA
+2. "How big is each pod?"  → VPA
+3. "How many nodes?"  → Cluster Autoscaler, Karpenter
+```
+
+---
+
+### Quick Comparison: When to Use What
+
+```
+External event (queue, stream)?  → KEDA
+Traffic/CPU spike?               → HPA
+OOM errors / resource waste?     → VPA
+Pods pending, no space?          → Cluster Autoscaler
+Need nodes in <30s?              → Karpenter
+```
+
+---
+
+### HPA vs KEDA vs VPA vs CA — One-liner each
+
+- **HPA** — "Scale out when busy" (reactive, metric-based)
+- **VPA** — "Scale up when cramped" (right-size resources)
+- **KEDA** — "Scale from zero on events" (event-driven, supports scale-to-zero)
+- **CA** — "Add machines when pods can't fit" (infrastructure layer)
+- **Karpenter** — "Add the *right* machine instantly" (smarter CA)
+
+---
+
+### Important Conflict Note
+
+> **VPA + HPA cannot both manage CPU/memory on the same pod** — they fight each other. Use VPA for resource sizing in staging, HPA for scaling in production. Or use KEDA with custom metrics + VPA together safely.
