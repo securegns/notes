@@ -1,6 +1,6 @@
 # KCNA Exam — Categorised Study Guide
 
-> **270 of 300 questions captured** (Q271–Q300 were not available in source material)  
+> **All 300 questions captured and categorised.**  
 > Each question shows all options and the correct answer.
 
 ---
@@ -9,21 +9,21 @@
 
 | # | Category | Count | Questions |
 |---|----------|-------|-----------|
-| 1 | [Kubernetes Architecture & Core Components](#1-kubernetes-architecture--core-components) | 20 | Q3 Q4 Q40 Q44 Q46 Q58 Q61 Q74 Q103 Q121 Q129 Q142 Q148 Q156 Q163 Q169 Q170 Q187 Q220 Q234 |
-| 2 | [Workloads](#2-workloads) | 30 | Q2 Q18 Q21 Q23 Q37 Q51 Q56 Q67 Q70 Q83 Q88 Q94 Q107 Q114 Q120 Q122 Q138 Q140 Q153 Q161 Q167 Q176 Q180 Q182 Q188 Q190 Q193 Q210 Q227 Q238 |
-| 3 | [Services & Networking](#3-services--networking) | 34 | Q7 Q10 Q29 Q38 Q39 Q48 Q50 Q55 Q60 Q62 Q66 Q68 Q73 Q77 Q81 Q85 Q98 Q104 Q113 Q130 Q134 Q154 Q178 Q199 Q209 Q212 Q213 Q221 Q225 Q233 Q246 Q250 Q264 Q269 |
+| 1 | [Kubernetes Architecture & Core Components](#1-kubernetes-architecture--core-components) | 22 | Q3 Q4 Q40 Q44 Q46 Q58 Q61 Q74 Q103 Q121 Q129 Q142 Q148 Q156 Q163 Q169 Q170 Q187 Q220 Q234 Q271 Q298 |
+| 2 | [Workloads](#2-workloads) | 31 | Q2 Q18 Q21 Q23 Q37 Q51 Q56 Q67 Q70 Q83 Q88 Q94 Q107 Q114 Q120 Q122 Q138 Q140 Q153 Q161 Q167 Q176 Q180 Q182 Q188 Q190 Q193 Q210 Q227 Q238 Q274 |
+| 3 | [Services & Networking](#3-services--networking) | 39 | Q7 Q10 Q29 Q38 Q39 Q48 Q50 Q55 Q60 Q62 Q66 Q68 Q73 Q77 Q81 Q85 Q98 Q104 Q113 Q130 Q134 Q154 Q178 Q199 Q209 Q212 Q213 Q221 Q225 Q233 Q246 Q250 Q264 Q269 Q276 Q279 Q283 Q286 Q292 |
 | 4 | [Storage](#4-storage) | 10 | Q32 Q78 Q102 Q132 Q150 Q155 Q219 Q236 Q258 Q263 |
-| 5 | [Configuration, Secrets & Labels](#5-configuration-secrets--labels) | 11 | Q9 Q54 Q65 Q106 Q164 Q165 Q203 Q204 Q228 Q265 Q270 |
-| 6 | [Security & RBAC](#6-security--rbac) | 17 | Q5 Q14 Q26 Q86 Q116 Q135 Q137 Q157 Q183 Q195 Q202 Q208 Q215 Q243 Q244 Q251 Q268 |
-| 7 | [Observability & Monitoring](#7-observability--monitoring) | 14 | Q36 Q53 Q57 Q91 Q110 Q111 Q136 Q147 Q166 Q192 Q196 Q200 Q214 Q262 |
-| 8 | [Scheduling & Autoscaling](#8-scheduling--autoscaling) | 19 | Q6 Q13 Q52 Q90 Q100 Q112 Q119 Q128 Q146 Q152 Q194 Q216 Q217 Q226 Q235 Q241 Q242 Q249 Q259 |
-| 9 | [kubectl Commands & Troubleshooting](#9-kubectl-commands--troubleshooting) | 28 | Q20 Q45 Q49 Q63 Q71 Q75 Q76 Q84 Q87 Q97 Q124 Q126 Q159 Q168 Q201 Q206 Q211 Q229 Q230 Q231 Q232 Q237 Q240 Q245 Q253 Q257 Q261 Q267 |
+| 5 | [Configuration, Secrets & Labels](#5-configuration-secrets--labels) | 13 | Q9 Q54 Q65 Q106 Q164 Q165 Q203 Q204 Q228 Q265 Q270 Q278 Q293 |
+| 6 | [Security & RBAC](#6-security--rbac) | 22 | Q5 Q14 Q26 Q86 Q116 Q135 Q137 Q157 Q183 Q195 Q202 Q208 Q215 Q243 Q244 Q251 Q268 Q273 Q275 Q281 Q282 Q297 |
+| 7 | [Observability & Monitoring](#7-observability--monitoring) | 16 | Q36 Q53 Q57 Q91 Q110 Q111 Q136 Q147 Q166 Q192 Q196 Q200 Q214 Q262 Q284 Q296 |
+| 8 | [Scheduling & Autoscaling](#8-scheduling--autoscaling) | 21 | Q6 Q13 Q52 Q90 Q100 Q112 Q119 Q128 Q146 Q152 Q194 Q216 Q217 Q226 Q235 Q241 Q242 Q249 Q259 Q291 Q294 |
+| 9 | [kubectl Commands & Troubleshooting](#9-kubectl-commands--troubleshooting) | 33 | Q20 Q45 Q49 Q63 Q71 Q75 Q76 Q84 Q87 Q97 Q124 Q126 Q159 Q168 Q201 Q206 Q211 Q229 Q230 Q231 Q232 Q237 Q240 Q245 Q253 Q257 Q261 Q267 Q272 Q285 Q288 Q289 Q300 |
 | 10 | [Helm](#10-helm) | 6 | Q19 Q117 Q145 Q223 Q239 Q248 |
 | 11 | [GitOps & CI/CD](#11-gitops--cicd) | 13 | Q8 Q22 Q101 Q127 Q131 Q144 Q158 Q171 Q198 Q254 Q256 Q260 Q266 |
-| 12 | [Service Mesh](#12-service-mesh) | 9 | Q28 Q31 Q64 Q151 Q173 Q197 Q205 Q207 Q255 |
-| 13 | [Container Runtime & Images](#13-container-runtime--images) | 14 | Q1 Q27 Q47 Q89 Q93 Q105 Q109 Q115 Q133 Q139 Q218 Q222 Q247 Q252 |
-| 14 | [Cloud Native, CNCF & Open Source](#14-cloud-native-cncf--open-source) | 31 | Q12 Q15 Q16 Q17 Q25 Q30 Q34 Q41 Q42 Q69 Q72 Q79 Q80 Q82 Q92 Q95 Q108 Q123 Q125 Q141 Q143 Q149 Q160 Q162 Q172 Q175 Q181 Q184 Q185 Q189 Q224 |
-| 15 | [Kubernetes API, Extensions & Versions](#15-kubernetes-api-extensions--versions) | 8 | Q11 Q24 Q33 Q59 Q96 Q174 Q179 Q191 |
+| 12 | [Service Mesh](#12-service-mesh) | 10 | Q28 Q31 Q64 Q151 Q173 Q197 Q205 Q207 Q255 Q290 |
+| 13 | [Container Runtime & Images](#13-container-runtime--images) | 16 | Q1 Q27 Q47 Q89 Q93 Q105 Q109 Q115 Q133 Q139 Q218 Q222 Q247 Q252 Q277 Q280 |
+| 14 | [Cloud Native, CNCF & Open Source](#14-cloud-native-cncf--open-source) | 33 | Q12 Q15 Q16 Q17 Q25 Q30 Q34 Q41 Q42 Q69 Q72 Q79 Q80 Q82 Q92 Q95 Q108 Q123 Q125 Q141 Q143 Q149 Q160 Q162 Q172 Q175 Q181 Q184 Q185 Q189 Q224 Q287 Q295 |
+| 15 | [Kubernetes API, Extensions & Versions](#15-kubernetes-api-extensions--versions) | 9 | Q11 Q24 Q33 Q59 Q96 Q174 Q179 Q191 Q299 |
 | 16 | [Cluster Management & Namespaces](#16-cluster-management--namespaces) | 6 | Q35 Q43 Q99 Q118 Q177 Q186 |
 
 ---
@@ -251,6 +251,28 @@ C. kubelet manages the container runtime and ensures that all Pods scheduled to 
 D. kubelet configures networking rules on each node to handle traffic routing for Services.
 
 **✅ Answer: C**
+
+---
+
+**Q271.** In a Kubernetes cluster, what is the primary function of etcd?
+
+A. To replicate cluster state data across control plane nodes for high availability.  
+B. To provide a distributed key-value store for all cluster state and data.  
+C. To persist API object definitions such as Pods, ConfigMaps, and Secrets.  
+D. To maintain the desired state of workloads by reconciling changes through controllers.
+
+**✅ Answer: B**
+
+---
+
+**Q298.** In a Kubernetes cluster, which component is responsible for maintaining the desired state of applications by reconciling resources such as Deployments and ReplicaSets?
+
+A. Controller Manager  
+B. Kubernetes API Server  
+C. kubelet  
+D. etcd
+
+**✅ Answer: A**
 
 ---
 
@@ -587,6 +609,17 @@ C. A database that requires persistent storage and stable network identities.
 D. A background job that runs periodically and does not maintain state.
 
 **✅ Answer: C**
+
+---
+
+**Q274.** A logging agent must be deployed to run on every node in a Kubernetes cluster. Which resource should be used to achieve this requirement?
+
+A. Deployment  
+B. DaemonSet  
+C. ReplicaSet  
+D. StatefulSet
+
+**✅ Answer: B**
 
 ---
 
@@ -970,6 +1003,61 @@ D. kube-proxy
 
 ---
 
+**Q276.** In a Kubernetes cluster, how does DNS resolution work for services?
+
+A. DNS resolution for services uses the IP addresses of the Pods directly.  
+B. DNS resolution for services is handled by an external DNS provider that manages all service names.  
+C. Kubernetes creates service names that resolve to stable cluster IPs.  
+D. Service names in Kubernetes are resolved using environment variables set in each Pod.
+
+**✅ Answer: C**
+
+---
+
+**Q279.** What is the primary role of a Service in a Kubernetes cluster?
+
+A. It exposes an application running behind a single outward-facing endpoint.  
+B. To store configuration data and secrets in the cluster.  
+C. To provide an endpoint for outward side to access the cluster on the Internet.  
+D. To manage the scaling of applications automatically in the cluster.
+
+**✅ Answer: A**
+
+---
+
+**Q283.** What are the possible options for PolicyTypes when configuring NetworkPolicy?
+
+A. inbound and outbound  
+B. ingress and egress  
+C. push and pull  
+D. get and put
+
+**✅ Answer: B**
+
+---
+
+**Q286.** By default, Pods are non-isolated and accept traffic from any source. When a NetworkPolicy selects a Pod, it becomes isolated. How are multiple NetworkPolicies applied to the same Pod handled in Kubernetes?
+
+A. restricted  
+B. additive  
+C. conflicting  
+D. hierarchical
+
+**✅ Answer: B**
+
+---
+
+**Q292.** What is the primary purpose of an Ingress resource in Kubernetes?
+
+A. To monitor the health status of application Pods.  
+B. To expose internal services to external web traffic.  
+C. To store configuration data used by applications.  
+D. To manage persistent volumes for application data.
+
+**✅ Answer: B**
+
+---
+
 ## 4. Storage
 
 > PersistentVolumes (PV), PersistentVolumeClaims (PVC), StorageClass, CSI, ephemeral storage.
@@ -1211,6 +1299,28 @@ Labels are **key/value pairs attached to Kubernetes objects** that are used for 
 
 ---
 
+**Q278.** In a Kubernetes cluster, how are Labels and Selectors utilized to manage and organize resources?
+
+A. Labels are used only for service discovery and do not affect resource management.  
+B. Labels are used for categorizing resources, while Selectors are used to filter and retrieve resources based on those labels.  
+C. Selectors can only be applied to Pods and not to other resource types in Kubernetes.  
+D. Labels are automatically generated by Kubernetes, and Selectors are manually defined by users.
+
+**✅ Answer: B**
+
+---
+
+**Q293.** In Kubernetes, how do Namespaces differ from Labels in managing resources within a cluster?
+
+A. Namespaces can only contain Pods, but Labels can be applied to any Kubernetes resource.  
+B. Namespaces are assigned statically, while Labels can be modified dynamically.  
+C. Namespaces are only used for access control, while Labels are solely for resource monitoring.  
+D. Namespaces are used to isolate resources, while Labels are used for query and selection.
+
+**✅ Answer: D**
+
+---
+
 ## 6. Security & RBAC
 
 > Role-Based Access Control (RBAC), Pod Security Standards, Security Context, ServiceAccounts, OPA.
@@ -1404,13 +1514,60 @@ D. A Role is limited to Pods and Services, while a ClusterRole can grant access 
 
 ---
 
-## 7. Observability & Monitoring
+**Q273.** Which Pod Security Standard balances ease of adoption while still preventing known privilege escalations?
 
-> Metrics, Logs, Traces/Spans, Prometheus, Grafana, health probes, observability pillars.
+A. Privileged  
+B. Permissive  
+C. Restricted  
+D. Baseline
+
+**✅ Answer: D**
 
 ---
 
-**Q36.** What is a probe within Kubernetes?
+**Q275.** How can a tls-type secret be created that holds the TLS certificate and its associated key using kubectl?
+
+A. `kubectl create secret generic tls-secret --cert=path/to/tls.crt --key=path/to/tls.key`  
+B. `kubectl create secret tls tls-secret --cert=path/to/tls.crt --key=path/to/tls.key`  
+C. `kubectl create secret tls tls-secret --from-file=cert=path/to/tls.crt --from-file=key=path/to/tls.key`  
+D. `kubectl create secret generic tls-secret --from-file=cert=path/to/tls.crt --from-file=key=path/to/tls.key`
+
+**✅ Answer: B**
+
+---
+
+**Q281.** Which of the following Pod Security Standards enforces the most restrictive settings, designed for security-critical workloads?
+
+A. Unrestricted  
+B. Restricted  
+C. Privileged  
+D. Baseline
+
+**✅ Answer: B**
+
+---
+
+**Q282.** Which statement is correct about Role and ClusterRole objects in Kubernetes?
+
+A. Roles can only set permissions for resources within a particular namespace.  
+B. ClusterRoles and Roles can remove permissions from resources within a namespace.  
+C. ClusterRoles can only set permissions for resources that are not assigned to a namespace.  
+D. Roles can set permissions for both namespaced and non-namespaced objects.
+
+**✅ Answer: A**
+
+---
+
+**Q297.** How can a Pod be configured to use a ServiceAccount for authenticated API access?
+
+A. By attaching the ServiceAccount directly to the kube-scheduler to change how the Pod is scheduled.  
+B. By specifying the ServiceAccount name in the Pod specs, Kubernetes mounts its token as a volume.  
+C. By embedding the ServiceAccount token inside the container image at build time.  
+D. By converting the ServiceAccount into a ConfigMap that the Pod consumes as environment variables.
+
+**✅ Answer: B**
+
+---
 
 A. A monitoring mechanism of the Kubernetes API.  
 B. A pre-operational scope issued by the kubectl agent.  
@@ -1561,6 +1718,28 @@ C. Observability is the process of restarting failed Pods to maintain applicatio
 D. Observability is the configuration of health probes to check whether containers are running correctly.
 
 **✅ Answer: A**
+
+---
+
+**Q284.** A Pod needs to be configured for a slow-starting application. What is the best approach to ensure the Pod is only marked as ready when it is fully initialized?
+
+A. Use a startup probe only.  
+B. Use a readiness probe only.  
+C. Use both liveness and startup probes.  
+D. Use both readiness and startup probes.
+
+**✅ Answer: D**
+
+---
+
+**Q296.** Prometheus has 4 core metric types: Summary, Histogram, Gauge. What is the 4th metric type?
+
+A. Sampler  
+B. Counter  
+C. Final  
+D. Total
+
+**✅ Answer: B**
 
 ---
 
@@ -1776,6 +1955,28 @@ C. Use a nodeSelector in the deployment specification.
 D. Configure resource limits and requests for the Pods.
 
 **✅ Answer: C**
+
+---
+
+**Q291.** Which Kubernetes feature is the simplest way to force a Pod or Deployment to run only on nodes with a specific label?
+
+A. Taint  
+B. NodeSelector  
+C. NodeAffinity  
+D. Toleration
+
+**✅ Answer: B**
+
+---
+
+**Q294.** A data science team is deploying a machine learning workload that performs best on nodes labeled `disk=ssd`. However, the Pods must still be able to run on other nodes if no SSD nodes are available. Which scheduling rule should they configure?
+
+A. Node Affinity with PreferredDuringSchedulingIgnoredDuringExecution  
+B. Pod Anti-Affinity  
+C. Taints and Tolerations  
+D. Node Affinity with RequiredDuringSchedulingIgnoredDuringExecution
+
+**✅ Answer: A**
 
 ---
 
@@ -2090,6 +2291,61 @@ C. `kubectl logs` to review application output for errors related to DNS resolut
 D. `kubectl exec -- nslookup` to check name resolution directly inside the Pod.
 
 **✅ Answer: D**
+
+---
+
+**Q272.** What is the correct command to scale multiple Pods for a deployment?
+
+A. `kubectl scale --clones=3 deployment/my-app`  
+B. `kubectl scale --pods=3 deployment/my-app`  
+C. `kubectl scale --replicas=3 deployment/my-app`  
+D. `kubectl scale --copy=3 deployment/my-app`
+
+**✅ Answer: C**
+
+---
+
+**Q285.** A Kubernetes node is scheduled for maintenance. How can the Pods scheduled on that node be identified so workloads can be redirected before the node is taken out of service?
+
+A. `kubectl describe node`  
+B. `kubectl get pods -o wide --all-namespaces`  
+C. `kubectl get pods --on`  
+D. `kubectl describe pods --on`
+
+**✅ Answer: B**
+
+---
+
+**Q288.** Which command correctly uses kubectl exec to inspect environment variables inside a running container?
+
+A. `kubectl exec -- show variables`  
+B. `kubectl exec -- get env`  
+C. `kubectl exec -- list config`  
+D. `kubectl exec -- env`
+
+**✅ Answer: D**
+
+---
+
+**Q289.** A DevOps engineer is preparing worker-1 for maintenance. The node is running multiple Pods, but workloads must be safely evicted and rescheduled onto other nodes. Which kubectl command should the engineer use?
+
+A. `kubectl delete node worker-1 --delete-emptydir-data`  
+B. `kubectl drain worker-1 --ignore-daemonsets`  
+C. `kubectl scale deployment --replicas=0 --namespace=production`  
+D. `kubectl cordon worker-1 --daemonsets=off`
+
+**✅ Answer: B**
+
+---
+
+**Q300.** If a Pod contains multiple containers, how can logs be viewed from one of the containers?
+
+A. `kubectl logs --describe`  
+B. `kubectl logs --container`  
+C. `kubectl logs --application`  
+D. `kubectl logs --docker`
+
+**✅ Answer: B**
 
 ---
 
@@ -2419,6 +2675,17 @@ D. Gateway plane
 
 ---
 
+**Q290.** Which CNCF project is primarily used as a high-performance proxy for microservices, handling service-to-service communication, load balancing, and observability in service meshes?
+
+A. Helm  
+B. Fluentd  
+C. Envoy  
+D. Prometheus
+
+**✅ Answer: C**
+
+---
+
 ## 13. Container Runtime & Images
 
 > OCI, CRI, containerd, CRI-O, runc, kata, gVisor, Dockerfile, multi-stage builds, image best practices.
@@ -2576,6 +2843,28 @@ C. Containerization uses hypervisors to manage resources, while virtualization d
 D. Containerization allocates resources per container, virtualization does not isolate them.
 
 **✅ Answer: B**
+
+---
+
+**Q277.** A developer is trying to understand the concept of containerization for their Kubernetes deployment. What best describes containerization?
+
+A. A technique that allows applications to run only on bare metal servers without any abstraction.  
+B. A lightweight approach to running applications in isolated environments using shared OS resources.  
+C. A way to create and manage virtual machines for running various applications.  
+D. A method of virtualizing physical hardware to run multiple operating systems.
+
+**✅ Answer: B**
+
+---
+
+**Q280.** What happens if a container runtime is missing on Kubernetes worker nodes?
+
+A. kubelet cannot communicate with kube-api-server.  
+B. Nodes cannot communicate with each other.  
+C. kubelet cannot launch Pods.  
+D. Pods cannot communicate with each other.
+
+**✅ Answer: C**
 
 ---
 
@@ -2926,6 +3215,28 @@ D. Open source projects succeed when contributors focus on code quality without 
 
 ---
 
+**Q287.** CNCF supports and helps organize different Kubernetes related events: meetups, KubeCons, KubeDays, KCDs etc. What does KCD stand for?
+
+A. Kubernetes Cloud Developers  
+B. Kubernetes Cloud Days  
+C. Kubernetes Community Days  
+D. Kubernetes Community Developers
+
+**✅ Answer: C**
+
+---
+
+**Q295.** What is the main role of CNCF Ambassadors in the cloud native ecosystem?
+
+A. They promote cloud native adoption by supporting communities, organizing events, and advocating for CNCF projects.  
+B. They handle CNCF operations by managing budgets, securing sponsors, and negotiating agreements.  
+C. They design Kubernetes features by writing code, planning releases, and coordinating development.  
+D. They manage project governance by guiding development, reviewing code, and approving changes.
+
+**✅ Answer: A**
+
+---
+
 ## 15. Kubernetes API, Extensions & Versions
 
 > API versioning (alpha/beta/stable), CRDs, Aggregation Layer, required YAML fields, REST API objects.
@@ -3020,6 +3331,17 @@ D. The software may contain bugs. Enabling a feature may expose bugs.
 
 ---
 
+**Q299.** What is the primary purpose of Custom Resource Definitions (CRDs) in Kubernetes?
+
+A. To automatically scale pods based on resource usage.  
+B. To facilitate network communication between Pods and services.  
+C. To define a set of custom resources that extend the Kubernetes API.  
+D. To manage the storage of persistent volumes within a Kubernetes cluster.
+
+**✅ Answer: C**
+
+---
+
 ## 16. Cluster Management & Namespaces
 
 > Namespaces, HA etcd topology, cluster sizing, garbage collection, ResourceQuota.
@@ -3092,4 +3414,4 @@ D. Terminated pods, completed jobs, and objects without owner references.
 
 ---
 
-*End of Study Guide — Q271–Q300 were not available in the source material.*
+*End of Study Guide — All 300 questions.*
